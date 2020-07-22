@@ -1,0 +1,41 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+}
+
+label {
+  display: block;
+  width: 12em;
+  margin: 0.5em 0;
+  color: #009688;
+  font-weight: bold;
+}
+
+input {
+  height: 2em;
+  font-size: 1em;
+  padding-left: 0.4em;
+}
+
+button {
+  font-family: Arial;
+  background-color: #009688;
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #cfd8dc;
+}
+
+button:disabled {
+  background-color: #eee;
+  color: #ccc;
+  cursor: auto;
+}
