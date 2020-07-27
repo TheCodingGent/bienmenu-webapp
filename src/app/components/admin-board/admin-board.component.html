@@ -1,0 +1,21 @@
+<div class="admin-board container-fluid">
+  <div class="admin-board-content container">
+    <div class="d-flex flex-column">
+      <h3>All Restaurants</h3>
+      <ul class="restaurants list-group">
+        <li
+          *ngFor="let restaurant of restaurants"
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          {{ restaurant.name }}
+          <a routerLink="/detail/{{ restaurant._id }}">
+            <button class="btn">view</button>
+          </a>
+        </li>
+      </ul>
+      <a routerLink="/add">
+        <button class="btn">Add New</button>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,35 +1,52 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 //import { InMemoryDataService } from './in-memory-data.service'; // for local debugging only
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './components/home/home.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HeaderComponent } from './header/header.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { RestaurantDetailComponent } from './restaurant-detail/restaurant-detail.component';
-import { AddRestaurantComponent } from './add-restaurant/add-restaurant.component';
-import { AddMenuComponent } from './add-menu/add-menu.component';
-import { UpdateMenuComponent } from './update-menu/update-menu.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RestaurantDetailComponent } from './components/restaurant-detail/restaurant-detail.component';
+import { AddRestaurantComponent } from './components/add-restaurant/add-restaurant.component';
+import { AddMenuComponent } from './components/add-menu/add-menu.component';
+import { UpdateMenuComponent } from './components/update-menu/update-menu.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { AdminBoardComponent } from './components/admin-board/admin-board.component';
+import { UserBoardComponent } from './components/user-board/user-board.component';
+
+import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { MenuListComponent } from './components/menu-list/menu-list.component';
+import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    HeaderComponent,
     PageNotFoundComponent,
     RestaurantDetailComponent,
     AddRestaurantComponent,
     AddMenuComponent,
     UpdateMenuComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent,
+    AdminBoardComponent,
+    UserBoardComponent,
+    ResetPasswordComponent,
+    MenuListComponent,
+    RequestResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,8 +64,9 @@ import { UpdateMenuComponent } from './update-menu/update-menu.component';
     AngularMaterialModule,
     MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

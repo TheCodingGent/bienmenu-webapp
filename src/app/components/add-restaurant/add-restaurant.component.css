@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+}
+
+label {
+  display: block;
+  width: 12em;
+  margin: 0.5em 0;
+  color: #009688;
+  font-weight: bold;
+}
+
+input {
+  height: 2em;
+  font-size: 1em;
+  padding-left: 0.4em;
+}

@@ -1,0 +1,47 @@
+<div class="login container-fluid">
+  <div class="login-content card card-container">
+    <img
+      id="profile-img"
+      src="/assets/img/bienmenu-long-logo.png"
+      class="profile-img-card"
+    />
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Username</label>
+        <input
+          type="text"
+          formControlName="username"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+        />
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+          <div *ngIf="f.username.errors.required">Username is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+        />
+        <a [routerLink]="['/request-reset-password']">
+          Forgot Password?
+        </a>
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+      </div>
+      <div class="form-group text-center">
+        <button class="btn btn-primary">Login</button>
+      </div>
+      <div class="alert alert-warning" *ngIf="f.submitted && isLoginFailed">
+        Login failed!<br />{{ errorMessage }}
+      </div>
+    </form>
+    <div class="alert alert-success" *ngIf="isLoggedIn">
+      Logged in Successfully.
+    </div>
+  </div>
+</div>
