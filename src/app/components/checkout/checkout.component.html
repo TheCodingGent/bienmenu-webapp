@@ -1,0 +1,22 @@
+<div class="checkout container-fluid">
+  <div class="checkout-content card card-container">
+    <button type="button" class="btn" (click)="openModal('addpaymentmodal')">
+      Add Payment
+    </button>
+    <div class="alert alert-success" *ngIf="success">
+      Card added successfully!
+    </div>
+    <app-stripe-payment (token)="onSuccess($event)"></app-stripe-payment>
+    <button
+      type="button"
+      class="btn"
+      [disabled]="!success"
+      (click)="processPayment()"
+    >
+      Process Payment
+    </button>
+    <div class="alert alert-danger" *ngIf="isOperationFailed">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>

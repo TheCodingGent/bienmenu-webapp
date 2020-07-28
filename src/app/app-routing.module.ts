@@ -14,6 +14,7 @@ import { AuthGuard } from './helpers/auth.guard';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const externalUrlProvider = new InjectionToken('externalUrlRedirectResolver');
 
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'add', component: AddRestaurantComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'admin', component: AdminBoardComponent },
   { path: 'user', component: UserBoardComponent },

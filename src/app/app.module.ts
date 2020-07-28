@@ -24,11 +24,12 @@ import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminBoardComponent } from './components/admin-board/admin-board.component';
 import { UserBoardComponent } from './components/user-board/user-board.component';
-
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
+import { StripePaymentComponent } from './components/stripe-payment/stripe-payment.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,8 @@ import { RequestResetPasswordComponent } from './components/request-reset-passwo
     ResetPasswordComponent,
     MenuListComponent,
     RequestResetPasswordComponent,
+    StripePaymentComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
