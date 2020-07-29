@@ -8,9 +8,14 @@
           class="list-group-item d-flex justify-content-between align-items-center"
         >
           {{ restaurant.name }}
-          <a routerLink="/detail/{{ restaurant._id }}">
-            <button class="btn">view</button>
-          </a>
+          <div class="d-flex justify-content-between">
+            <a routerLink="/detail/{{ restaurant._id }}">
+              <button class="btn">Details</button>
+            </a>
+            <a routerLink="/qrcode/{{ restaurant._id }}">
+              <button class="btn">QR Code</button>
+            </a>
+          </div>
         </li>
       </ul>
     </div>

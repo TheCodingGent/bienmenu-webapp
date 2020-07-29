@@ -14,6 +14,7 @@ import { AuthGuard } from './helpers/auth.guard';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
+import { QrCodeViewerComponent } from './components/qr-code-viewer/qr-code-viewer.component';
 
 const externalUrlProvider = new InjectionToken('externalUrlRedirectResolver');
 
@@ -23,6 +24,10 @@ const routes: Routes = [
     path: 'detail/:id',
     component: RestaurantDetailComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'qrcode/:id',
+    component: QrCodeViewerComponent,
   },
   { path: 'add', component: AddRestaurantComponent },
   { path: 'login', component: LoginComponent },

@@ -5,7 +5,7 @@
 .container-fluid {
   padding-top: 80px;
 }
-button {
+/* button {
   font-family: Arial;
   background-color: #2cbbad;
   color: #ffffff;
@@ -25,4 +25,4 @@ button:disabled {
   background-color: #eee;
   color: #ccc;
   cursor: auto;
-}
+} */

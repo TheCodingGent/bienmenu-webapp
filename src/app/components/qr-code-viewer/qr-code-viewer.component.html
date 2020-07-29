@@ -1,0 +1,17 @@
+<div class="qr-code-viewer container-fluid">
+  <div class="qr-code-viewer-content card card-container">
+    <img
+      id="profile-img"
+      src="/assets/img/bienmenu-long-logo.png"
+      class="profile-img-card"
+    />
+    <div class="qr-code container">
+      <qrcode
+        [qrdata]="restaurantQrCode"
+        [width]="256"
+        [elementType]="'url'"
+        [errorCorrectionLevel]="'M'"
+      ></qrcode>
+    </div>
+  </div>
+</div>

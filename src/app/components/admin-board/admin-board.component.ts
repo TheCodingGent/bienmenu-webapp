@@ -9,6 +9,7 @@ import { RestaurantService } from 'src/app/services/restaurant.service';
   styleUrls: ['../../app.component.css', './admin-board.component.css'],
 })
 export class AdminBoardComponent implements OnInit {
+  accessAllowed = false;
   content: string;
   restaurants: Restaurant[];
 
@@ -19,8 +20,8 @@ export class AdminBoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getAdminBoard().subscribe(
-      (data) => {
-        this.content = data;
+      (_) => {
+        this.accessAllowed = true;
         this.getRestaurants();
       },
       (err) => {

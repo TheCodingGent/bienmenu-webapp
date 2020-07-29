@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 //import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 //import { InMemoryDataService } from './in-memory-data.service'; // for local debugging only
 
+import { QRCodeModule } from 'angularx-qrcode';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +31,7 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
+import { QrCodeViewerComponent } from './components/qr-code-viewer/qr-code-viewer.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,7 @@ import { RequestResetPasswordComponent } from './components/request-reset-passwo
     ResetPasswordComponent,
     MenuListComponent,
     RequestResetPasswordComponent,
+    QrCodeViewerComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,7 @@ import { RequestResetPasswordComponent } from './components/request-reset-passwo
     //   dataEncapsulation: false,
     // }),
 
+    QRCodeModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
     MDBBootstrapModule.forRoot(),

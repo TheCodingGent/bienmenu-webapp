@@ -1,6 +1,6 @@
 <div class="admin-board container-fluid">
   <div class="admin-board-content container">
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column" *ngIf="accessAllowed">
       <h3>All Restaurants</h3>
       <ul class="restaurants list-group">
         <li
@@ -16,6 +16,9 @@
       <a routerLink="/add">
         <button class="btn">Add New</button>
       </a>
+    </div>
+    <div class="alert alert-danger" *ngIf="!accessAllowed">
+      {{ content }}
     </div>
   </div>
 </div>

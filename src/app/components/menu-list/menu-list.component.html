@@ -1,1 +1,26 @@
-<p>menu-list works!</p>
+<div class="menus-container container-fluid">
+  <div class="menus-content container" *ngIf="currentRestaurant">
+    <div class="d-flex flex-column">
+      <h3>{{ currentRestaurant.name }}</h3>
+      <ul class="menus list-group-flush" *ngIf="menus">
+        <li
+          *ngFor="let menu of menus; let i = index"
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex flex-column">
+              <h5 class="mb-1">{{ menu.name }}</h5>
+              <div class="d-flex w-100 justify-content-between">
+                <mat-icon matListIcon>touch_app</mat-icon>
+                <p class="mb-1">Tap to view menu</p>
+              </div>
+            </div>
+            <button mat-raised-button (click)="openMenu(menu.filename)">
+              View
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

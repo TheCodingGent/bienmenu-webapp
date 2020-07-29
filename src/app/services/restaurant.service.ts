@@ -84,6 +84,15 @@ export class RestaurantService {
     );
   }
 
+  getMenuForRestaurant(id: string, filename: string): Observable<any> {
+    const url = `http://localhost:5000/menu/pdf/${id}/${filename}`;
+    console.log(url);
+    return this.http.get(url, { responseType: 'arraybuffer' }).pipe(
+      tap((result) => console.log(`fetched menu pdf id=${result}`)),
+      catchError(this.handleError<Restaurant>(`getRestaurant id=${id}`))
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.
