@@ -38,6 +38,7 @@ const routes: Routes = [
   { path: 'request-reset-password', component: RequestResetPasswordComponent },
   { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: 'menus/:id', component: MenuListComponent },
+  { path: ':id', component: MenuListComponent },
   {
     path: 'externalRedirect',
     canActivate: [externalUrlProvider],

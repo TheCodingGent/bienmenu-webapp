@@ -1,4 +1,4 @@
 {
-  "apiBaseUrl": "http://localhost:5000/",
-  "menusBaseUrl": "http://localhost:4200/menus/"
+  "apiBaseUrl": "https://cryptic-dawn-36054.herokuapp.com/",
+  "menusBaseUrl": "https://www.bienmenuapp.com/menus/"
 }
