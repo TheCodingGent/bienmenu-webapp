@@ -1,16 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-
 import { HttpClientModule } from '@angular/common/http';
-//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-//import { InMemoryDataService } from './in-memory-data.service'; // for local debugging only
-
 import { QRCodeModule } from 'angularx-qrcode';
 
 import { AppComponent } from './app.component';
@@ -26,12 +21,12 @@ import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminBoardComponent } from './components/admin-board/admin-board.component';
 import { UserBoardComponent } from './components/user-board/user-board.component';
-
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
 import { QrCodeViewerComponent } from './components/qr-code-viewer/qr-code-viewer.component';
+import { AppConfigService } from './services/app-config.service';
 
 @NgModule({
   declarations: [
@@ -56,14 +51,6 @@ import { QrCodeViewerComponent } from './components/qr-code-viewer/qr-code-viewe
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    // HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-    //   dataEncapsulation: false,
-    // }),
-
     QRCodeModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
@@ -71,7 +58,19 @@ import { QrCodeViewerComponent } from './components/qr-code-viewer/qr-code-viewe
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [authInterceptorProviders],
+  providers: [
+    authInterceptorProviders,
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [AppConfigService],
+      useFactory: (appConfigService: AppConfigService) => {
+        return () => {
+          return appConfigService.loadAppConfig();
+        };
+      },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

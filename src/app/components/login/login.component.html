@@ -26,15 +26,17 @@
           class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
         />
-        <a [routerLink]="['/request-reset-password']">
-          Forgot Password?
-        </a>
         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
           <div *ngIf="f.password.errors.required">Password is required</div>
         </div>
+        <a [routerLink]="['/request-reset-password']">
+          Forgot Password?
+        </a>
       </div>
       <div class="form-group text-center">
-        <button class="btn btn-primary">Login</button>
+        <button mat-raised-button color="primary" class="btn">
+          Login
+        </button>
       </div>
       <div class="alert alert-warning" *ngIf="f.submitted && isLoginFailed">
         Login failed!<br />{{ errorMessage }}

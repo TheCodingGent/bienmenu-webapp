@@ -14,9 +14,10 @@
           type="button"
           class="close"
           #closeButton
+          mat-raised-button
           data-dismiss="modal"
           aria-label="Close"
-          (click)="addmenumodal.hide()"
+          (click)="close()"
         >
           <span aria-hidden="true">&times;</span>
         </button>
@@ -36,10 +37,10 @@
             />
             <label for="name">Menu name</label>
             <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)">
-              Input invalid
+              Menu name is required
             </mdb-error>
             <mdb-success *ngIf="name.valid && (name.dirty || name.touched)"
-              >Input valid
+              >Valid
             </mdb-success>
           </div>
 
@@ -57,19 +58,20 @@
             <mdb-error
               *ngIf="filename.invalid && (filename.dirty || filename.touched)"
             >
-              Input invalid
+              Filename is required and must only include small letters, numbers
+              or '_'
             </mdb-error>
             <mdb-success
               *ngIf="filename.valid && (filename.dirty || filename.touched)"
             >
-              Input valid
+              Valid
             </mdb-success>
           </div>
           <div class="md-form mb-3">
             <mdb-icon fas icon="file" class="prefix grey-text"></mdb-icon>
             <input
               type="file"
-              id="file"
+              #menufile
               (change)="handleInputFiles($event.target.files)"
               required
             />
@@ -78,21 +80,22 @@
       </div>
       <div class="modal-footer d-flex flex-column justify-content-center">
         <button
-          mdbBtn
-          color="default"
-          class="waves-light"
+          type="button"
+          class="btn"
           id="saveButton"
           data-dismiss="modal"
           mdbWavesEffect
+          mat-raised-button
           (click)="saveMenu()"
           [disabled]="!fileToUpload"
         >
           Save
         </button>
         <div class="alert alert-danger" *ngIf="isOperationFailed">
-          Failed to add menu...
+          Failed to add menu...either you have exceeded the limit of allowed
+          menus or there's an issue with the server.
         </div>
-        <div class="alert alert-danger" *ngIf="isInvalidFile">
+        <div class="alert alert-danger" *ngIf="!isValidFile && fileToUpload">
           File must not exceed 5 MB and must be in PDF format...
         </div>
       </div>

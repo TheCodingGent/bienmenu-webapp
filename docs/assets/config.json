@@ -1,0 +1,4 @@
+{
+  "apiBaseUrl": "http://localhost:5000/",
+  "menusBaseUrl": "http://localhost:4200/menus/"
+}

@@ -3,19 +3,45 @@
   <div class="home-content container">
     <div class="d-flex flex-column">
       <h1>Welcome to BienMenu Admin Tool</h1>
-      <p>Login to your account to manage your menus</p>
-      <div class="row">
+      <p>A space for you to manage your menus with just a few clicks</p>
+      <div class="login-container">
+        <a routerLink="/login"
+          ><button
+            mat-raised-button
+            color="primary"
+            type="button"
+            class="btn btn-lg"
+          >
+            Login
+          </button></a
+        >
+      </div>
+      <!-- <div class="row" *ngIf="!isLoggedIn">
         <div class="col-md-6 text-right">
           <a routerLink="/register"
-            ><button class="btn btn-primary pull-left">Sign Up</button></a
+            ><button
+              mat-raised-button
+              color="primary"
+              type="button"
+              class="btn"
+            >
+              Sign Up
+            </button></a
           >
         </div>
         <div class="col-md-6 text-left">
           <a routerLink="/login"
-            ><button class="btn btn-primary pull-right">Login</button></a
+            ><button
+              mat-raised-button
+              color="primary"
+              type="button"
+              class="btn btn-lg"
+            >
+              Login
+            </button></a
           >
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

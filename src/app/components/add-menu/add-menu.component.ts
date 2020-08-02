@@ -5,6 +5,7 @@ import {
   ViewChild,
   Output,
   EventEmitter,
+  ElementRef,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -17,21 +18,23 @@ import { RestaurantService } from '../../services/restaurant.service';
 import { FileUploadService } from '../../services/file-upload.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { ValidateFile } from 'src/app/helpers/file.validator';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-menu',
   templateUrl: './add-menu.component.html',
-  styleUrls: ['../../app.component.css', './add-menu.component.css'],
+  styleUrls: ['./add-menu.component.css'],
 })
 export class AddMenuComponent implements OnInit {
   @Input() restaurantId: string;
   @Output() closed = new EventEmitter<boolean>();
   @ViewChild('addmenumodal') addmenumodal;
+  @ViewChild('menufile') menuFile: ElementRef;
 
   id = 'addmenumodal'; // modal id used by modal service
 
   isOperationFailed = false;
-  isInvalidFile = false;
+  isValidFile = false;
   menuForm: FormGroup;
   name: FormControl;
   filename: FormControl;
@@ -41,6 +44,7 @@ export class AddMenuComponent implements OnInit {
     private formBuilder: FormBuilder,
     private restaurantService: RestaurantService,
     private fileUploadService: FileUploadService,
+    private userService: UserService,
     private modalService: ModalService
   ) {}
 
@@ -50,7 +54,7 @@ export class AddMenuComponent implements OnInit {
     this.name = this.formBuilder.control('', Validators.required);
     this.filename = this.formBuilder.control('', [
       Validators.required,
-      Validators.pattern('^[a-z_]+$'),
+      Validators.pattern('^[a-z_0-9]+$'),
     ]);
 
     this.menuForm = this.formBuilder.group({
@@ -71,14 +75,16 @@ export class AddMenuComponent implements OnInit {
 
   // close modal
   close(): void {
+    this.menuForm.reset();
+    this.menuFile.nativeElement.value = '';
     this.addmenumodal.hide();
     this.closed.emit(true);
   }
 
   handleInputFiles(files: FileList) {
-    this.isInvalidFile = ValidateFile(files.item(0), 5242880, ['pdf']);
+    this.isValidFile = ValidateFile(files.item(0), 5242880, ['pdf']);
 
-    if (!this.isInvalidFile) {
+    if (this.isValidFile) {
       this.fileToUpload = files.item(0);
     }
   }
@@ -99,8 +105,15 @@ export class AddMenuComponent implements OnInit {
             .subscribe(
               (data) => {
                 // do something, if upload success
-                console.log(data);
-                this.close();
+                this.userService.updateMenuUpdateCount().subscribe(
+                  (_) => {
+                    this.close();
+                  },
+                  (err) => {
+                    console.log(JSON.parse(err.error).message);
+                    this.isOperationFailed = true;
+                  }
+                );
               },
               (error) => {
                 console.log(error);
@@ -109,7 +122,7 @@ export class AddMenuComponent implements OnInit {
             );
         },
         (error) => {
-          console.log(error);
+          console.log('foo' + error);
           this.isOperationFailed = true;
         }
       );

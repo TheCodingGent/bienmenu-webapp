@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
+const PLUS_SUB_KEY = 'auth-plus-sub';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +30,14 @@ export class TokenStorageService {
 
   public getUser(): any {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
+  }
+
+  public savePlusSubscriptionToken(token: string): void {
+    window.sessionStorage.removeItem(PLUS_SUB_KEY);
+    window.sessionStorage.setItem(PLUS_SUB_KEY, token);
+  }
+
+  public getPlusSubscriptionToken(): string {
+    return sessionStorage.getItem(PLUS_SUB_KEY);
   }
 }

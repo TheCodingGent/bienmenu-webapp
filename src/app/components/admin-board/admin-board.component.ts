@@ -6,7 +6,7 @@ import { RestaurantService } from 'src/app/services/restaurant.service';
 @Component({
   selector: 'app-admin-board',
   templateUrl: './admin-board.component.html',
-  styleUrls: ['../../app.component.css', './admin-board.component.css'],
+  styleUrls: ['./admin-board.component.css'],
 })
 export class AdminBoardComponent implements OnInit {
   accessAllowed = false;
@@ -19,7 +19,7 @@ export class AdminBoardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.getAdminBoard().subscribe(
+    this.userService.getAdminContent().subscribe(
       (_) => {
         this.accessAllowed = true;
         this.getRestaurants();

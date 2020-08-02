@@ -13,9 +13,10 @@
         <button
           type="button"
           class="close"
+          mat-raised-button
           data-dismiss="modal"
           aria-label="Close"
-          (click)="updatemenumodal.hide()"
+          (click)="close()"
         >
           <span aria-hidden="true">&times;</span>
         </button>
@@ -23,7 +24,7 @@
       <div class="modal-body mx-3">
         <input
           type="file"
-          id="file"
+          #menufile
           (change)="handleInputFiles($event.target.files)"
           class="form-control"
           required
@@ -31,11 +32,11 @@
       </div>
       <div class="modal-footer d-flex flex-column justify-content-center">
         <button
-          mdbBtn
-          color="default"
-          class="waves-light"
+          type="button"
+          class="btn"
           mdbWavesEffect
-          [disabled]="isInvalidFile"
+          mat-raised-button
+          [disabled]="isInvalidFile || !fileToUpload"
           (click)="saveMenu()"
         >
           Submit

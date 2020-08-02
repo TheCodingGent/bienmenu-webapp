@@ -1,64 +1,76 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  Validators,
+  FormArray,
+  FormGroup,
+  FormControl,
+} from '@angular/forms';
 import { RestaurantService } from '../../services/restaurant.service';
 import { FileUploadService } from '../../services/file-upload.service';
 import { ObjectID } from 'bson';
 import { ValidateFile } from 'src/app/helpers/file.validator';
+import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-restaurant',
   templateUrl: './add-restaurant.component.html',
-  styleUrls: ['../../app.component.css', './add-restaurant.component.css'],
+  styleUrls: ['./add-restaurant.component.css'],
 })
 export class AddRestaurantComponent implements OnInit {
   restaurantForm: FormGroup;
   menus: FormArray;
+  name: FormControl;
+  city: FormControl;
+  address: FormControl;
+  color: FormControl;
+
   menuFiles: Array<File>;
-  isInvalidFile = false;
+  isValidFile = true;
+  menusMatchFiles = true;
+  isOperationFailed = false;
+  isSuccess = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private restaurantService: RestaurantService,
-    private fileUploadService: FileUploadService
+    private userService: UserService,
+    private fileUploadService: FileUploadService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.menuFiles = new Array();
+    this.name = this.formBuilder.control('', Validators.required);
+    this.city = this.formBuilder.control('', [
+      Validators.required,
+      Validators.pattern('^([A-Z][a-z]*((\\s[A-Za-z])?[a-z]*)*)$'), // check if only first letter is capital
+    ]);
+    this.address = this.formBuilder.control('', [
+      Validators.required,
+      Validators.pattern(
+        '^[0-9]{1,5}[,\\s].*[,\\s](([A-Z][0-9][A-Z]\\s{0,1}[0-9][A-Z][0-9])|([0-9]{5}))$' // ensure address starts with numbers and ends with a zipcode
+      ),
+    ]);
+    this.color = this.formBuilder.control('', [
+      Validators.pattern('^[#][a-z0-9]{6}$'),
+    ]); // ensure color starts with # and has 6 characters
+
     this.restaurantForm = this.formBuilder.group({
       _id: [new ObjectID()],
-      name: ['', Validators.required],
-      city: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^([A-Z][a-z]*((\\s[A-Za-z])?[a-z]*)*)$'), // check if only first letter is capital
-        ],
-      ],
-      address: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            '^[0-9]{1,5}[,\\s].*[,\\s](([A-Z][0-9][A-Z]\\s{0,1}[0-9][A-Z][0-9])|([0-9]{5}))$' // ensure address starts with numbers and ends with a zipcode
-          ),
-        ],
-      ],
+      name: this.name,
+      city: this.city,
+      address: this.address,
       menus: this.formBuilder.array([this.createMenu()]),
-      rating: [
-        '',
-        [Validators.required, Validators.pattern('^[0-9][.][0-9]$')], // make sure this is in the format of digit.digit
-      ],
-      color: [
-        '',
-        [Validators.required, Validators.pattern('^[#][a-z0-9]{6}$')], // ensure color starts with # and has 6 characters
-      ],
+      color: this.color,
     });
   }
 
   createMenu(): FormGroup {
     return this.formBuilder.group({
       name: ['', Validators.required],
-      filename: ['', [Validators.required, Validators.pattern('^[a-z_]+$')]], // must be all small letters and only contain letters and underscores
+      filename: ['', [Validators.required, Validators.pattern('^[a-z_0-9]+$')]], // must be all small letters and only contain letters and underscores
       lastupdated: [new Date().toISOString()],
     });
   }
@@ -74,11 +86,22 @@ export class AddRestaurantComponent implements OnInit {
     this.menuFiles.splice(index, 1);
   }
 
-  handleInputFiles(files: FileList, index: number) {
-    this.isInvalidFile = ValidateFile(files.item(0), 5242880, ['pdf']);
+  handleInputFiles(files: FileList) {
+    Array.from(files).forEach((file) => {
+      const duplicate = this.menuFiles.find((f) => f.name === file.name);
+      if (ValidateFile(file, 5242880, ['pdf']) || !duplicate) {
+        this.menuFiles.push(file);
+      } else {
+        this.isValidFile = false;
+      }
+    });
+  }
 
-    if (!this.isInvalidFile) {
-      this.menuFiles.push(files.item(0));
+  deleteFile(name) {
+    let f = this.menuFiles.find((f) => f.name === name);
+    let index = this.menuFiles.indexOf(f, 0);
+    if (index > -1) {
+      this.menuFiles.splice(index, 1);
     }
   }
 
@@ -104,6 +127,13 @@ export class AddRestaurantComponent implements OnInit {
     // TODO: Use EventEmitter with form value
     console.log(this.restaurantForm.value);
 
+    let m = this.restaurantForm.get('menus')['controls'];
+
+    if (!m || !this.menuFiles || m.length != this.menuFiles.length) {
+      this.menusMatchFiles = false;
+      return;
+    }
+
     //upload the files
     for (let [i, file] of this.menuFiles.entries()) {
       console.log(file.name);
@@ -111,7 +141,22 @@ export class AddRestaurantComponent implements OnInit {
     }
 
     this.restaurantService
-      .addRestaurant(this.restaurantForm.value)
-      .subscribe((restaurant) => console.log(restaurant));
+      .addRestaurantForUser(this.restaurantForm.value)
+      .subscribe((restaurant) => {
+        console.log(restaurant);
+        this.userService.updateRestaurantCount().subscribe(
+          (_) => {
+            console.log('Restaurant updated successfully');
+            this.isSuccess = true;
+            this.isOperationFailed = false;
+            setTimeout(() => this.router.navigate(['/user']), 3000);
+          },
+          (err) => {
+            console.log(JSON.parse(err.error).message);
+            this.isOperationFailed = true;
+            this.isSuccess = false;
+          }
+        );
+      });
   }
 }

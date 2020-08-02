@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-const AUTH_API = 'http://localhost:5000/api/auth/';
+import { AppConfigService } from './app-config.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -12,21 +11,30 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  private authUrl: string;
+
+  constructor(private http: HttpClient, private appConfig: AppConfigService) {
+    this.authUrl = appConfig.apiBaseUrl + 'api/auth';
+  }
 
   login(credentials): Observable<any> {
-    return this.http.post(AUTH_API + 'signin', credentials, httpOptions);
+    return this.http.post(this.authUrl + '/signin', credentials, httpOptions);
   }
 
   register(user): Observable<any> {
-    return this.http.post(AUTH_API + 'signup', user, httpOptions);
+    console.log(user);
+    return this.http.post(this.authUrl + '/signup', user, httpOptions);
+  }
+
+  getPlusSubscription(): Observable<any> {
+    return this.http.get(this.authUrl + '/subscription/plus', httpOptions);
   }
 
   requestResetPassword(email): Observable<any> {
-    return this.http.post(AUTH_API + 'reset-password', email, httpOptions);
+    return this.http.post(this.authUrl + '/reset-password', email, httpOptions);
   }
 
   updatePassword(body): Observable<any> {
-    return this.http.post(AUTH_API + 'new-password', body, httpOptions);
+    return this.http.post(this.authUrl + '/new-password', body, httpOptions);
   }
 }

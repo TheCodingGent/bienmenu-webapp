@@ -1,19 +1,18 @@
-:host {
+.add-restaurant {
+  padding-top: 300px;
+  padding-bottom: 20px;
+  position: relative;
+  overflow: auto;
+  height: 100vh;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  padding-top: 24px;
+  align-items: center;
+  justify-content: center;
 }
 
-label {
-  display: block;
-  width: 12em;
-  margin: 0.5em 0;
-  color: #009688;
-  font-weight: bold;
-}
-
-input {
-  height: 2em;
-  font-size: 1em;
-  padding-left: 0.4em;
+.add-restaurant-content {
+  border: none;
+  width: 600px;
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 20px; */
 }

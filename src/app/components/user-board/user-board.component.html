@@ -1,7 +1,14 @@
 <div class="user-board container-fluid">
   <div class="user-board-content container">
     <div class="d-flex flex-column">
-      <h3>Your Restaurants</h3>
+      <div class="d-flex">
+        <!-- <button type="button" class="btn" (click)="goBack()">
+          Go Back
+        </button>
+        <div class="divider"></div> -->
+        <h3>Your Restaurants</h3>
+      </div>
+
       <ul class="restaurants list-group">
         <li
           *ngFor="let restaurant of restaurants"
@@ -9,15 +16,25 @@
         >
           {{ restaurant.name }}
           <div class="d-flex justify-content-between">
-            <a routerLink="/detail/{{ restaurant._id }}">
-              <button class="btn">Details</button>
+            <a routerLink="/menus/{{ restaurant._id }}">
+              <button mat-raised-button class="btn">Menus</button>
             </a>
+            <div class="divider"></div>
+            <a routerLink="/detail/{{ restaurant._id }}">
+              <button mat-raised-button class="btn">Manage</button>
+            </a>
+            <div class="divider"></div>
             <a routerLink="/qrcode/{{ restaurant._id }}">
-              <button class="btn">QR Code</button>
+              <button mat-raised-button class="btn">QR Code</button>
             </a>
           </div>
         </li>
       </ul>
+      <div class="add-new" *ngIf="enableAdd">
+        <a routerLink="/add">
+          <button mat-raised-button class="btn">Add New</button>
+        </a>
+      </div>
     </div>
   </div>
 </div>

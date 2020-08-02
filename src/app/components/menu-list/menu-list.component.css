@@ -1,0 +1,41 @@
+.menus-container {
+  padding: 80px;
+  padding-left: 0;
+  padding-right: 0;
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  background-color: var(--accent-color);
+
+  justify-content: center;
+}
+
+.menus-container-content {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.menus-title {
+  text-align: center;
+  padding: 20px;
+}
+
+.menus-title h2 {
+  font-family: "Lobster Two", cursive;
+}
+
+.menus {
+  padding: 0;
+  color: var(--font-color);
+}
+
+.menu-item {
+  background-color: var(--main-color);
+}
+
+.view-btn {
+  background-color: var(--accent-color) !important;
+}

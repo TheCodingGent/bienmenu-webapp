@@ -9,12 +9,12 @@
         >
           {{ restaurant.name }}
           <a routerLink="/detail/{{ restaurant._id }}">
-            <button class="btn">view</button>
+            <button mat-raised-button class="btn">view</button>
           </a>
         </li>
       </ul>
       <a routerLink="/add">
-        <button class="btn">Add New</button>
+        <button mat-raised-button class="btn">Add New</button>
       </a>
     </div>
     <div class="alert alert-danger" *ngIf="!accessAllowed">

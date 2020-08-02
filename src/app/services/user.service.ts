@@ -1,29 +1,58 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-const API_URL = 'http://localhost:5000/api/test/';
+import { AppConfigService } from './app-config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  private userApiUrl: string; // URL to web api
+
+  constructor(private http: HttpClient, private appConfig: AppConfigService) {
+    this.userApiUrl = appConfig.apiBaseUrl + 'api/content/';
+  }
 
   getPublicContent(): Observable<any> {
-    return this.http.get(API_URL + 'all', { responseType: 'text' });
+    return this.http.get(this.userApiUrl + 'all', { responseType: 'text' });
   }
 
-  getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + 'user', { responseType: 'text' });
+  getUserContent(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'user', { responseType: 'text' });
   }
 
-  // getModeratorBoard(): Observable<any> {
-  //   return this.http.get(API_URL + 'mod', { responseType: 'text' });
-  // }
+  getAdminContent(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'admin', {
+      responseType: 'text',
+    });
+  }
 
-  getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + 'admin', {
+  getMenuUpdateAllowed(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'features/update-allowed', {
+      responseType: 'text',
+    });
+  }
+
+  updateMenuUpdateCount(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'features/update-count', {
+      responseType: 'text',
+    });
+  }
+
+  updateFeatureExpiry(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'features/update-feature-expiry', {
+      responseType: 'text',
+    });
+  }
+
+  getRestaurantAddAllowed(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'features/add-restaurant-allowed', {
+      responseType: 'text',
+    });
+  }
+
+  updateRestaurantCount(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'features/update-restaurant-count', {
       responseType: 'text',
     });
   }

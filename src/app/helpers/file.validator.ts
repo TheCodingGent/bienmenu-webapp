@@ -4,6 +4,6 @@ export function ValidateFile(
   allowedExtensions: string[]
 ) {
   return (
-    file.size > size || !allowedExtensions.includes(file.name.split('.').pop())
+    file.size <= size || allowedExtensions.includes(file.name.split('.').pop())
   );
 }

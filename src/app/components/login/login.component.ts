@@ -3,11 +3,12 @@ import { AuthService } from '../../services/auth.service';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../../app.component.css', './login.component.css'],
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -21,13 +22,14 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      username: ['', Validators.required],
       password: ['', Validators.required],
     });
 
@@ -52,7 +54,6 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginForm.value).subscribe(
       (data) => {
-        console.log(data);
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
 
@@ -60,9 +61,30 @@ export class LoginComponent implements OnInit {
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
 
-        this.router.navigate(['/profile']).then(() => {
-          window.location.reload();
-        });
+        this.authService.getPlusSubscription().subscribe(
+          (data) => {
+            // user has plus update token
+            this.tokenStorage.savePlusSubscriptionToken(data.subscriptionToken);
+            this.router.navigate(['/user']).then(() => {
+              window.location.reload();
+            });
+          },
+          (err) => {
+            // user does not have a plus membership
+            //update feature expiry
+            this.userService.updateFeatureExpiry().subscribe(
+              (data) => {
+                this.router.navigate(['/user']).then(() => {
+                  window.location.reload();
+                });
+              },
+              (err) => {
+                console.log(JSON.parse(err.error).message);
+                this.isLoginFailed = true;
+              }
+            );
+          }
+        );
       },
       (err) => {
         this.errorMessage = err.error.message;

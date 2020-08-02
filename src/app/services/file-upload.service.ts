@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
-import { MessageService } from './message.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { AppConfigService } from './app-config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileUploadService {
-  private fileServerUrl = 'http://localhost:5000/menu/pdf'; // URL to web api
+  private fileServerUrl: string; // URL to web api
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private appConfig: AppConfigService) {
+    this.fileServerUrl = appConfig.apiBaseUrl + 'menu/pdf';
+  }
 
   postFile(file: File, id: string, name?: string): Observable<any> {
     const url = `${this.fileServerUrl}/upload/${id}`;

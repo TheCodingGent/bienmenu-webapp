@@ -2,7 +2,7 @@
   <div class="alert alert-danger" *ngIf="notAllowed">
     Current user not authorized to view this restaurant...
   </div>
-  <div class="restaurant-detail container">
+  <div class="restaurant-detail-content container">
     <div *ngIf="restaurant">
       <h2>{{ restaurant.name }} Details</h2>
       <div class="list-group list-group-root well">
@@ -32,38 +32,49 @@
               class="list-group-item"
             >
               <div class="d-flex align-items-center">
-                <span class="restaurant-detail-field">Menu {{ i + 1 }}</span>
+                <span class="restaurant-detail-field">{{ menu.name }}</span>
                 <button
+                  mat-raised-button
                   type="button"
-                  class="btn btn-danger"
+                  class="delete-btn btn"
                   (click)="deleteMenu(menu, restaurant._id)"
                 >
                   Delete Menu
                 </button>
               </div>
               <div class="list-group">
-                <div class="list-group-item">
+                <!-- <div class="list-group-item">
                   <span class="restaurant-detail-field">Menu Name: </span
                   >{{ menu.name }}
-                </div>
+                </div> -->
                 <div class="list-group-item d-flex align-items-center">
                   <div>
                     <span class="restaurant-detail-field"
-                      >Menu Last Updated: </span
+                      >Menu File Last Updated: </span
                     >{{ formatDate(menu.lastupdated) }}
                   </div>
+                  <div class="divider"></div>
                   <button
+                    mat-raised-button
                     type="button"
                     class="btn"
                     (click)="openModal('updatemenumodal', i)"
+                    [disabled]="!featureAllowed"
                   >
-                    Update menu
+                    Update Menu
                   </button>
                   <div
                     class="menu-update-alert alert alert-success"
                     *ngIf="menuUpdating == i && success"
                   >
                     Menu updated successfully!
+                  </div>
+                  <div
+                    class="menu-update-alert alert alert-success"
+                    *ngIf="!featureAllowed"
+                  >
+                    Maximum updates reached for this month, please upgrade to
+                    get unlimited updates.
                   </div>
                   <app-update-menu
                     [restaurantId]="restaurant._id"
@@ -75,17 +86,23 @@
             </li>
           </ul>
         </div>
-        <div class="list-group-item">
+        <!-- <div class="list-group-item">
           <span class="restaurant-detail-field"> Restaurant Rating: </span
           >{{ restaurant.rating }}
         </div>
         <div class="list-group-item">
           <span class="restaurant-detail-field">Restaurant Color: </span
           >{{ restaurant.color }}
-        </div>
+        </div> -->
       </div>
-      <button type="button" class="btn" (click)="openModal('addmenumodal', -1)">
-        Add menu
+      <button
+        mat-raised-button
+        type="button"
+        class="btn"
+        (click)="openModal('addmenumodal', -1)"
+        [disabled]="!featureAllowed"
+      >
+        Add Menu
       </button>
       <app-add-menu
         [restaurantId]="restaurant._id"

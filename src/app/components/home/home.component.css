@@ -28,11 +28,6 @@
   padding: 3px;
 }
 
-.home-content button {
-  background-color: #2cbbad;
-  border: none;
-}
-
 .home img {
   position: absolute;
   left: 0;
@@ -40,4 +35,10 @@
   height: auto;
   object-fit: cover;
   opacity: 0.5;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

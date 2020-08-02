@@ -5,23 +5,26 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { FileUploadService } from '../../services/file-upload.service';
 import { Menu } from '../../models/menu';
 import { ModalService } from 'src/app/services/modal.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { ValidateFile } from 'src/app/helpers/file.validator';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-update-menu',
   templateUrl: './update-menu.component.html',
-  styleUrls: ['../../app.component.css', './update-menu.component.css'],
+  styleUrls: ['./update-menu.component.css'],
 })
 export class UpdateMenuComponent implements OnInit {
   @Input() restaurantId: string;
   @Input() menu: Menu;
   @Output() success = new EventEmitter<boolean>();
   @ViewChild('updatemenumodal') updatemenumodal;
+  @ViewChild('menufile') menuFile: ElementRef;
 
   id = 'updatemenumodal'; // modal id used by modal service
 
@@ -32,7 +35,8 @@ export class UpdateMenuComponent implements OnInit {
   constructor(
     private fileUploadService: FileUploadService,
     private modalService: ModalService,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +54,7 @@ export class UpdateMenuComponent implements OnInit {
 
   // close modal
   close(): void {
+    this.menuFile.nativeElement.value = '';
     this.updatemenumodal.hide();
   }
 
@@ -71,16 +76,23 @@ export class UpdateMenuComponent implements OnInit {
       .subscribe(
         (data) => {
           // do something, if upload success
-
           //update menu timestamp
           this.restaurantService
             .updateMenu(this.menu, this.restaurantId)
             .subscribe(
               (data) => {
                 console.log(data);
-
-                this.success.emit(true);
-                this.close();
+                // update the number of times the use has updated or added a menu other initial creation
+                this.userService.updateMenuUpdateCount().subscribe(
+                  (_) => {
+                    this.success.emit(true);
+                    this.close();
+                  },
+                  (err) => {
+                    console.log(JSON.parse(err.error).message);
+                    this.isOperationFailed = true;
+                  }
+                );
               },
               (error) => {
                 console.log(error);
