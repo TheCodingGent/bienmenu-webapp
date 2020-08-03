@@ -22,6 +22,15 @@
           </div>
         </li>
       </ul>
+      <div class="pdf-container container" *ngIf="pdfSrc">
+        <pdf-viewer
+          [src]="pdfSrc"
+          [render-text]="true"
+          [original-size]="false"
+          [show-borders]="true"
+          style="display: block;"
+        ></pdf-viewer>
+      </div>
     </div>
   </div>
 </div>

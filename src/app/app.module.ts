@@ -7,6 +7,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule } from '@angular/common/http';
 import { QRCodeModule } from 'angularx-qrcode';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -57,6 +58,7 @@ import { AppConfigService } from './services/app-config.service';
     MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
     FormsModule,
+    PdfViewerModule,
   ],
   providers: [
     authInterceptorProviders,

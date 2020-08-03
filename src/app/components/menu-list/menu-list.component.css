@@ -3,12 +3,11 @@
   padding-left: 0;
   padding-right: 0;
   position: relative;
-  overflow: hidden;
-  height: 100vh;
-  width: 100%;
   display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  width: 100%;
   background-color: var(--accent-color);
-
   justify-content: center;
 }
 
@@ -30,12 +29,16 @@
 .menus {
   padding: 0;
   color: var(--font-color);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .menu-item {
   background-color: var(--main-color);
 }
 
-.view-btn {
-  background-color: var(--accent-color) !important;
+.pdf-container {
+  padding: 0;
+  border-style: solid;
+  border-width: 5px;
+  border-color: var(--main-color);
 }

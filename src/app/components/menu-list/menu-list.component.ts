@@ -15,6 +15,7 @@ export class MenuListComponent implements OnInit {
   currentRestaurant: Restaurant;
   menus: Menu[];
   mainColor = '#009688';
+  pdfSrc: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -62,8 +63,9 @@ export class MenuListComponent implements OnInit {
         (data) => {
           console.log('Successfully fetched data.');
           var file = new Blob([data], { type: 'application/pdf' });
-          var fileURL = URL.createObjectURL(file);
-          window.open(fileURL);
+          // var fileURL = URL.createObjectURL(file);
+          this.pdfSrc = URL.createObjectURL(file);
+          //window.open(fileURL);
         },
         (err) => {
           console.log(
