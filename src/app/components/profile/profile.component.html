@@ -1,0 +1,38 @@
+<div class="profile container-fluid">
+  <div class="profile-content card card-container" *ngIf="currentUser">
+    <h3>
+      Welcome <strong>{{ currentUser.firstName }}</strong
+      >!
+    </h3>
+
+    <!-- <p>
+    <strong>Token:</strong>
+    {{ currentUser.accessToken.substring(0, 20) }} ...
+    {{ currentUser.accessToken.substr(currentUser.accessToken.length - 20) }}
+  </p> -->
+    <p>
+      <strong>Name:</strong>
+      {{ currentUser.firstName }}&nbsp;{{ currentUser.lastName }}
+    </p>
+    <p>
+      <strong>Email:</strong>
+      {{ currentUser.email }}
+    </p>
+    <!-- <strong>Roles:</strong>
+  <ul>
+    <li *ngFor="let role of currentUser.roles">
+      {{ role }}
+    </li>
+  </ul> -->
+    <strong>Restaurants:</strong>
+    <ul>
+      <li *ngFor="let restaurant of currentUser.restaurants">
+        {{ restaurant.name }}
+      </li>
+    </ul>
+
+    <div class="alert alert-danger" *ngIf="!loggedIn">
+      Please login to view your profile.
+    </div>
+  </div>
+</div>

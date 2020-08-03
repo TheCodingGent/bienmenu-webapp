@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.divider {
+  width: 10px;
+  height: auto;
+  display: inline-block;
+}
+
+button {
+  background-color: #2cbbad !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #cfd8dc !important;
+}
+
+button:disabled {
+  background-color: #eee !important;
+  color: #ccc !important;
+  cursor: auto !important;
+}
+
+button.delete-btn {
+  background-color: tomato !important;
+}

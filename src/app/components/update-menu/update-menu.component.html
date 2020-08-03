@@ -1,0 +1,53 @@
+<div
+  mdbModal
+  #updatemenumodal="mdbModal"
+  class="modal fade left"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Update Menu</h4>
+        <button
+          type="button"
+          class="close"
+          mat-raised-button
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="close()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <input
+          type="file"
+          #menufile
+          (change)="handleInputFiles($event.target.files)"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="modal-footer d-flex flex-column justify-content-center">
+        <button
+          type="button"
+          class="btn"
+          mdbWavesEffect
+          mat-raised-button
+          [disabled]="isInvalidFile || !fileToUpload"
+          (click)="saveMenu()"
+        >
+          Submit
+        </button>
+        <div class="alert alert-danger" *ngIf="isOperationFailed">
+          Failed to add menu...
+        </div>
+        <div class="alert alert-danger" *ngIf="isInvalidFile">
+          File must not exceed 5 MB and must be in PDF format...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
