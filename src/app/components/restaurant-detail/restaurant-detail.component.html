@@ -30,6 +30,7 @@
             <li
               *ngFor="let menu of restaurant.menus; let i = index"
               class="list-group-item"
+              [@EnterLeave]="'flyIn'"
             >
               <div class="d-flex align-items-center">
                 <span class="restaurant-detail-field">{{ menu.name }}</span>

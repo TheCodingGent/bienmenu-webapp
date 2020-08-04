@@ -28,6 +28,7 @@ import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
 import { QrCodeViewerComponent } from './components/qr-code-viewer/qr-code-viewer.component';
 import { AppConfigService } from './services/app-config.service';
+import { MainNavbarComponent } from './components/main-navbar/main-navbar.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { AppConfigService } from './services/app-config.service';
     MenuListComponent,
     RequestResetPasswordComponent,
     QrCodeViewerComponent,
+    MainNavbarComponent,
   ],
   imports: [
     BrowserModule,

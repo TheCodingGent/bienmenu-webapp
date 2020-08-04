@@ -4,11 +4,31 @@ import { RestaurantService } from 'src/app/services/restaurant.service';
 import { Menu } from 'src/app/models/menu';
 import { Restaurant } from 'src/app/models/restaurant';
 import { LightOrDark } from 'src/app/helpers/color.helper';
+import { NavbarService } from 'src/app/services/navbar.service';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-menu-list',
   templateUrl: './menu-list.component.html',
   styleUrls: ['./menu-list.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state(
+        'void',
+        style({
+          opacity: 0,
+        })
+      ),
+      transition('void <=> *', animate(1000)),
+    ]),
+  ],
 })
 export class MenuListComponent implements OnInit {
   currentRestaurantId: string;
@@ -16,11 +36,15 @@ export class MenuListComponent implements OnInit {
   menus: Menu[];
   mainColor = '#009688';
   pdfSrc: string;
+  showSplashScreen = true;
+  isLoggedIn = false;
 
   constructor(
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
-    private elRef: ElementRef
+    private elRef: ElementRef,
+    private navbarService: NavbarService,
+    private tokenStorageService: TokenStorageService
   ) {}
 
   setColorThemeProperty() {
@@ -38,10 +62,17 @@ export class MenuListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    if (!this.isLoggedIn) {
+      // if user is not logged in hide the navigation bar
+      this.navbarService.hide();
+    }
+
     this.currentRestaurantId = this.route.snapshot.paramMap.get('id');
 
     if (this.currentRestaurantId) {
       this.getMenus();
+      setTimeout(() => (this.showSplashScreen = false), 3000);
     }
   }
 

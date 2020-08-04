@@ -1,4 +1,9 @@
-<div class="menus-container container-fluid">
+<div
+  class="menus-container container-fluid"
+  *ngIf="!showSplashScreen"
+  [ngClass]="{ 'top-padding': isLoggedIn }"
+  [@fadeInOut]
+>
   <div class="menus-container-content container" *ngIf="currentRestaurant">
     <div class="d-flex flex-column">
       <div class="menus-title">
@@ -31,6 +36,22 @@
           style="display: block;"
         ></pdf-viewer>
       </div>
+    </div>
+  </div>
+</div>
+<div
+  class="splash-screen container-fluid"
+  *ngIf="showSplashScreen"
+  [@fadeInOut]
+>
+  <div class="container">
+    <div class="d-flex flex-column">
+      <h3>Propulsé par / Powered by</h3>
+
+      <img
+        class="bienmenu-long-logo"
+        src="./assets/img/bienmenu-long-logo.png"
+      />
     </div>
   </div>
 </div>

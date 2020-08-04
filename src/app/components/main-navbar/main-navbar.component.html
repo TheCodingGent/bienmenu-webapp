@@ -1,0 +1,57 @@
+<mdb-navbar
+  class="app-nav"
+  SideClass="navbar navbar-expand-lg navbar-dark default-color fixed-top"
+  [containerInside]="false"
+  *ngIf="navbarService.visible"
+>
+  <mdb-navbar-brand
+    ><a class="navbar-brand" href="#">BienMenu</a></mdb-navbar-brand
+  >
+  <links>
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item active" *ngIf="!isLoggedIn">
+        <a
+          href="/home"
+          class="nav-link waves-light"
+          routerLink="home"
+          mdbWavesEffect
+          >Home
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="showAdminBoard">
+        <a
+          href="/admin"
+          class="nav-link waves-light"
+          routerLink="admin"
+          mdbWavesEffect
+          >Admin Board</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          href="/user"
+          class="nav-link waves-light"
+          *ngIf="isLoggedIn"
+          routerLink="user"
+          mdbWavesEffect
+          >Restaurants</a
+        >
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto nav-flex-icons" *ngIf="isLoggedIn">
+      <!-- <li class="nav-item">
+          <a
+            href="/profile"
+            class="nav-link"
+            routerLink="profile"
+            mdbWavesEffect
+            >{{ username }}</a
+          >
+        </li> -->
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()" mdbWavesEffect>Logout</a>
+      </li>
+    </ul>
+  </links>
+</mdb-navbar>
