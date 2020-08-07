@@ -100,7 +100,8 @@ export class MenuListComponent implements OnInit {
         },
         (err) => {
           console.log(
-            'An error occurred while retrieving pdf file for menu...' + err
+            'An error occurred while retrieving pdf file for menu...' +
+              err.message
           );
         }
       );

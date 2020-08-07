@@ -35,6 +35,7 @@ export class AddMenuComponent implements OnInit {
 
   isOperationFailed = false;
   isValidFile = false;
+  isSubmitted = false;
   menuForm: FormGroup;
   name: FormControl;
   filename: FormControl;
@@ -90,6 +91,8 @@ export class AddMenuComponent implements OnInit {
   }
 
   saveMenu() {
+    this.isSubmitted = true;
+
     this.restaurantService
       .addMenu(this.menuForm.value, this.restaurantId)
       .subscribe(

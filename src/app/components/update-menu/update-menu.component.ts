@@ -30,7 +30,8 @@ export class UpdateMenuComponent implements OnInit {
 
   fileToUpload: File;
   isOperationFailed = false;
-  isInvalidFile = false;
+  isValidFile = false;
+  isSubmitted = false;
 
   constructor(
     private fileUploadService: FileUploadService,
@@ -40,6 +41,7 @@ export class UpdateMenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.id += this.menu._id;
     this.modalService.add(this);
   }
 
@@ -59,17 +61,16 @@ export class UpdateMenuComponent implements OnInit {
   }
 
   handleInputFiles(files: FileList) {
-    this.isInvalidFile = ValidateFile(files.item(0), 5242880, ['pdf']);
+    this.isValidFile = ValidateFile(files.item(0), 5242880, ['pdf']);
 
-    if (!this.isInvalidFile) {
+    if (this.isValidFile) {
       this.fileToUpload = files.item(0);
     }
   }
 
   saveMenu() {
     console.log('Restaurant ID:' + this.restaurantId);
-    console.log('submit');
-    console.log(this.fileToUpload.name);
+    this.isSubmitted = true;
 
     this.fileUploadService
       .postFile(this.fileToUpload, this.restaurantId, this.menu.filename)

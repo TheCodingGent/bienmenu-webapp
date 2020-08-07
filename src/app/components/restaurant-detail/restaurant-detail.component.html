@@ -30,7 +30,6 @@
             <li
               *ngFor="let menu of restaurant.menus; let i = index"
               class="list-group-item"
-              [@EnterLeave]="'flyIn'"
             >
               <div class="d-flex align-items-center">
                 <span class="restaurant-detail-field">{{ menu.name }}</span>
@@ -59,7 +58,7 @@
                     mat-raised-button
                     type="button"
                     class="btn"
-                    (click)="openModal('updatemenumodal', i)"
+                    (click)="openModal('updatemenumodal' + menu._id, i)"
                     [disabled]="!featureAllowed"
                   >
                     Update Menu

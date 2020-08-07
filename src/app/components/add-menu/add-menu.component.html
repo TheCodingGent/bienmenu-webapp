@@ -98,6 +98,10 @@
         <div class="alert alert-danger" *ngIf="!isValidFile && fileToUpload">
           File must not exceed 5 MB and must be in PDF format...
         </div>
+        <div class="alert alert-info" *ngIf="isSubmitted && !isOperationFailed">
+          Menu is uploading...this window will close if the menu is added
+          successfully!
+        </div>
       </div>
     </div>
   </div>
