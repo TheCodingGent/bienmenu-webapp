@@ -19,6 +19,8 @@ import { FileUploadService } from '../../services/file-upload.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { ValidateFile } from 'src/app/helpers/file.validator';
 import { UserService } from 'src/app/services/user.service';
+import { MustNotBeDuplicateInRestaurant } from 'src/app/helpers/menu.filename.validator';
+import { Restaurant } from 'src/app/models/restaurant';
 
 @Component({
   selector: 'app-add-menu',
@@ -26,7 +28,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./add-menu.component.css'],
 })
 export class AddMenuComponent implements OnInit {
-  @Input() restaurantId: string;
+  @Input() restaurant: Restaurant;
   @Output() closed = new EventEmitter<boolean>();
   @ViewChild('addmenumodal') addmenumodal;
   @ViewChild('menufile') menuFile: ElementRef;
@@ -58,11 +60,19 @@ export class AddMenuComponent implements OnInit {
       Validators.pattern('^[a-z_0-9]+$'),
     ]);
 
-    this.menuForm = this.formBuilder.group({
-      name: this.name,
-      filename: this.filename,
-      lastupdated: [new Date().toISOString()],
-    });
+    this.menuForm = this.formBuilder.group(
+      {
+        name: this.name,
+        filename: this.filename,
+        lastupdated: [new Date().toISOString()],
+      },
+      {
+        validator: MustNotBeDuplicateInRestaurant(
+          'filename',
+          this.restaurant.menus
+        ),
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -94,7 +104,7 @@ export class AddMenuComponent implements OnInit {
     this.isSubmitted = true;
 
     this.restaurantService
-      .addMenu(this.menuForm.value, this.restaurantId)
+      .addMenu(this.menuForm.value, this.restaurant._id)
       .subscribe(
         (data) => {
           console.log(data);
@@ -102,7 +112,7 @@ export class AddMenuComponent implements OnInit {
           this.fileUploadService
             .postFile(
               this.fileToUpload,
-              this.restaurantId,
+              this.restaurant._id,
               this.menuForm.get('filename').value
             )
             .subscribe(

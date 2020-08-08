@@ -12,6 +12,7 @@ import { ObjectID } from 'bson';
 import { ValidateFile } from 'src/app/helpers/file.validator';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { MustNotBeDuplicateInForm } from 'src/app/helpers/menu.filename.validator';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -26,9 +27,9 @@ export class AddRestaurantComponent implements OnInit {
   address: FormControl;
   color: FormControl;
 
-  menuFiles: Array<File>;
-  isValidFile = true;
-  menusMatchFiles = true;
+  menuFiles: Map<string, File>;
+  menuFilesValid: Map<string, boolean>;
+
   isOperationFailed = false;
   isSuccess = false;
 
@@ -41,7 +42,9 @@ export class AddRestaurantComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.menuFiles = new Array();
+    this.menuFiles = new Map<string, File>();
+    this.menuFilesValid = new Map<string, boolean>();
+
     this.name = this.formBuilder.control('', Validators.required);
     this.city = this.formBuilder.control('', [
       Validators.required,
@@ -65,53 +68,53 @@ export class AddRestaurantComponent implements OnInit {
       menus: this.formBuilder.array([this.createMenu()]),
       color: this.color,
     });
+
+    this.menus = this.restaurantForm.get('menus') as FormArray;
   }
 
   createMenu(): FormGroup {
-    return this.formBuilder.group({
-      name: ['', Validators.required],
-      filename: ['', [Validators.required, Validators.pattern('^[a-z_0-9]+$')]], // must be all small letters and only contain letters and underscores
-      lastupdated: [new Date().toISOString()],
-    });
+    return this.formBuilder.group(
+      {
+        name: ['', Validators.required],
+        filename: [
+          '',
+          [Validators.required, Validators.pattern('^[a-z_0-9]+$')],
+        ], // must be all small letters and only contain letters and underscores
+        lastupdated: [new Date().toISOString()],
+      },
+      {
+        validator: MustNotBeDuplicateInForm('filename', this.menus),
+      }
+    );
   }
 
   addMenu(): void {
-    this.menus = this.restaurantForm.get('menus') as FormArray;
     this.menus.push(this.createMenu());
   }
 
   deleteMenu(index: number): void {
     this.menus = this.restaurantForm.get('menus') as FormArray;
+    this.menuFiles.delete(this.menus.at(index).get('filename').value);
+    this.menuFilesValid.delete(this.menus.at(index).get('filename').value);
     this.menus.removeAt(index);
-    this.menuFiles.splice(index, 1);
   }
 
-  handleInputFiles(files: FileList) {
-    Array.from(files).forEach((file) => {
-      const duplicate = this.menuFiles.find((f) => f.name === file.name);
-      if (ValidateFile(file, 5242880, ['pdf']) || !duplicate) {
-        this.menuFiles.push(file);
-      } else {
-        this.isValidFile = false;
-      }
-    });
-  }
-
-  deleteFile(name) {
-    let f = this.menuFiles.find((f) => f.name === name);
-    let index = this.menuFiles.indexOf(f, 0);
-    if (index > -1) {
-      this.menuFiles.splice(index, 1);
+  handleInputFiles(files: FileList, filename: string) {
+    let f = files.item(0);
+    if (ValidateFile(f, 5242880, ['pdf'])) {
+      this.menuFiles.set(filename, f);
+      this.menuFilesValid.set(filename, true);
+    } else {
+      this.menuFilesValid.set(filename, false);
     }
   }
 
-  uploadFileToServer(fileToUpload: File, index: number) {
-    let menus = this.restaurantForm.get('menus') as FormArray;
+  uploadFileToServer(fileToUpload: File, filename: string) {
     this.fileUploadService
       .postFile(
         fileToUpload,
         this.restaurantForm.get('_id').value,
-        menus.at(index).get('filename').value // set the file name to the one entered in the filename field
+        filename // set the file name to the one entered in the filename field
       )
       .subscribe(
         (data) => {
@@ -124,20 +127,12 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
     console.log(this.restaurantForm.value);
 
-    let m = this.restaurantForm.get('menus')['controls'];
-
-    if (!m || !this.menuFiles || m.length != this.menuFiles.length) {
-      this.menusMatchFiles = false;
-      return;
-    }
-
-    //upload the files
-    for (let [i, file] of this.menuFiles.entries()) {
-      console.log(file.name);
-      this.uploadFileToServer(file, i);
+    // upload all menu files
+    for (let [filename, file] of this.menuFiles) {
+      console.log(`Uploading file ${file.name} for menu ${filename}`);
+      this.uploadFileToServer(file, filename);
     }
 
     this.restaurantService

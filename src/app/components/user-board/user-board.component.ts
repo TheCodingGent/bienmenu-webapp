@@ -29,6 +29,9 @@ export class UserBoardComponent implements OnInit {
     for (let restaurant of this.currentUser.restaurants) {
       this.getRestaurant(restaurant._id);
     }
+    this.restaurants.sort(function (r1, r2) {
+      return r1.name.localeCompare(r2.name);
+    });
   }
 
   getRestaurant(restaurantId: string): void {

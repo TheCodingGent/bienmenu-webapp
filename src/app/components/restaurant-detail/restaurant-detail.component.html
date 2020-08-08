@@ -43,10 +43,6 @@
                 </button>
               </div>
               <div class="list-group">
-                <!-- <div class="list-group-item">
-                  <span class="restaurant-detail-field">Menu Name: </span
-                  >{{ menu.name }}
-                </div> -->
                 <div class="list-group-item d-flex align-items-center">
                   <div>
                     <span class="restaurant-detail-field"
@@ -86,14 +82,6 @@
             </li>
           </ul>
         </div>
-        <!-- <div class="list-group-item">
-          <span class="restaurant-detail-field"> Restaurant Rating: </span
-          >{{ restaurant.rating }}
-        </div>
-        <div class="list-group-item">
-          <span class="restaurant-detail-field">Restaurant Color: </span
-          >{{ restaurant.color }}
-        </div> -->
       </div>
       <button
         mat-raised-button
@@ -105,7 +93,7 @@
         Add Menu
       </button>
       <app-add-menu
-        [restaurantId]="restaurant._id"
+        [restaurant]="restaurant"
         (closed)="onClosedModal($event)"
       ></app-add-menu>
     </div>

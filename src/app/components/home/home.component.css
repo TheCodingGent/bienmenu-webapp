@@ -6,26 +6,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #009688;
 }
 
 .home-content {
   position: relative;
   z-index: 2;
   margin: 0 auto;
-  /* padding-top: 220px; */
+  padding: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: fit-content;
 }
 
 .home-content h1 {
   font-weight: bold;
+  color: white;
 }
 
 .home-content p {
   text-align: center;
   font-size: 1.4em;
   padding: 3px;
+  color: white;
 }
 
 .home img {
@@ -35,10 +40,4 @@
   height: auto;
   object-fit: cover;
   opacity: 0.5;
-}
-
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

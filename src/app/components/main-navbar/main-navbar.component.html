@@ -5,17 +5,29 @@
   *ngIf="navbarService.visible"
 >
   <mdb-navbar-brand
-    ><a class="navbar-brand" href="#">BienMenu</a></mdb-navbar-brand
-  >
+    ><a class="navbar-brand" href="#"
+      ><img
+        src="./assets/img/bienmenu-long-logo-white.png"
+        height="45"
+        alt="bienmenu logo" /></a
+  ></mdb-navbar-brand>
   <links>
     <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item active" *ngIf="!isLoggedIn">
+      <li class="nav-item" *ngIf="!isLoggedIn">
         <a
           href="/home"
           class="nav-link waves-light"
           routerLink="home"
           mdbWavesEffect
           >Home
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="!isLoggedIn">
+        <a
+          href="https://www.bien-menu.com"
+          class="nav-link waves-light"
+          mdbWavesEffect
+          >Learn More
         </a>
       </li>
 
@@ -39,7 +51,7 @@
         >
       </li>
     </ul>
-    <ul class="navbar-nav ml-auto nav-flex-icons" *ngIf="isLoggedIn">
+    <ul class="navbar-nav ml-auto nav-flex-icons">
       <!-- <li class="nav-item">
           <a
             href="/profile"
@@ -49,8 +61,37 @@
             >{{ username }}</a
           >
         </li> -->
+
       <li class="nav-item">
-        <a href class="nav-link" (click)="logout()" mdbWavesEffect>Logout</a>
+        <a
+          href="/login"
+          class="nav-link waves-light"
+          *ngIf="!isLoggedIn"
+          routerLink="login"
+          mdbWavesEffect
+        >
+          Login
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          href="https://www.bien-menu.com/plans-pricing"
+          class="nav-link waves-light"
+          *ngIf="!isLoggedIn"
+          mdbWavesEffect
+        >
+          Sign Up
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          href
+          class="nav-link"
+          *ngIf="isLoggedIn"
+          (click)="logout()"
+          mdbWavesEffect
+          >Logout</a
+        >
       </li>
     </ul>
   </links>

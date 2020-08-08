@@ -58,9 +58,15 @@
             <mdb-error
               *ngIf="filename.invalid && (filename.dirty || filename.touched)"
             >
-              Filename is required and must only include small letters, numbers
-              or '_'
+              <span *ngIf="filename.errors.required">Filename is required</span>
+              <span *ngIf="filename.errors.pattern"
+                >Filename must only contain small letters, numbers or '_'</span
+              >
+              <span *ngIf="filename.errors.duplicate"
+                >Filename is already in use by another menu</span
+              >
             </mdb-error>
+
             <mdb-success
               *ngIf="filename.valid && (filename.dirty || filename.touched)"
             >
@@ -73,6 +79,7 @@
               type="file"
               #menufile
               (change)="handleInputFiles($event.target.files)"
+              [disabled]="filename.value === '' || filename.invalid"
               required
             />
           </div>

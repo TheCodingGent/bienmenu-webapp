@@ -141,9 +141,18 @@
                     menu.controls.filename.touched)
                 "
               >
-                Filename is required and must only contain small letters,
-                numbers or '_'
+                <span *ngIf="menu.controls.filename.errors.required"
+                  >Filename is required</span
+                >
+                <span *ngIf="menu.controls.filename.errors.pattern"
+                  >Filename must only contain small letters, numbers or
+                  '_'</span
+                >
+                <span *ngIf="menu.controls.filename.errors.duplicate"
+                  >Filename is already in use by another menu</span
+                >
               </mdb-error>
+
               <mdb-success
                 *ngIf="
                   menu.controls.filename.valid &&
@@ -154,14 +163,34 @@
                 Valid
               </mdb-success>
             </div>
-            <!-- <div class="md-form">
+            <div class="md-form">
               <mdb-icon fas icon="file-pdf" class="prefix grey-text"></mdb-icon>
               <input
                 type="file"
-                (change)="handleInputFiles($event.target.files, i)"
+                id="i"
+                (change)="
+                  handleInputFiles(
+                    $event.target.files,
+                    menu.controls.filename.value
+                  )
+                "
+                [disabled]="
+                  menu.controls.filename.value === '' ||
+                  menu.controls.filename.invalid
+                "
                 required
               />
-            </div> -->
+              <div class="divider"></div>
+              <div
+                class="alert alert-danger"
+                *ngIf="
+                  menuFilesValid.has(menu.controls.filename.value) &&
+                  !menuFilesValid.get(menu.controls.filename.value)
+                "
+              >
+                File must be in PDF format and no larger than 5 MB
+              </div>
+            </div>
             <button
               type="button"
               mat-raised-button
@@ -171,57 +200,11 @@
               Remove Menu
             </button>
           </div>
-
-          <!-- <div class="alert alert-danger" *ngIf="!isValidFile">
-            Each file must not exceed 5 MB and must be in PDF format...
-          </div> -->
         </div>
       </div>
       <button type="button" mat-raised-button (click)="addMenu()">
         Add Menu
       </button>
-
-      <div class="md-form">
-        <mdb-icon fas icon="file-pdf" class="prefix grey-text"></mdb-icon>
-        <input
-          type="file"
-          multiple
-          (change)="handleInputFiles($event.target.files)"
-          required
-        />
-        <div class="divider"></div>
-        <div class="alert alert-danger" *ngIf="!isValidFile">
-          Files must be less than 5 MB, must be in PDF format, and cannot have
-          duplicate names.
-        </div>
-        <div class="alert alert-danger" *ngIf="!menusMatchFiles">
-          Please ensure that the number of files uploaded match with the menus
-          you have added 1 to 1
-        </div>
-        <div class="divider"></div>
-        <div class="card">
-          <div class="card-header">Menu Files</div>
-
-          <ul
-            class="list-group list-group-flush"
-            *ngFor="let file of menuFiles"
-          >
-            <li
-              class="list-group-item d-flex justify-content-between align-items-center"
-            >
-              {{ file.name }}
-              <button
-                type="button"
-                mat-raised-button
-                class="delete-btn btn"
-                (click)="deleteFile(file.name)"
-              >
-                x
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
 
       <div class="md-form">
         <mdb-icon fas icon="palette" class="prefix grey-text"></mdb-icon>
@@ -245,13 +228,10 @@
       <button
         type="submit"
         mat-raised-button
-        [disabled]="!restaurantForm.valid"
+        [disabled]="!restaurantForm.valid || menus.length !== menuFiles.size"
       >
         Submit
       </button>
     </form>
-    <!-- <p>Form Value: {{ restaurantForm.value | json }}</p>
-
-    <p>Form Status: {{ restaurantForm.status }}</p> -->
   </div>
 </div>

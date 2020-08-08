@@ -1,5 +1,10 @@
 import { NgModule, InjectionToken } from '@angular/core';
-import { Routes, RouterModule, ActivatedRouteSnapshot } from '@angular/router';
+import {
+  Routes,
+  RouterModule,
+  ActivatedRouteSnapshot,
+  UrlSegment,
+} from '@angular/router';
 
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -35,10 +40,26 @@ const routes: Routes = [
   // { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminBoardComponent },
   { path: 'user', component: UserBoardComponent, canActivate: [AuthGuard] },
-  { path: 'request-reset-password', component: RequestResetPasswordComponent },
-  { path: 'reset-password/:token', component: ResetPasswordComponent },
+  // { path: 'request-reset-password', component: RequestResetPasswordComponent },
+  // { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: 'menus/:id', component: MenuListComponent },
-  { path: ':id', component: MenuListComponent },
+  {
+    matcher: (url) => {
+      if (
+        url.length === 1 &&
+        url[0].path.match(/^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i) //tries to match a url that has a restaurant ID in it
+      ) {
+        return {
+          consumed: url,
+          posParams: {
+            id: new UrlSegment(url[0].path, {}),
+          },
+        };
+      }
+      return null;
+    },
+    component: MenuListComponent,
+  },
   {
     path: 'externalRedirect',
     canActivate: [externalUrlProvider],

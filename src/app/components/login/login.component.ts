@@ -69,11 +69,11 @@ export class LoginComponent implements OnInit {
               window.location.reload();
             });
           },
-          (err) => {
+          (_) => {
             // user does not have a plus membership
             //update feature expiry
             this.userService.updateFeatureExpiry().subscribe(
-              (data) => {
+              (_) => {
                 this.router.navigate(['/user']).then(() => {
                   window.location.reload();
                 });
