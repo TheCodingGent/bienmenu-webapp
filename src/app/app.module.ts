@@ -8,6 +8,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule } from '@angular/common/http';
 import { QRCodeModule } from 'angularx-qrcode';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -61,6 +62,7 @@ import { MainNavbarComponent } from './components/main-navbar/main-navbar.compon
     ReactiveFormsModule,
     FormsModule,
     PdfViewerModule,
+    RxReactiveFormsModule,
   ],
   providers: [
     authInterceptorProviders,

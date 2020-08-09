@@ -65,7 +65,7 @@
   align-items: center;
 }
 
-.splash-screen h3 {
+.splash-screen h4 {
   font-family: "Lobster Two", cursive;
   text-align: center;
 }
@@ -74,7 +74,7 @@
   align-self: center;
   height: auto;
   width: auto;
-  max-width: 400px;
-  max-height: 400px;
-  padding-left: 50px;
+  max-width: 300px;
+  max-height: 300px;
+  padding-left: 35px;
 }

@@ -12,7 +12,9 @@ import { ObjectID } from 'bson';
 import { ValidateFile } from 'src/app/helpers/file.validator';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { MustNotBeDuplicateInForm } from 'src/app/helpers/menu.filename.validator';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { FormatFilename } from 'src/app/helpers/utilities';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -38,6 +40,7 @@ export class AddRestaurantComponent implements OnInit {
     private restaurantService: RestaurantService,
     private userService: UserService,
     private fileUploadService: FileUploadService,
+    private tokenStorageService: TokenStorageService,
     private router: Router
   ) {}
 
@@ -57,7 +60,7 @@ export class AddRestaurantComponent implements OnInit {
       ),
     ]);
     this.color = this.formBuilder.control('', [
-      Validators.pattern('^[#][a-z0-9]{6}$'),
+      Validators.pattern('^[#][a-zA-Z0-9]{6}$'),
     ]); // ensure color starts with # and has 6 characters
 
     this.restaurantForm = this.formBuilder.group({
@@ -73,19 +76,11 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   createMenu(): FormGroup {
-    return this.formBuilder.group(
-      {
-        name: ['', Validators.required],
-        filename: [
-          '',
-          [Validators.required, Validators.pattern('^[a-z_0-9]+$')],
-        ], // must be all small letters and only contain letters and underscores
-        lastupdated: [new Date().toISOString()],
-      },
-      {
-        validator: MustNotBeDuplicateInForm('filename', this.menus),
-      }
-    );
+    return this.formBuilder.group({
+      name: ['', [Validators.required, RxwebValidators.unique()]],
+      filename: [''],
+      lastupdated: [new Date().toISOString()],
+    });
   }
 
   addMenu(): void {
@@ -94,18 +89,25 @@ export class AddRestaurantComponent implements OnInit {
 
   deleteMenu(index: number): void {
     this.menus = this.restaurantForm.get('menus') as FormArray;
-    this.menuFiles.delete(this.menus.at(index).get('filename').value);
-    this.menuFilesValid.delete(this.menus.at(index).get('filename').value);
+    this.menuFiles.delete(this.menus.at(index).get('name').value);
+    this.menuFilesValid.delete(this.menus.at(index).get('name').value);
     this.menus.removeAt(index);
   }
 
-  handleInputFiles(files: FileList, filename: string) {
+  handleInputFiles(files: FileList, name: string) {
     let f = files.item(0);
+
+    if (!f) {
+      this.menuFilesValid.set(name, false);
+      this.menuFiles.delete(name);
+      return;
+    }
+
     if (ValidateFile(f, 5242880, ['pdf'])) {
-      this.menuFiles.set(filename, f);
-      this.menuFilesValid.set(filename, true);
+      this.menuFiles.set(name, f);
+      this.menuFilesValid.set(name, true);
     } else {
-      this.menuFilesValid.set(filename, false);
+      this.menuFilesValid.set(name, false);
     }
   }
 
@@ -127,11 +129,17 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.restaurantForm.value);
+    //populate the menu file names
+    for (let menu of this.menus.controls) {
+      let name = menu.get('name').value;
+      let file = this.menuFiles.get(name);
 
-    // upload all menu files
-    for (let [filename, file] of this.menuFiles) {
-      console.log(`Uploading file ${file.name} for menu ${filename}`);
+      menu.patchValue({
+        filename: FormatFilename(name),
+      });
+
+      let filename = menu.get('filename').value;
+
       this.uploadFileToServer(file, filename);
     }
 
@@ -144,7 +152,8 @@ export class AddRestaurantComponent implements OnInit {
             console.log('Restaurant updated successfully');
             this.isSuccess = true;
             this.isOperationFailed = false;
-            setTimeout(() => this.router.navigate(['/user']), 3000);
+            // setTimeout(() => this.router.navigate(['/user']), 3000);
+            this.handleSuccessfulOperation();
           },
           (err) => {
             console.log(JSON.parse(err.error).message);
@@ -153,5 +162,19 @@ export class AddRestaurantComponent implements OnInit {
           }
         );
       });
+  }
+
+  handleSuccessfulOperation() {
+    if (
+      confirm(
+        'You must logout and log back in to see your restaurant would you like to do that now?'
+      )
+    ) {
+      this.tokenStorageService.signOut();
+      window.location.reload();
+      this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/user']);
+    }
   }
 }

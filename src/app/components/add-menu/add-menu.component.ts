@@ -19,8 +19,9 @@ import { FileUploadService } from '../../services/file-upload.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { ValidateFile } from 'src/app/helpers/file.validator';
 import { UserService } from 'src/app/services/user.service';
-import { MustNotBeDuplicateInRestaurant } from 'src/app/helpers/menu.filename.validator';
+import { MustNotBeDuplicateInRestaurant } from 'src/app/helpers/file.validator';
 import { Restaurant } from 'src/app/models/restaurant';
+import { FormatFilename } from 'src/app/helpers/utilities';
 
 @Component({
   selector: 'app-add-menu',
@@ -40,7 +41,6 @@ export class AddMenuComponent implements OnInit {
   isSubmitted = false;
   menuForm: FormGroup;
   name: FormControl;
-  filename: FormControl;
   fileToUpload: File;
 
   constructor(
@@ -55,20 +55,16 @@ export class AddMenuComponent implements OnInit {
     this.modalService.add(this);
 
     this.name = this.formBuilder.control('', Validators.required);
-    this.filename = this.formBuilder.control('', [
-      Validators.required,
-      Validators.pattern('^[a-z_0-9]+$'),
-    ]);
 
     this.menuForm = this.formBuilder.group(
       {
         name: this.name,
-        filename: this.filename,
+        filename: [''],
         lastupdated: [new Date().toISOString()],
       },
       {
         validator: MustNotBeDuplicateInRestaurant(
-          'filename',
+          'name',
           this.restaurant.menus
         ),
       }
@@ -102,6 +98,11 @@ export class AddMenuComponent implements OnInit {
 
   saveMenu() {
     this.isSubmitted = true;
+
+    // set the filename based on the name
+    this.menuForm.patchValue({
+      filename: FormatFilename(this.name.value),
+    });
 
     this.restaurantService
       .addMenu(this.menuForm.value, this.restaurant._id)

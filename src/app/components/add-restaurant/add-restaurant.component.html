@@ -5,13 +5,6 @@
       src="./assets/img/bienmenu-long-logo.png"
       class="profile-img-card"
     />
-    <div class="alert alert-danger" *ngIf="isOperationFailed">
-      Failed to add restaurant...please try again or contact the system
-      administrator.
-    </div>
-    <div class="alert alert-success" *ngIf="isSuccess">
-      Restaurant added successfully
-    </div>
     <form [formGroup]="restaurantForm" (ngSubmit)="onSubmit()">
       <div class="md-form">
         <mdb-icon fas icon="tag" class="prefix grey-text"></mdb-icon>
@@ -56,7 +49,7 @@
         <input
           type="text"
           id="address"
-          placeholder="Example: 123, Fake Blvd, A1B 2C3"
+          placeholder="Example: 321 Main St., Montreal, QC, A1B 2C3"
           formControlName="address"
           class="form-control"
           mdbInput
@@ -106,8 +99,14 @@
                   (menu.controls.name.dirty || menu.controls.name.touched)
                 "
               >
-                Menu name is required
+                <span *ngIf="menu.controls.name.errors.required"
+                  >Menu name is required</span
+                >
+                <span *ngIf="menu.controls.name.errors.unique"
+                  >Menu name is already in use, menu names must be unique</span
+                >
               </mdb-error>
+
               <mdb-success
                 *ngIf="
                   menu.controls.name.valid &&
@@ -117,66 +116,20 @@
                 Valid
               </mdb-success>
             </div>
-            <div class="md-form">
-              <mdb-icon
-                fas
-                icon="file-signature"
-                class="prefix grey-text"
-              ></mdb-icon>
-              <input
-                type="text"
-                id="filename"
-                formControlName="filename"
-                placeholder="Example: main_menu"
-                required
-                class="form-control"
-                mdbInput
-                mdbValidate
-              />
-              <label for="filename">Menu Filename</label>
-              <mdb-error
-                *ngIf="
-                  menu.controls.filename.invalid &&
-                  (menu.controls.filename.dirty ||
-                    menu.controls.filename.touched)
-                "
-              >
-                <span *ngIf="menu.controls.filename.errors.required"
-                  >Filename is required</span
-                >
-                <span *ngIf="menu.controls.filename.errors.pattern"
-                  >Filename must only contain small letters, numbers or
-                  '_'</span
-                >
-                <span *ngIf="menu.controls.filename.errors.duplicate"
-                  >Filename is already in use by another menu</span
-                >
-              </mdb-error>
 
-              <mdb-success
-                *ngIf="
-                  menu.controls.filename.valid &&
-                  (menu.controls.filename.dirty ||
-                    menu.controls.filename.touched)
-                "
-              >
-                Valid
-              </mdb-success>
-            </div>
             <div class="md-form">
               <mdb-icon fas icon="file-pdf" class="prefix grey-text"></mdb-icon>
               <input
                 type="file"
-                id="i"
+                id="menufile"
                 (change)="
                   handleInputFiles(
                     $event.target.files,
-                    menu.controls.filename.value
+                    menu.controls.name.value
                   )
                 "
                 [disabled]="
-                  menu.controls.filename.value === '' ||
-                  menu.controls.filename.invalid
+                  menu.controls.name.value === '' || menu.controls.name.invalid
                 "
                 required
               />
@@ -184,8 +137,8 @@
               <div
                 class="alert alert-danger"
                 *ngIf="
-                  menuFilesValid.has(menu.controls.filename.value) &&
-                  !menuFilesValid.get(menu.controls.filename.value)
+                  menuFilesValid.has(menu.controls.name.value) &&
+                  !menuFilesValid.get(menu.controls.name.value)
                 "
               >
                 File must be in PDF format and no larger than 5 MB
@@ -227,11 +180,16 @@
       </div>
       <button
         type="submit"
+        class="submit-button"
         mat-raised-button
         [disabled]="!restaurantForm.valid || menus.length !== menuFiles.size"
       >
         Submit
       </button>
     </form>
+    <div class="alert alert-danger" *ngIf="isOperationFailed">
+      Failed to add restaurant...please try again or contact the system
+      administrator.
+    </div>
   </div>
 </div>

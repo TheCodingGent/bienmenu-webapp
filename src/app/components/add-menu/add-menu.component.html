@@ -37,40 +37,13 @@
             />
             <label for="name">Menu name</label>
             <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)">
-              Menu name is required
+              <span *ngIf="name.errors.required">Menu name is required</span>
+              <span *ngIf="name.errors.duplicate"
+                >Menu name is already in use, menu names must be unique</span
+              >
             </mdb-error>
             <mdb-success *ngIf="name.valid && (name.dirty || name.touched)"
               >Valid
-            </mdb-success>
-          </div>
-
-          <div class="md-form mb-4">
-            <mdb-icon fas icon="file-pdf" class="prefix grey-text"></mdb-icon>
-            <input
-              type="text"
-              id="filename"
-              formControlName="filename"
-              class="form-control"
-              mdbInput
-              mdbValidate
-            />
-            <label for="filename">Menu filename</label>
-            <mdb-error
-              *ngIf="filename.invalid && (filename.dirty || filename.touched)"
-            >
-              <span *ngIf="filename.errors.required">Filename is required</span>
-              <span *ngIf="filename.errors.pattern"
-                >Filename must only contain small letters, numbers or '_'</span
-              >
-              <span *ngIf="filename.errors.duplicate"
-                >Filename is already in use by another menu</span
-              >
-            </mdb-error>
-
-            <mdb-success
-              *ngIf="filename.valid && (filename.dirty || filename.touched)"
-            >
-              Valid
             </mdb-success>
           </div>
           <div class="md-form mb-3">
@@ -79,7 +52,7 @@
               type="file"
               #menufile
               (change)="handleInputFiles($event.target.files)"
-              [disabled]="filename.value === '' || filename.invalid"
+              [disabled]="name.value === '' || name.invalid"
               required
             />
           </div>
