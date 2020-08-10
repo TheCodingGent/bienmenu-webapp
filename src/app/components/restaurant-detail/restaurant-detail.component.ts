@@ -38,6 +38,7 @@ export class RestaurantDetailComponent implements OnInit {
   menuUpdating = -1;
   notAllowed = false;
   featureAllowed = true;
+  maxMenuCountReached = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -84,9 +85,10 @@ export class RestaurantDetailComponent implements OnInit {
 
   getRestaurant(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.restaurantService
-      .getRestaurant(id)
-      .subscribe((restaurant) => (this.restaurant = restaurant));
+    this.restaurantService.getRestaurant(id).subscribe((restaurant) => {
+      this.restaurant = restaurant;
+      this.maxMenuCountReached = restaurant.menus.length >= 4;
+    });
   }
 
   setAllowedFeatures(): void {
@@ -111,7 +113,7 @@ export class RestaurantDetailComponent implements OnInit {
       confirm('Are you sure you want to delete this menu and all its data?')
     ) {
       this.restaurantService.deleteMenu(menu, restaurantId).subscribe((_) => {
-        this.ngOnInit();
+        window.location.reload();
       }),
         (err) => {
           console.log('An error occurred: ' + err);

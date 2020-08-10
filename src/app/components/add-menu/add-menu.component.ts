@@ -83,7 +83,6 @@ export class AddMenuComponent implements OnInit {
   // close modal
   close(): void {
     this.menuForm.reset();
-    this.menuFile.nativeElement.value = '';
     this.addmenumodal.hide();
     this.closed.emit(true);
   }
@@ -122,6 +121,7 @@ export class AddMenuComponent implements OnInit {
                 this.userService.updateMenuUpdateCount().subscribe(
                   (_) => {
                     this.close();
+                    window.location.reload();
                   },
                   (err) => {
                     console.log(JSON.parse(err.error).message);

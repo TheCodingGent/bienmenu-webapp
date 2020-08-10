@@ -88,10 +88,13 @@
         type="button"
         class="btn"
         (click)="openModal('addmenumodal', -1)"
-        [disabled]="!featureAllowed"
+        [disabled]="!featureAllowed || maxMenuCountReached"
       >
         Add Menu
       </button>
+      <div class="alert alert-info" *ngIf="maxMenuCountReached">
+        The maximum number of allowed menus per restaurant is 4.
+      </div>
       <app-add-menu
         [restaurant]="restaurant"
         (closed)="onClosedModal($event)"

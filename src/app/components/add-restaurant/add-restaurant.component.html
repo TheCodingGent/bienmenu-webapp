@@ -158,6 +158,10 @@
       <button type="button" mat-raised-button (click)="addMenu()">
         Add Menu
       </button>
+      <div class="alert alert-danger" *ngIf="maxMenuCountReached">
+        Failed to add menu, the maximum number of allowed menus per restaurant
+        is 4.
+      </div>
 
       <div class="md-form">
         <mdb-icon fas icon="palette" class="prefix grey-text"></mdb-icon>

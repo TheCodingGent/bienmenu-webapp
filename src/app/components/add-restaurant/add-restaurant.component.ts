@@ -34,6 +34,7 @@ export class AddRestaurantComponent implements OnInit {
 
   isOperationFailed = false;
   isSuccess = false;
+  maxMenuCountReached = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -84,6 +85,11 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   addMenu(): void {
+    if (this.menus.length >= 4) {
+      this.maxMenuCountReached = true;
+      return;
+    }
+
     this.menus.push(this.createMenu());
   }
 
@@ -92,6 +98,7 @@ export class AddRestaurantComponent implements OnInit {
     this.menuFiles.delete(this.menus.at(index).get('name').value);
     this.menuFilesValid.delete(this.menus.at(index).get('name').value);
     this.menus.removeAt(index);
+    this.maxMenuCountReached = this.menus.length >= 4;
   }
 
   handleInputFiles(files: FileList, name: string) {

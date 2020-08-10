@@ -67,7 +67,11 @@
           mdbWavesEffect
           mat-raised-button
           (click)="saveMenu()"
-          [disabled]="!fileToUpload"
+          [disabled]="
+            !fileToUpload ||
+            menuForm.invalid ||
+            (isSubmitted && !isOperationFailed)
+          "
         >
           Save
         </button>
