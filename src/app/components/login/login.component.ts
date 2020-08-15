@@ -3,7 +3,6 @@ import { AuthService } from '../../services/auth.service';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +11,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  submitted = false;
 
+  isSubmitted = false;
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
@@ -22,7 +21,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
-    private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {}
@@ -45,7 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.submitted = true;
+    this.isSubmitted = true;
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
@@ -60,31 +58,9 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-
-        this.authService.getPlusSubscription().subscribe(
-          (data) => {
-            // user has plus update token
-            this.tokenStorage.savePlusSubscriptionToken(data.subscriptionToken);
-            this.router.navigate(['/user']).then(() => {
-              window.location.reload();
-            });
-          },
-          (_) => {
-            // user does not have a plus membership
-            //update feature expiry
-            this.userService.updateFeatureExpiry().subscribe(
-              (_) => {
-                this.router.navigate(['/user']).then(() => {
-                  window.location.reload();
-                });
-              },
-              (err) => {
-                console.log(JSON.parse(err.error).message);
-                this.isLoginFailed = true;
-              }
-            );
-          }
-        );
+        this.router.navigate(['/user']).then(() => {
+          window.location.reload();
+        });
       },
       (err) => {
         this.errorMessage = err.message;

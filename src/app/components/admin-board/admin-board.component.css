@@ -1,3 +1,11 @@
 .admin-board {
-  padding: 80px;
+  padding: 100px;
+}
+
+.admin-board h3 {
+  padding: 20px 0 20px 0;
+}
+
+.add-new {
+  padding-top: 20px;
 }

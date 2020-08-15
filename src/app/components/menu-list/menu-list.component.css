@@ -31,12 +31,15 @@
 
 .menus {
   padding: 0;
-  color: var(--font-color);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .menu-item {
   background-color: var(--main-color);
+}
+
+.menu-item-content {
+  color: var(--font-color);
 }
 
 .pdf-container {

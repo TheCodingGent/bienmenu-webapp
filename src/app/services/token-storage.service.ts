@@ -32,6 +32,14 @@ export class TokenStorageService {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
   }
 
+  public saveRestaurant(restaurantId): void {
+    var user = JSON.parse(sessionStorage.getItem(USER_KEY));
+    console.log(user);
+    user.restaurants.push(restaurantId);
+    console.log(user);
+    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
   public savePlusSubscriptionToken(token: string): void {
     window.sessionStorage.removeItem(PLUS_SUB_KEY);
     window.sessionStorage.setItem(PLUS_SUB_KEY, token);

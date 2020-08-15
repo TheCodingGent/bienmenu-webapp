@@ -1,6 +1,6 @@
 .add-restaurant {
   padding-top: 80px;
-  padding-bottom: 20px;
+  padding-bottom: 100px;
   position: relative;
   overflow: auto;
   min-height: 100vh;
@@ -20,4 +20,13 @@
 .submit-button {
   width: 100px !important;
   min-width: unset !important;
+}
+
+.color-input {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.color-input:hover {
+  cursor: pointer;
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Restaurant } from 'src/app/models/restaurant';
 import { RestaurantService } from 'src/app/services/restaurant.service';
@@ -14,6 +14,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { LightOrDark } from 'src/app/helpers/color.helper';
 
 @Component({
   selector: 'app-restaurant-detail',
@@ -36,31 +37,46 @@ export class RestaurantDetailComponent implements OnInit {
   restaurant: Restaurant;
   success = false;
   menuUpdating = -1;
-  notAllowed = false;
-  featureAllowed = true;
-  maxMenuCountReached = false;
+  userAllowedOnPage = false;
+  menuUpdateAllowed = false;
+  maxMenuCountReached = true;
+
+  mainColor = '#009688';
 
   constructor(
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
     private userService: UserService,
     private modalService: ModalService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private router: Router,
+    private elRef: ElementRef
   ) {}
+
+  setColorThemeProperty() {
+    this.elRef.nativeElement.style.setProperty('--main-color', this.mainColor);
+    this.elRef.nativeElement.style.setProperty(
+      '--accent-color',
+      this.mainColor + '4d'
+    );
+
+    if (LightOrDark(this.mainColor) == 'light') {
+      this.elRef.nativeElement.style.setProperty('--font-color', '#000000');
+    } else {
+      this.elRef.nativeElement.style.setProperty('--font-color', '#ffffff');
+    }
+  }
 
   ngOnInit(): void {
     if (
       this.tokenStorageService
         .getUser()
-        .restaurants.find(
-          (r) => r._id === this.route.snapshot.paramMap.get('id')
-        ) ||
+        .restaurants.includes(this.route.snapshot.paramMap.get('id')) ||
       this.tokenStorageService.getUser().roles.includes('ROLE_ADMIN')
     ) {
-      this.setAllowedFeatures();
+      this.userAllowedOnPage = true;
+      this.getMenuUpdateAllowed();
       this.getRestaurant();
-    } else {
-      this.notAllowed = true;
     }
   }
 
@@ -87,25 +103,36 @@ export class RestaurantDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.restaurantService.getRestaurant(id).subscribe((restaurant) => {
       this.restaurant = restaurant;
-      this.maxMenuCountReached = restaurant.menus.length >= 4;
+      this.getMenuMaxCountReached();
+      //this.mainColor = restaurant.color;
+      //this.setColorThemeProperty();
     });
   }
 
-  setAllowedFeatures(): void {
-    if (this.tokenStorageService.getPlusSubscriptionToken()) {
-      // if member is a plus member enable all features on manage page for menus; unlimited updates and adds
-      return;
-    }
-
+  getMenuUpdateAllowed(): void {
     this.userService.getMenuUpdateAllowed().subscribe(
-      (data) => {
-        console.log(data);
+      (_) => {
+        this.menuUpdateAllowed = true;
       },
       (err) => {
-        console.log(JSON.parse(err.error).message);
-        this.featureAllowed = false;
+        console.log(err.message);
+        this.menuUpdateAllowed = false;
       }
     );
+  }
+
+  getMenuMaxCountReached(): void {
+    this.restaurantService
+      .getMenuMaxCountReached(this.restaurant._id)
+      .subscribe(
+        (_) => {
+          this.maxMenuCountReached = false;
+        },
+        (err) => {
+          console.log(err.message);
+          this.maxMenuCountReached = true;
+        }
+      );
   }
 
   deleteMenu(menu: Menu, restaurantId: string) {
@@ -114,6 +141,23 @@ export class RestaurantDetailComponent implements OnInit {
     ) {
       this.restaurantService.deleteMenu(menu, restaurantId).subscribe((_) => {
         window.location.reload();
+      }),
+        (err) => {
+          console.log('An error occurred: ' + err);
+        };
+    }
+  }
+
+  deleteRestaurant(restaurantId: string) {
+    if (
+      confirm(
+        'Are you sure you want to delete this restaurant? This action cannot be undone.'
+      )
+    ) {
+      this.restaurantService.deleteRestaurant(restaurantId).subscribe((_) => {
+        this.router.navigate(['/user']).then(() => {
+          window.location.reload();
+        });
       }),
         (err) => {
           console.log('An error occurred: ' + err);

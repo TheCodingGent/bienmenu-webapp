@@ -8,6 +8,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.navbar {
+  background-color: #009688;
+}
+
 .divider {
   width: 10px;
   height: auto;
@@ -15,7 +19,7 @@ body {
 }
 
 button {
-  background-color: #2cbbad !important;
+  background-color: #009688 !important;
   color: white !important;
   cursor: pointer;
 }
@@ -31,5 +35,10 @@ button:disabled {
 }
 
 button.delete-btn {
+  margin-bottom: 10px;
   background-color: tomato !important;
+}
+
+button.delete-btn:hover {
+  background-color: #cfd8dc !important;
 }

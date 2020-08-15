@@ -4,6 +4,7 @@ import { RestaurantService } from 'src/app/services/restaurant.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { Location } from '@angular/common';
 import { UserService } from 'src/app/services/user.service';
+import { CollapseComponent } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-user-board',
@@ -14,7 +15,7 @@ export class UserBoardComponent implements OnInit {
   content: string;
   currentUser: any;
   restaurants: Restaurant[];
-  enableAdd = true;
+  enableAdd = false;
 
   constructor(
     private restaurantService: RestaurantService,
@@ -26,11 +27,17 @@ export class UserBoardComponent implements OnInit {
   ngOnInit(): void {
     this.restaurants = [];
     this.currentUser = this.tokenStorageService.getUser();
-    for (let restaurant of this.currentUser.restaurants) {
-      this.getRestaurant(restaurant._id);
-    }
-    this.restaurants.sort(function (r1, r2) {
-      return r1.name.localeCompare(r2.name);
+    this.getUserRestaurants();
+    this.getAddAllowed();
+  }
+
+  getUserRestaurants(): void {
+    this.userService.getUserRestaurants().subscribe((data) => {
+      if (data.restaurants) {
+        data.restaurants.forEach((restaurantId: string) => {
+          this.getRestaurant(restaurantId);
+        });
+      }
     });
   }
 
@@ -46,13 +53,9 @@ export class UserBoardComponent implements OnInit {
         this.enableAdd = true;
       },
       (err) => {
-        console.log(JSON.parse(err.error).message);
+        console.log(err.message);
         this.enableAdd = false;
       }
     );
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 }

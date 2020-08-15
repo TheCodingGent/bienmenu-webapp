@@ -1,29 +1,27 @@
 <div class="restaurant-detail container-fluid">
-  <div class="alert alert-danger" *ngIf="notAllowed">
+  <div class="alert alert-danger" *ngIf="!userAllowedOnPage">
     Current user not authorized to view this restaurant...
   </div>
   <div class="restaurant-detail-content container">
     <div *ngIf="restaurant">
       <h2>{{ restaurant.name }} Details</h2>
-      <div class="list-group list-group-root well">
-        <div class="list-group-item">
-          <span class="restaurant-detail-field">Restaurant ID: </span
-          >{{ restaurant._id }}
+      <div class="list-group list-group-root">
+        <div class="list-group-item restaurant-detail-section-header">
+          <h4>Basic Info</h4>
         </div>
         <div class="list-group-item">
-          <span class="restaurant-detail-field">Restaurant Name: </span
+          <span class="restaurant-detail-field">ID: </span>{{ restaurant._id }}
+        </div>
+        <div class="list-group-item">
+          <span class="restaurant-detail-field">Name: </span
           >{{ restaurant.name }}
         </div>
         <div class="list-group-item">
-          <span class="restaurant-detail-field">Restaurant City: </span
-          >{{ restaurant.city }}
-        </div>
-        <div class="list-group-item">
-          <span class="restaurant-detail-field">Restaurant Address: </span
+          <span class="restaurant-detail-field">Address: </span
           >{{ restaurant.address }}
         </div>
-        <div class="list-group-item restaurant-detail-field">
-          Restaurant Menus
+        <div class="list-group-item restaurant-detail-section-header">
+          <h4>Restaurant Menus</h4>
         </div>
         <div class="menus list-group">
           <ul>
@@ -31,74 +29,97 @@
               *ngFor="let menu of restaurant.menus; let i = index"
               class="list-group-item"
             >
-              <div class="d-flex align-items-center">
-                <span class="restaurant-detail-field">{{ menu.name }}</span>
-                <button
-                  mat-raised-button
-                  type="button"
-                  class="delete-btn btn"
-                  (click)="deleteMenu(menu, restaurant._id)"
-                >
-                  Delete Menu
-                </button>
-              </div>
-              <div class="list-group">
-                <div class="list-group-item d-flex align-items-center">
+              <div class="menu-column d-flex flex-column">
+                <div class="menu-row d-flex justify-content-between">
+                  <span class="restaurant-detail-field">{{ menu.name }}</span>
+                  <button
+                    mat-raised-button
+                    type="button"
+                    class="delete-btn btn"
+                    (click)="deleteMenu(menu, restaurant._id)"
+                  >
+                    Delete Menu
+                  </button>
+                </div>
+                <div class="menu-row d-flex justify-content-between">
                   <div>
                     <span class="restaurant-detail-field"
                       >Menu File Last Updated: </span
                     >{{ formatDate(menu.lastupdated) }}
                   </div>
-                  <div class="divider"></div>
                   <button
                     mat-raised-button
                     type="button"
                     class="btn"
                     (click)="openModal('updatemenumodal' + menu._id, i)"
-                    [disabled]="!featureAllowed"
+                    [disabled]="!menuUpdateAllowed"
                   >
                     Update Menu
                   </button>
-                  <div
-                    class="menu-update-alert alert alert-success"
-                    *ngIf="menuUpdating == i && success"
-                  >
-                    Menu updated successfully!
-                  </div>
-                  <div
-                    class="menu-update-alert alert alert-success"
-                    *ngIf="!featureAllowed"
-                  >
-                    Maximum updates reached for this month, please upgrade to
-                    get unlimited updates.
-                  </div>
-                  <app-update-menu
-                    [restaurantId]="restaurant._id"
-                    [menu]="menu"
-                    (success)="updateSuccess($event)"
-                  ></app-update-menu>
+                </div>
+                <app-update-menu
+                  [restaurantId]="restaurant._id"
+                  [menu]="menu"
+                  (success)="updateSuccess($event)"
+                ></app-update-menu>
+                <div
+                  class="menu-update-alert alert alert-success"
+                  *ngIf="menuUpdating == i && success"
+                >
+                  Menu updated successfully!
                 </div>
               </div>
             </li>
           </ul>
         </div>
       </div>
-      <button
-        mat-raised-button
-        type="button"
-        class="btn"
-        (click)="openModal('addmenumodal', -1)"
-        [disabled]="!featureAllowed || maxMenuCountReached"
-      >
-        Add Menu
-      </button>
-      <div class="alert alert-info" *ngIf="maxMenuCountReached">
-        The maximum number of allowed menus per restaurant is 4.
+      <div class="form-footer d-flex flex-column">
+        <div class="add">
+          <button
+            mat-raised-button
+            type="button"
+            class="add-btn btn"
+            (click)="openModal('addmenumodal', -1)"
+            [disabled]="!menuUpdateAllowed || maxMenuCountReached"
+          >
+            Add Menu
+          </button>
+          <div
+            class="menu-update-alert alert alert-info"
+            *ngIf="!menuUpdateAllowed"
+          >
+            The maximum menu updates has been reached for this month. You can
+            upgrade your plan for unlimited updates!
+          </div>
+          <div
+            class="menu-update-alert alert alert-info"
+            *ngIf="maxMenuCountReached"
+          >
+            The maximum number of allowed menus per restaurant has been reached.
+            You can upgrade your plan to add more!
+          </div>
+          <div *ngIf="maxMenuCountReached || !menuUpdateAllowed">
+            <a href="https://www.bien-menu.com/plans-pricing">
+              <button mat-raised-button class="btn">Upgrade Now</button>
+            </a>
+          </div>
+
+          <app-add-menu
+            [restaurant]="restaurant"
+            (closed)="onClosedModal($event)"
+          ></app-add-menu>
+        </div>
+        <div>
+          <button
+            mat-raised-button
+            type="button"
+            class="delete-btn btn"
+            (click)="deleteRestaurant(restaurant._id)"
+          >
+            Delete Restaurant
+          </button>
+        </div>
       </div>
-      <app-add-menu
-        [restaurant]="restaurant"
-        (closed)="onClosedModal($event)"
-      ></app-add-menu>
     </div>
   </div>
 </div>

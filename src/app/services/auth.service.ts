@@ -26,10 +26,6 @@ export class AuthService {
     return this.http.post(this.authUrl + '/signup', user, httpOptions);
   }
 
-  getPlusSubscription(): Observable<any> {
-    return this.http.get(this.authUrl + '/subscription/plus', httpOptions);
-  }
-
   requestResetPassword(email): Observable<any> {
     return this.http.post(this.authUrl + '/reset-password', email, httpOptions);
   }

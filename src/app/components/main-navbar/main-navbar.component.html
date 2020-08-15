@@ -1,6 +1,6 @@
 <mdb-navbar
   class="app-nav"
-  SideClass="navbar navbar-expand-lg navbar-dark default-color fixed-top"
+  SideClass="navbar navbar-expand-lg navbar-dark fixed-top"
   [containerInside]="false"
   *ngIf="navbarService.visible"
 >
@@ -13,24 +13,6 @@
   ></mdb-navbar-brand>
   <links>
     <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item" *ngIf="!isLoggedIn">
-        <a
-          href="/home"
-          class="nav-link waves-light"
-          routerLink="home"
-          mdbWavesEffect
-          >Home
-        </a>
-      </li>
-      <li class="nav-item" *ngIf="!isLoggedIn">
-        <a
-          href="https://www.bien-menu.com"
-          class="nav-link waves-light"
-          mdbWavesEffect
-          >Learn More
-        </a>
-      </li>
-
       <li class="nav-item" *ngIf="showAdminBoard">
         <a
           href="/admin"
@@ -61,7 +43,16 @@
             >{{ username }}</a
           >
         </li> -->
-
+      <li class="nav-item">
+        <a
+          href="https://www.bien-menu.com"
+          class="nav-link waves-light"
+          *ngIf="!isLoggedIn"
+          mdbWavesEffect
+        >
+          Explore
+        </a>
+      </li>
       <li class="nav-item">
         <a
           href="/login"
@@ -71,16 +62,6 @@
           mdbWavesEffect
         >
           Login
-        </a>
-      </li>
-      <li class="nav-item">
-        <a
-          href="https://www.bien-menu.com/plans-pricing"
-          class="nav-link waves-light"
-          *ngIf="!isLoggedIn"
-          mdbWavesEffect
-        >
-          Sign Up
         </a>
       </li>
       <li class="nav-item">

@@ -1,0 +1,26 @@
+<div class="md-form">
+  <div class="d-flex">
+    <div class="address-field p-2 flex-fill">
+      <mdb-icon fas icon="map-marker" class="prefix grey-text"></mdb-icon>
+      <input
+        type="text"
+        #search
+        placeholder="Select your country and start typing your restaurant name"
+        class="form-control"
+        (keydown.enter)="$event.preventDefault()"
+        autocorrect="off"
+        autocapitalize="off"
+        autocomplete="off"
+        spellcheck="off"
+        mdbInput
+      />
+      <label for="address">Address</label>
+    </div>
+    <div class="country-select">
+      <select class="browser-default custom-select" (change)="onChange($event)">
+        <option selected value="Canada">Canada</option>
+        <option value="US">US</option>
+      </select>
+    </div>
+  </div>
+</div>

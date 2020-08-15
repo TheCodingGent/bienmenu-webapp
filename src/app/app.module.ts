@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { QRCodeModule } from 'angularx-qrcode';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
+import { AgmCoreModule } from '@agm/core';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -30,6 +32,8 @@ import { RequestResetPasswordComponent } from './components/request-reset-passwo
 import { QrCodeViewerComponent } from './components/qr-code-viewer/qr-code-viewer.component';
 import { AppConfigService } from './services/app-config.service';
 import { MainNavbarComponent } from './components/main-navbar/main-navbar.component';
+import { AddressAutocompleteComponent } from './components/address-autocomplete/address-autocomplete.component';
+import { QrcodeCardSvgComponent } from './components/qrcode-card-svg/qrcode-card-svg.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +54,8 @@ import { MainNavbarComponent } from './components/main-navbar/main-navbar.compon
     RequestResetPasswordComponent,
     QrCodeViewerComponent,
     MainNavbarComponent,
+    AddressAutocompleteComponent,
+    QrcodeCardSvgComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +69,11 @@ import { MainNavbarComponent } from './components/main-navbar/main-navbar.compon
     FormsModule,
     PdfViewerModule,
     RxReactiveFormsModule,
+    ColorPickerModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyC5OKLO-8r7Jy-SJszBQww_g7ci6n_jMGc',
+      libraries: ['places'],
+    }),
   ],
   providers: [
     authInterceptorProviders,

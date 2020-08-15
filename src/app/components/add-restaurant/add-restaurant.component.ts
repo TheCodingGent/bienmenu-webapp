@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -12,9 +12,18 @@ import { ObjectID } from 'bson';
 import { ValidateFile } from 'src/app/helpers/file.validator';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { RxwebValidators, disable } from '@rxweb/reactive-form-validators';
 import { FormatFilename } from 'src/app/helpers/utilities';
+import { Restaurant } from 'src/app/models/restaurant';
+import {
+  getPhone,
+  getCity,
+  getFormattedAddress,
+  getCountry,
+  getState,
+  getPostCode,
+} from 'src/app/helpers/google.address.formatter';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -23,26 +32,37 @@ import { FormatFilename } from 'src/app/helpers/utilities';
 })
 export class AddRestaurantComponent implements OnInit {
   restaurantForm: FormGroup;
+  restaurant: Restaurant;
   menus: FormArray;
   name: FormControl;
-  city: FormControl;
-  address: FormControl;
   color: FormControl;
+
+  country: string;
+  province: string;
+  city: string;
+  postalCode: string;
+  address: string;
+  phone: string;
 
   menuFiles: Map<string, File>;
   menuFilesValid: Map<string, boolean>;
 
   isOperationFailed = false;
   isSuccess = false;
+  isSubmitted = false;
   maxMenuCountReached = false;
+  maxMenuCount = 4;
+
+  selectedColor: string = '#009688';
 
   constructor(
     private formBuilder: FormBuilder,
     private restaurantService: RestaurantService,
     private userService: UserService,
     private fileUploadService: FileUploadService,
-    private tokenStorageService: TokenStorageService,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone,
+    private tokenStorageService: TokenStorageService
   ) {}
 
   ngOnInit() {
@@ -50,30 +70,21 @@ export class AddRestaurantComponent implements OnInit {
     this.menuFilesValid = new Map<string, boolean>();
 
     this.name = this.formBuilder.control('', Validators.required);
-    this.city = this.formBuilder.control('', [
-      Validators.required,
-      Validators.pattern('^([A-Z][a-z]*((\\s[A-Za-z])?[a-z]*)*)$'), // check if only first letter is capital
-    ]);
-    this.address = this.formBuilder.control('', [
-      Validators.required,
-      Validators.pattern(
-        '^[0-9]{1,5}[,\\s].*[,\\s](([A-Z][0-9][A-Z]\\s{0,1}[0-9][A-Z][0-9])|([0-9]{5}))$' // ensure address starts with numbers and ends with a zipcode
-      ),
-    ]);
-    this.color = this.formBuilder.control('', [
+    this.color = this.formBuilder.control({ value: '', disabled: true }, [
       Validators.pattern('^[#][a-zA-Z0-9]{6}$'),
     ]); // ensure color starts with # and has 6 characters
 
     this.restaurantForm = this.formBuilder.group({
       _id: [new ObjectID()],
       name: this.name,
-      city: this.city,
-      address: this.address,
       menus: this.formBuilder.array([this.createMenu()]),
       color: this.color,
     });
 
     this.menus = this.restaurantForm.get('menus') as FormArray;
+
+    // get max menus allowed
+    this.getMenuMaxCount();
   }
 
   createMenu(): FormGroup {
@@ -85,12 +96,11 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   addMenu(): void {
-    if (this.menus.length >= 4) {
-      this.maxMenuCountReached = true;
-      return;
-    }
-
     this.menus.push(this.createMenu());
+
+    if (this.menus.length >= this.maxMenuCount) {
+      this.maxMenuCountReached = true;
+    }
   }
 
   deleteMenu(index: number): void {
@@ -98,7 +108,7 @@ export class AddRestaurantComponent implements OnInit {
     this.menuFiles.delete(this.menus.at(index).get('name').value);
     this.menuFilesValid.delete(this.menus.at(index).get('name').value);
     this.menus.removeAt(index);
-    this.maxMenuCountReached = this.menus.length >= 4;
+    this.maxMenuCountReached = this.menus.length >= this.maxMenuCount;
   }
 
   handleInputFiles(files: FileList, name: string) {
@@ -135,7 +145,44 @@ export class AddRestaurantComponent implements OnInit {
       );
   }
 
+  getMenuMaxCount(): void {
+    this.userService.getMaxMenuCountAllowed().subscribe(
+      (data) => {
+        this.maxMenuCount = data.maxMenusPerRestaurant;
+      },
+      (err) => {
+        console.log(err.message);
+        this.maxMenuCount = 4; // set it to default
+      }
+    );
+  }
+
+  getAddress(place: object) {
+    this.country = getCountry(place);
+    this.province = getState(place);
+    this.city = getCity(place);
+    this.postalCode = getPostCode(place);
+    this.address = getFormattedAddress(place);
+    this.phone = getPhone(place);
+
+    //this.ngZone.run(() => {});
+  }
+
+  createRestaurantFromForm() {
+    this.restaurant = this.restaurantForm.value;
+
+    this.restaurant.country = this.country;
+    this.restaurant.province = this.province;
+    this.restaurant.city = this.city;
+    this.restaurant.postalCode = this.postalCode;
+    this.restaurant.address = this.address;
+    this.restaurant.phone = this.phone;
+    this.restaurant.color = this.selectedColor;
+  }
+
   onSubmit() {
+    this.isSubmitted = true;
+
     //populate the menu file names
     for (let menu of this.menus.controls) {
       let name = menu.get('name').value;
@@ -147,11 +194,16 @@ export class AddRestaurantComponent implements OnInit {
 
       let filename = menu.get('filename').value;
 
+      console.log(menu.get('filename').value);
+
       this.uploadFileToServer(file, filename);
     }
 
+    // build restaurant object to be sent to the server
+    this.createRestaurantFromForm();
+
     this.restaurantService
-      .addRestaurantForUser(this.restaurantForm.value)
+      .addRestaurantForUser(this.restaurant)
       .subscribe((restaurant) => {
         console.log(restaurant);
         this.userService.updateRestaurantCount().subscribe(
@@ -159,8 +211,10 @@ export class AddRestaurantComponent implements OnInit {
             console.log('Restaurant updated successfully');
             this.isSuccess = true;
             this.isOperationFailed = false;
-            // setTimeout(() => this.router.navigate(['/user']), 3000);
-            this.handleSuccessfulOperation();
+            this.tokenStorageService.saveRestaurant(this.restaurant._id);
+            this.router.navigate(['/user']).then(() => {
+              window.location.reload();
+            });
           },
           (err) => {
             console.log(JSON.parse(err.error).message);
@@ -169,19 +223,5 @@ export class AddRestaurantComponent implements OnInit {
           }
         );
       });
-  }
-
-  handleSuccessfulOperation() {
-    if (
-      confirm(
-        'You must logout and log back in to see your restaurant would you like to do that now?'
-      )
-    ) {
-      this.tokenStorageService.signOut();
-      window.location.reload();
-      this.router.navigate(['/login']);
-    } else {
-      this.router.navigate(['/user']);
-    }
   }
 }

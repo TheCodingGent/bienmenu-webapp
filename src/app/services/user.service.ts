@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConfigService } from './app-config.service';
+import { Restaurant } from '../models/restaurant';
 
 @Injectable({
   providedIn: 'root',
@@ -27,20 +28,14 @@ export class UserService {
     });
   }
 
+  getUserRestaurants(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'restaurants', {
+      responseType: 'json',
+    });
+  }
+
   getMenuUpdateAllowed(): Observable<any> {
     return this.http.get(this.userApiUrl + 'features/update-allowed', {
-      responseType: 'text',
-    });
-  }
-
-  updateMenuUpdateCount(): Observable<any> {
-    return this.http.get(this.userApiUrl + 'features/update-count', {
-      responseType: 'text',
-    });
-  }
-
-  updateFeatureExpiry(): Observable<any> {
-    return this.http.get(this.userApiUrl + 'features/update-feature-expiry', {
       responseType: 'text',
     });
   }
@@ -50,6 +45,22 @@ export class UserService {
       responseType: 'text',
     });
   }
+
+  getMaxMenuCountAllowed(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'features/max-menu-count-allowed');
+  }
+
+  updateMenuUpdateCount(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'features/update-count', {
+      responseType: 'text',
+    });
+  }
+
+  // updateFeatureExpiry(): Observable<any> {
+  //   return this.http.get(this.userApiUrl + 'features/update-feature-expiry', {
+  //     responseType: 'text',
+  //   });
+  // }
 
   updateRestaurantCount(): Observable<any> {
     return this.http.get(this.userApiUrl + 'features/update-restaurant-count', {

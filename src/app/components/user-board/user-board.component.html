@@ -24,7 +24,7 @@
               <button mat-raised-button class="btn">Manage</button>
             </a>
             <div class="divider"></div>
-            <a routerLink="/qrcode/{{ restaurant._id }}">
+            <a routerLink="/qrcode/{{ restaurant._id }}/{{ restaurant.color }}">
               <button mat-raised-button class="btn">QR Code</button>
             </a>
           </div>
@@ -32,7 +32,9 @@
       </ul>
       <div class="add-new" *ngIf="enableAdd">
         <a routerLink="/add">
-          <button mat-raised-button class="btn">Add New</button>
+          <button mat-raised-button class="btn">
+            Add New
+          </button>
         </a>
       </div>
     </div>

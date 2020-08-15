@@ -1,8 +1,5 @@
-.container-fluid {
-  padding-top: 80px;
-}
-
 .qr-code-viewer {
+  padding-top: 100px;
   position: relative;
   overflow: auto;
   height: 100vh;
@@ -12,13 +9,29 @@
   justify-content: center;
 }
 
+.qr-code-viewer-content {
+  margin-bottom: 40px;
+}
+
+.card {
+  width: fit-content;
+}
+
+.options-container {
+  width: fit-content;
+}
+
 .qr-code-frame {
   position: relative;
 }
 
 .qr-code {
   position: absolute;
-  top: 400px;
-  left: 210px;
+  top: 265px;
+  left: 135px;
   /* z-index: 2; */
+}
+
+.download-btn {
+  margin-top: 20px;
 }

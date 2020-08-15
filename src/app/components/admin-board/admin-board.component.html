@@ -17,15 +17,17 @@
               <button mat-raised-button class="btn">Manage</button>
             </a>
             <div class="divider"></div>
-            <a routerLink="/qrcode/{{ restaurant._id }}">
+            <a routerLink="/qrcode/{{ restaurant._id }}/{{ restaurant.color }}">
               <button mat-raised-button class="btn">QR Code</button>
             </a>
           </div>
         </li>
       </ul>
-      <a routerLink="/add">
-        <button mat-raised-button class="btn">Add New</button>
-      </a>
+      <div class="add-new">
+        <a routerLink="/add">
+          <button mat-raised-button class="btn">Add New</button>
+        </a>
+      </div>
     </div>
     <div class="alert alert-danger" *ngIf="!accessAllowed">
       {{ content }}

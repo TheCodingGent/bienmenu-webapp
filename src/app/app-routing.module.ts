@@ -31,7 +31,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'qrcode/:id',
+    path: 'qrcode/:id/:color',
     component: QrCodeViewerComponent,
   },
   { path: 'add', component: AddRestaurantComponent, canActivate: [AuthGuard] },

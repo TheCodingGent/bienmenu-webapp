@@ -1,5 +1,9 @@
 .user-board {
-  padding-top: 80px;
+  padding-top: 100px;
+}
+
+.user-board h3 {
+  padding: 20px 0 20px 0;
 }
 
 .add-new {

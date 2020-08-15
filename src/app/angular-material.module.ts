@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatCardModule,
     MatSidenavModule,
     MatListModule,
+    MatSlideToggleModule,
   ],
   exports: [
     MatToolbarModule,
@@ -37,6 +39,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatCardModule,
     MatSidenavModule,
     MatListModule,
+    MatSlideToggleModule,
   ],
   providers: [],
 })

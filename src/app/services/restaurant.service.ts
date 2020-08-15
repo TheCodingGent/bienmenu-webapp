@@ -21,15 +21,23 @@ export class RestaurantService {
     this.restaurantsUrl = appConfig.apiBaseUrl + 'restaurants';
   }
 
-  /** GET restaurants. Will 404 if id not found */
   getRestaurants(): Observable<Restaurant[]> {
     return this.http.get<Restaurant[]>(this.restaurantsUrl);
   }
 
-  /** GET restaurant by id. Will 404 if id not found */
   getRestaurant(id: string): Observable<Restaurant> {
     const url = `${this.restaurantsUrl}/${id}`;
     return this.http.get<Restaurant>(url);
+  }
+
+  getMenuForRestaurant(id: string, filename: string): Observable<any> {
+    const url = `${this.appConfig.apiBaseUrl}menu/pdf/${id}/${filename}`;
+    return this.http.get(url, { responseType: 'arraybuffer' });
+  }
+
+  getMenuMaxCountReached(id: string): Observable<any> {
+    const url = `${this.restaurantsUrl}/menu-max-count-reached/${id}`;
+    return this.http.get(url);
   }
 
   addRestaurant(restaurant: Restaurant): Observable<Restaurant> {
@@ -44,7 +52,7 @@ export class RestaurantService {
 
   addMenu(menu: Menu, id: string): Observable<Menu> {
     const url = `${this.restaurantsUrl}/menus/add/${id}`;
-    return this.http.put<Menu>(url, JSON.stringify(menu), this.httpOptions);
+    return this.http.post<Menu>(url, JSON.stringify(menu), this.httpOptions);
   }
 
   updateMenu(menu: Menu, id: string): Observable<Menu> {
@@ -52,13 +60,13 @@ export class RestaurantService {
     return this.http.post<Menu>(url, JSON.stringify(menu), this.httpOptions);
   }
 
-  deleteMenu(menu: Menu, restaurantId: string): Observable<unknown> {
-    const url = `${this.restaurantsUrl}/menus/delete/${restaurantId}`;
+  deleteMenu(menu: Menu, id: string): Observable<unknown> {
+    const url = `${this.restaurantsUrl}/menus/delete/${id}`;
     return this.http.post(url, JSON.stringify(menu), this.httpOptions);
   }
 
-  getMenuForRestaurant(id: string, filename: string): Observable<any> {
-    const url = `${this.appConfig.apiBaseUrl}menu/pdf/${id}/${filename}`;
-    return this.http.get(url, { responseType: 'arraybuffer' });
+  deleteRestaurant(id: string): Observable<unknown> {
+    const url = `${this.restaurantsUrl}/delete/${id}`;
+    return this.http.post(url, { restaurantId: id }, this.httpOptions);
   }
 }
