@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -21,6 +14,8 @@ export class QrCodeViewerComponent implements OnInit {
   qrCodeCard: ElementRef;
   restaurantColor: string;
   replication: string = '1';
+  language: string = 'EN';
+
   isChecked = false;
 
   public restaurantQrCode: string = null;
@@ -73,7 +68,10 @@ export class QrCodeViewerComponent implements OnInit {
   }
 
   onChange(event): void {
-    console.log(event.target.value);
     this.replication = event.target.value;
+  }
+
+  onLanguageChange(event): void {
+    this.language = event.target.value;
   }
 }

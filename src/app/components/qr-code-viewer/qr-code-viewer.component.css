@@ -19,10 +19,25 @@
 
 .options-container {
   width: fit-content;
+  padding-left: 5px;
 }
 
 .qr-code-frame {
   position: relative;
+}
+
+.card-instructions {
+  text-align: center;
+  position: absolute;
+  font-size: 21px;
+  font-weight: bold;
+  top: 135px;
+  left: 55px;
+  width: 300px;
+}
+
+.card-instructions p {
+  margin-bottom: 5px;
 }
 
 .qr-code {
@@ -30,6 +45,10 @@
   top: 265px;
   left: 135px;
   /* z-index: 2; */
+}
+
+.language-select {
+  margin-top: 20px;
 }
 
 .download-btn {

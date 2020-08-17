@@ -3,7 +3,7 @@
     <div class="top-notice alert alert-info">
       If you would like a custom QR code tailored specifically for your
       restaurant and brand or if you would like us to print and deliver your QR
-      code cards t your restaurant, please contact our sales team at:
+      code cards to your restaurant, please contact our sales team at:
       <a href="mailto:info@bienmenu.com">info@bienmenu.com</a> or give us a call
       at:<br />
       Canada: +1(514)755-9103<br />
@@ -12,6 +12,21 @@
     <div class="d-flex">
       <div class="card card-container p-2">
         <div #qrcodecard>
+          <div class="card-instructions">
+            <p *ngIf="language == 'FR' || language == 'FR/EN'">
+              Scannez pour le menu
+            </p>
+            <p *ngIf="language == 'ES' || language == 'ES/EN'">
+              Escanear para el menu
+            </p>
+            <p
+              *ngIf="
+                language == 'EN' || language == 'FR/EN' || language == 'ES/EN'
+              "
+            >
+              Scan for the menu
+            </p>
+          </div>
           <app-qrcode-card-svg [color]="restaurantColor"> </app-qrcode-card-svg>
           <qrcode
             class="qr-code"
@@ -22,7 +37,7 @@
           ></qrcode>
         </div>
       </div>
-      <div class="p-2 flex-grow-1">
+      <div class="flex-grow-1">
         <div class="d-flex flex-column options-container">
           <div class="replication-select">
             <select
@@ -31,6 +46,18 @@
             >
               <option selected value="1">1 x Page</option>
               <option value="4">4 x Page</option>
+            </select>
+          </div>
+          <div class="language-select">
+            <select
+              class="browser-default custom-select"
+              (change)="onLanguageChange($event)"
+            >
+              <option selected value="EN">English</option>
+              <option value="FR">Français</option>
+              <option value="ES">Español</option>
+              <option value="FR/EN">Français/English</option>
+              <option value="ES/EN">Español/English</option>
             </select>
           </div>
           <button
