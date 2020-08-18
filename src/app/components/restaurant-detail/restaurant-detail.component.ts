@@ -40,6 +40,10 @@ export class RestaurantDetailComponent implements OnInit {
   userAllowedOnPage = false;
   menuUpdateAllowed = false;
   maxMenuCountReached = true;
+  userHasContactTracing = false;
+
+  contactTracingChecked = false;
+  isSettingUpdatedSubmitted = false;
 
   mainColor = '#009688';
 
@@ -76,6 +80,7 @@ export class RestaurantDetailComponent implements OnInit {
     ) {
       this.userAllowedOnPage = true;
       this.getMenuUpdateAllowed();
+      this.getUserHasContactTracing();
       this.getRestaurant();
     }
   }
@@ -104,6 +109,7 @@ export class RestaurantDetailComponent implements OnInit {
     this.restaurantService.getRestaurant(id).subscribe((restaurant) => {
       this.restaurant = restaurant;
       this.getMenuMaxCountReached();
+      this.contactTracingChecked = restaurant.tracingEnabled;
       //this.mainColor = restaurant.color;
       //this.setColorThemeProperty();
     });
@@ -117,6 +123,18 @@ export class RestaurantDetailComponent implements OnInit {
       (err) => {
         console.log(err.message);
         this.menuUpdateAllowed = false;
+      }
+    );
+  }
+
+  getUserHasContactTracing(): void {
+    this.userService.getUserHasContactTracing().subscribe(
+      (_) => {
+        this.userHasContactTracing = true;
+      },
+      (err) => {
+        console.log(err.message);
+        this.userHasContactTracing = false;
       }
     );
   }
@@ -162,6 +180,33 @@ export class RestaurantDetailComponent implements OnInit {
         (err) => {
           console.log('An error occurred: ' + err);
         };
+    }
+  }
+
+  saveContactTracing() {
+    if (
+      confirm('Are you sure you want to modify the contact tracing setting?')
+    ) {
+      this.isSettingUpdatedSubmitted = true;
+      this.restaurantService
+        .updateContactTracing(this.contactTracingChecked, this.restaurant._id)
+        .subscribe((data) => {
+          console.log(data);
+          this.isSettingUpdatedSubmitted = false;
+          window.location.reload();
+        }),
+        (err) => {
+          console.log('An error occurred: ' + err);
+          this.isSettingUpdatedSubmitted = false;
+        };
+    }
+  }
+
+  getContactTracingValue(): string {
+    if (this.contactTracingChecked === false) {
+      return 'Disabled';
+    } else {
+      return 'Enabled';
     }
   }
 }

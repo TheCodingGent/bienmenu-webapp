@@ -40,6 +40,11 @@ export class RestaurantService {
     return this.http.get(url);
   }
 
+  getContactTracing(id: string): Observable<any> {
+    const url = `${this.restaurantsUrl}/get-contact-tracing/${id}`;
+    return this.http.get<Menu>(url, this.httpOptions);
+  }
+
   addRestaurant(restaurant: Restaurant): Observable<Restaurant> {
     const url = `${this.restaurantsUrl}/add`;
     return this.http.post<Restaurant>(url, restaurant, this.httpOptions);
@@ -58,6 +63,15 @@ export class RestaurantService {
   updateMenu(menu: Menu, id: string): Observable<Menu> {
     const url = `${this.restaurantsUrl}/menus/update/${id}`;
     return this.http.post<Menu>(url, JSON.stringify(menu), this.httpOptions);
+  }
+
+  updateContactTracing(tracingEnabled: boolean, id: string): Observable<any> {
+    const url = `${this.restaurantsUrl}/set-contact-tracing/${id}`;
+    return this.http.post<Menu>(
+      url,
+      { tracingEnabled: tracingEnabled },
+      this.httpOptions
+    );
   }
 
   deleteMenu(menu: Menu, id: string): Observable<unknown> {

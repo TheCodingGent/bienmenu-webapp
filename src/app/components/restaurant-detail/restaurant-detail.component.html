@@ -20,6 +20,31 @@
           <span class="restaurant-detail-field">Address: </span
           >{{ restaurant.address }}
         </div>
+        <div class="list-group-item" *ngIf="userHasContactTracing">
+          <div class="d-flex contact-tracing-setting">
+            <div>
+              <span class="restaurant-detail-field">Contact Tracing: </span
+              >{{ getContactTracingValue() }}
+            </div>
+            <div class="contact-tracing-toggle">
+              <mdb-checkbox [(ngModel)]="contactTracingChecked"></mdb-checkbox>
+            </div>
+            <div class="tracing-btn">
+              <button
+                mat-raised-button
+                type="button"
+                class="btn"
+                (click)="saveContactTracing()"
+                [disabled]="
+                  contactTracingChecked == restaurant.tracingEnabled ||
+                  isSettingUpdatedSubmitted
+                "
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
         <div class="list-group-item restaurant-detail-section-header">
           <h4>Restaurant Menus</h4>
         </div>

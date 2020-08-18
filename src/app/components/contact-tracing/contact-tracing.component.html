@@ -1,0 +1,156 @@
+<div
+  mdbModal
+  #contacttracingmodal="mdbModal"
+  class="modal fade left"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+  [config]="{
+    backdrop: false,
+    ignoreBackdropClick: true,
+    keyboard: false,
+    animated: true
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Contact Tracing</h4>
+        <button
+          type="button"
+          class="close"
+          #closeButton
+          mat-raised-button
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="close()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div>
+          For your safety and the safety of our employees please take the time
+          to fill in our form for contact tracing due to COVID-19. Your
+          information will be kept strictly confidential and used only for
+          contact tracing. Thank you in helping us all stay safe.
+        </div>
+        <div>
+          ----------
+        </div>
+        <div>
+          Pour votre sécurité et celle de nos employes, veuillez prendre le
+          temps de remplir notre forme pour la recherche des contacts en raison
+          du COVID-19. Vos informations resteront strictement confidentielles et
+          ne seront utilisées que pour la recherche des contacts. Nous vous
+          remercions de nous aider à assurer notre sécurité à tous.
+        </div>
+        <form [formGroup]="customerForm">
+          <div class="md-form mb-5">
+            <mdb-icon fas icon="user" class="prefix grey-text"></mdb-icon>
+            <input
+              type="text"
+              id="fullname"
+              formControlName="fullname"
+              class="form-control"
+              mdbInput
+              mdbValidate
+              required
+            />
+            <label for="fullname">Full Name / Nom Complet</label>
+            <mdb-error
+              *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)"
+            >
+              <span *ngIf="fullname.errors.required"
+                >Full name is required</span
+              >
+            </mdb-error>
+            <mdb-success
+              *ngIf="fullname.valid && (fullname.dirty || fullname.touched)"
+              >Valid
+            </mdb-success>
+          </div>
+          <div class="md-form mb-5">
+            <mdb-icon fas icon="envelope" class="prefix grey-text"></mdb-icon>
+            <input
+              type="text"
+              id="email"
+              formControlName="email"
+              class="form-control"
+              mdbInput
+              mdbValidate
+              required
+            />
+            <label for="email">Email / Courriel</label>
+            <mdb-error *ngIf="email.invalid && (email.dirty || email.touched)">
+              <span *ngIf="email.errors.required">Email is required</span>
+              <span *ngIf="email.errors.email">Please enter a valid email</span>
+            </mdb-error>
+            <mdb-success *ngIf="email.valid && (email.dirty || email.touched)"
+              >Valid
+            </mdb-success>
+          </div>
+          <div class="md-form mb-5">
+            <mdb-icon fas icon="mobile-alt" class="prefix grey-text"></mdb-icon>
+            <input
+              type="text"
+              id="phone"
+              formControlName="phone"
+              class="form-control"
+              mdbInput
+              mdbValidate
+              required
+            />
+            <label for="phone">Phone Number / Numéro de Téléphone</label>
+            <mdb-error *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+              <span *ngIf="phone.errors.required"
+                >Phone number is required</span
+              >
+              <span *ngIf="phone.errors.pattern"
+                >Please enter a valid phone number</span
+              >
+            </mdb-error>
+            <mdb-success *ngIf="phone.valid && (phone.dirty || phone.touched)"
+              >Valid
+            </mdb-success>
+          </div>
+          <div class="agreement-checkbox">
+            <mdb-checkbox formControlName="terms"
+              >By clicking this box I agree to the
+              <a href="https://www.bien-menu.com/terms" target="_blank"
+                >terms and conditions</a
+              >.
+            </mdb-checkbox>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer d-flex flex-column justify-content-center">
+        <button
+          type="button"
+          class="btn"
+          id="saveButton"
+          data-dismiss="modal"
+          mdbWavesEffect
+          mat-raised-button
+          (click)="saveCustomer()"
+          [disabled]="
+            customerForm.invalid || (isSubmitted && !isOperationFailed)
+          "
+        >
+          Submit
+        </button>
+        <div class="alert alert-danger" *ngIf="isOperationFailed">
+          Failed to register contact information at this given time...we
+          apologize for the inconvenience.
+        </div>
+        <div
+          class="alert alert-success"
+          *ngIf="isSubmitted && !isOperationFailed"
+        >
+          Thank you, enjoy your meal!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

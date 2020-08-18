@@ -50,6 +50,10 @@ export class UserService {
     return this.http.get(this.userApiUrl + 'features/max-menu-count-allowed');
   }
 
+  getUserHasContactTracing(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'features/has-contact-tracing');
+  }
+
   updateMenuUpdateCount(): Observable<any> {
     return this.http.get(this.userApiUrl + 'features/update-count', {
       responseType: 'text',

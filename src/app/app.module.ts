@@ -34,6 +34,7 @@ import { AppConfigService } from './services/app-config.service';
 import { MainNavbarComponent } from './components/main-navbar/main-navbar.component';
 import { AddressAutocompleteComponent } from './components/address-autocomplete/address-autocomplete.component';
 import { QrcodeCardSvgComponent } from './components/qrcode-card-svg/qrcode-card-svg.component';
+import { ContactTracingComponent } from './components/contact-tracing/contact-tracing.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { QrcodeCardSvgComponent } from './components/qrcode-card-svg/qrcode-card
     MainNavbarComponent,
     AddressAutocompleteComponent,
     QrcodeCardSvgComponent,
+    ContactTracingComponent,
   ],
   imports: [
     BrowserModule,

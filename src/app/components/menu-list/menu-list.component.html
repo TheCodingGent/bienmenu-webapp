@@ -9,7 +9,6 @@
       <div class="menus-title">
         <h2>{{ currentRestaurant.name }}</h2>
       </div>
-
       <ul class="menus list-group-flush" *ngIf="menus">
         <li
           *ngFor="let menu of menus; let i = index"
@@ -41,7 +40,7 @@
 </div>
 <div
   class="splash-screen container-fluid"
-  *ngIf="showSplashScreen"
+  *ngIf="showSplashScreen && currentRestaurant"
   [@fadeInOut]
 >
   <div class="container">
@@ -55,3 +54,4 @@
     </div>
   </div>
 </div>
+<app-contact-tracing (closed)="onClosedModal($event)"></app-contact-tracing>

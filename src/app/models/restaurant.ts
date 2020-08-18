@@ -12,4 +12,5 @@ export interface Restaurant {
   menus: [Menu];
   rating: Number;
   color: string;
+  tracingEnabled: boolean;
 }

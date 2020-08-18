@@ -13,6 +13,7 @@ import {
   animate,
 } from '@angular/animations';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-menu-list',
@@ -38,13 +39,15 @@ export class MenuListComponent implements OnInit {
   pdfSrc: string;
   showSplashScreen = true;
   isLoggedIn = false;
+  isContactTracingEnabled = false;
 
   constructor(
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
     private elRef: ElementRef,
     private navbarService: NavbarService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private modalService: ModalService
   ) {}
 
   setColorThemeProperty() {
@@ -72,9 +75,20 @@ export class MenuListComponent implements OnInit {
 
     if (this.currentRestaurantId) {
       this.getMenus();
-      setTimeout(() => (this.showSplashScreen = false), 3000);
+      setTimeout(() => {
+        this.showSplashScreen = false;
+        if (this.isContactTracingEnabled) {
+          this.openModal('contacttracingmodal');
+        }
+      }, 3000);
     }
   }
+
+  openModal(id: string) {
+    this.modalService.open(id);
+  }
+
+  onClosedModal(_) {}
 
   getMenus() {
     this.restaurantService
@@ -82,6 +96,7 @@ export class MenuListComponent implements OnInit {
       .subscribe((restaurant) => {
         this.currentRestaurant = restaurant;
         this.menus = restaurant.menus;
+        this.isContactTracingEnabled = restaurant.tracingEnabled;
         this.mainColor = this.currentRestaurant.color;
         this.setColorThemeProperty();
       });
