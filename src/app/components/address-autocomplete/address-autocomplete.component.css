@@ -1,3 +1,9 @@
 .country-select {
   padding-top: 10px;
 }
+
+label {
+  display: block;
+  width: 12em;
+  color: #009688;
+}

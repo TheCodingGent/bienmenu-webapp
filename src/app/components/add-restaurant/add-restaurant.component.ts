@@ -47,6 +47,7 @@ export class AddRestaurantComponent implements OnInit {
   menuFiles: Map<string, File>;
   menuFilesValid: Map<string, boolean>;
 
+  isAddressSet = false;
   isOperationFailed = false;
   isSuccess = false;
   isSubmitted = false;
@@ -158,14 +159,17 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   getAddress(place: object) {
-    this.country = getCountry(place);
-    this.province = getState(place);
-    this.city = getCity(place);
-    this.postalCode = getPostCode(place);
-    this.address = getFormattedAddress(place);
-    this.phone = getPhone(place);
+    if (place) {
+      this.isAddressSet = true;
+      this.country = getCountry(place);
+      this.province = getState(place);
+      this.city = getCity(place);
+      this.postalCode = getPostCode(place);
+      this.address = getFormattedAddress(place);
+      this.phone = getPhone(place);
 
-    //this.ngZone.run(() => {});
+      //this.ngZone.run(() => {});
+    }
   }
 
   createRestaurantFromForm() {
@@ -194,8 +198,6 @@ export class AddRestaurantComponent implements OnInit {
 
       let filename = menu.get('filename').value;
 
-      console.log(menu.get('filename').value);
-
       this.uploadFileToServer(file, filename);
     }
 
@@ -211,7 +213,7 @@ export class AddRestaurantComponent implements OnInit {
             console.log('Restaurant updated successfully');
             this.isSuccess = true;
             this.isOperationFailed = false;
-            this.tokenStorageService.saveRestaurant(this.restaurant._id);
+            this.tokenStorageService.saveRestaurant(this.restaurant);
             this.router.navigate(['/user']).then(() => {
               window.location.reload();
             });

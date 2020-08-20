@@ -38,6 +38,10 @@
   background-color: var(--main-color);
 }
 
+.menu-item.disabled {
+  pointer-events: none;
+}
+
 .menu-item-content {
   color: var(--font-color);
 }

@@ -40,6 +40,7 @@ export class MenuListComponent implements OnInit {
   showSplashScreen = true;
   isLoggedIn = false;
   isContactTracingEnabled = false;
+  isOpeningMenu = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -103,6 +104,8 @@ export class MenuListComponent implements OnInit {
   }
 
   openMenu(filename: string) {
+    console.log('menu clicked');
+    this.isOpeningMenu = true;
     this.restaurantService
       .getMenuForRestaurant(this.currentRestaurantId, filename)
       .subscribe(
@@ -111,6 +114,7 @@ export class MenuListComponent implements OnInit {
           var file = new Blob([data], { type: 'application/pdf' });
           // var fileURL = URL.createObjectURL(file);
           this.pdfSrc = URL.createObjectURL(file);
+          this.isOpeningMenu = false;
           //window.open(fileURL);
         },
         (err) => {
@@ -118,6 +122,7 @@ export class MenuListComponent implements OnInit {
             'An error occurred while retrieving pdf file for menu...' +
               err.message
           );
+          this.isOpeningMenu = false;
         }
       );
   }

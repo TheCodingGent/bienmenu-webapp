@@ -42,8 +42,8 @@ export class RestaurantDetailComponent implements OnInit {
   maxMenuCountReached = true;
   userHasContactTracing = false;
 
-  contactTracingChecked = false;
-  isSettingUpdatedSubmitted = false;
+  selectedCTSetting = false;
+  isCTSettingSubmitted = false;
 
   mainColor = '#009688';
 
@@ -75,7 +75,10 @@ export class RestaurantDetailComponent implements OnInit {
     if (
       this.tokenStorageService
         .getUser()
-        .restaurants.includes(this.route.snapshot.paramMap.get('id')) ||
+        .restaurants.find(
+          (restaurant) =>
+            restaurant._id === this.route.snapshot.paramMap.get('id')
+        ) ||
       this.tokenStorageService.getUser().roles.includes('ROLE_ADMIN')
     ) {
       this.userAllowedOnPage = true;
@@ -109,7 +112,7 @@ export class RestaurantDetailComponent implements OnInit {
     this.restaurantService.getRestaurant(id).subscribe((restaurant) => {
       this.restaurant = restaurant;
       this.getMenuMaxCountReached();
-      this.contactTracingChecked = restaurant.tracingEnabled;
+      this.selectedCTSetting = restaurant.tracingEnabled;
       //this.mainColor = restaurant.color;
       //this.setColorThemeProperty();
     });
@@ -173,6 +176,7 @@ export class RestaurantDetailComponent implements OnInit {
       )
     ) {
       this.restaurantService.deleteRestaurant(restaurantId).subscribe((_) => {
+        this.tokenStorageService.deleteRestaurant(restaurantId);
         this.router.navigate(['/user']).then(() => {
           window.location.reload();
         });
@@ -187,26 +191,23 @@ export class RestaurantDetailComponent implements OnInit {
     if (
       confirm('Are you sure you want to modify the contact tracing setting?')
     ) {
-      this.isSettingUpdatedSubmitted = true;
+      this.isCTSettingSubmitted = true;
       this.restaurantService
-        .updateContactTracing(this.contactTracingChecked, this.restaurant._id)
+        .updateContactTracing(this.selectedCTSetting, this.restaurant._id)
         .subscribe((data) => {
           console.log(data);
-          this.isSettingUpdatedSubmitted = false;
+          this.isCTSettingSubmitted = false;
           window.location.reload();
         }),
         (err) => {
           console.log('An error occurred: ' + err);
-          this.isSettingUpdatedSubmitted = false;
+          this.isCTSettingSubmitted = false;
         };
     }
   }
 
-  getContactTracingValue(): string {
-    if (this.contactTracingChecked === false) {
-      return 'Disabled';
-    } else {
-      return 'Enabled';
-    }
+  onChange(value: string) {
+    console.log(value);
+    this.selectedCTSetting = value === 'true';
   }
 }

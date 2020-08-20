@@ -1,0 +1,27 @@
+.plans-container {
+  padding-top: 100px;
+}
+
+.plans-container-content {
+  border: none;
+  margin-bottom: 50px;
+}
+
+.plans-container-content h2 {
+  padding: 20px 0 50px 0;
+  text-align: center;
+}
+
+.intro-card {
+  padding: 20px 100px 20px 100px;
+  margin-bottom: 50px;
+  border: none;
+}
+
+.plans-container-content .card-deck .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.plan-feature-list li {
+  padding: 5px;
+}

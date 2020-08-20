@@ -5,6 +5,7 @@
   position: relative;
   overflow: hidden;
   height: 100vh;
+  width: 100vw;
   display: flex;
 }
 
@@ -20,6 +21,7 @@
 
 .home-content {
   margin: 0 auto;
+  width: 100%;
 }
 
 .home-right {
@@ -53,4 +55,13 @@
 .home-left {
   width: 100%;
   position: relative;
+}
+
+.join-login-container {
+  text-align: center;
+  color: #009688;
+}
+
+.join-btn {
+  margin: 20px 0 10px 0;
 }

@@ -18,6 +18,12 @@ body {
   display: inline-block;
 }
 
+.vertical-divider {
+  width: 100%;
+  height: 20px;
+  display: inline-block;
+}
+
 button {
   background-color: #009688 !important;
   color: white !important;
@@ -25,7 +31,8 @@ button {
 }
 
 button:hover {
-  background-color: #cfd8dc !important;
+  background-color: #fffef2 !important;
+  color: #009688 !important;
 }
 
 button:disabled {
@@ -36,9 +43,10 @@ button:disabled {
 
 button.delete-btn {
   margin-bottom: 10px;
-  background-color: tomato !important;
+  background-color: #bb0000 !important;
 }
 
 button.delete-btn:hover {
-  background-color: #cfd8dc !important;
+  background-color: #fffef2 !important;
+  color: #009688 !important;
 }

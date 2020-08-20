@@ -7,6 +7,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -27,9 +28,16 @@ import {
 export class HomeComponent implements OnInit {
   isLoggedIn = false;
 
-  constructor(private tokenStorageService: TokenStorageService) {}
+  constructor(
+    private tokenStorageService: TokenStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
+  }
+
+  goToPricing() {
+    this.router.navigate(['/pricing-plans']);
   }
 }

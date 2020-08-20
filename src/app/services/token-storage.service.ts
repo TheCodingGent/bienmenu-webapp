@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Restaurant } from '../models/restaurant';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -32,11 +33,26 @@ export class TokenStorageService {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
   }
 
-  public saveRestaurant(restaurantId): void {
+  public saveRestaurant(restaurant: Restaurant): void {
     var user = JSON.parse(sessionStorage.getItem(USER_KEY));
-    console.log(user);
-    user.restaurants.push(restaurantId);
-    console.log(user);
+
+    var data = { _id: restaurant._id, name: restaurant.name };
+
+    user.restaurants.push(data);
+    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  public deleteRestaurant(restaurantId: string): void {
+    var user = JSON.parse(sessionStorage.getItem(USER_KEY));
+
+    var indexToRemove = user.restaurants.findIndex(
+      (restaurant) => restaurant._id === restaurantId
+    );
+
+    if (indexToRemove > -1) {
+      user.restaurants.splice(indexToRemove, 1);
+    }
+
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 

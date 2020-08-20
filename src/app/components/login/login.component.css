@@ -1,4 +1,4 @@
-.login {
+.login-container {
   position: relative;
   overflow: hidden;
   height: 100vh;
@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.login-content {
+.login-container-content {
   border: none;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 20px; */
@@ -17,13 +17,15 @@
 label {
   display: block;
   width: 12em;
-  margin: 0.5em 0;
-  color: #2cbbad;
-  font-weight: bold;
+  color: #009688;
 }
 
 input {
   height: 2em;
   font-size: 1em;
   padding-left: 0.4em;
+}
+
+.login-btn {
+  width: 100%;
 }

@@ -32,17 +32,27 @@
           >Restaurants</a
         >
       </li>
+      <li class="nav-item">
+        <a
+          href="/pricing-plans"
+          class="nav-link waves-light"
+          *ngIf="!isLoggedIn"
+          routerLink="pricing-plans"
+          mdbWavesEffect
+          >Pricing and Plans</a
+        >
+      </li>
     </ul>
     <ul class="navbar-nav ml-auto nav-flex-icons">
-      <!-- <li class="nav-item">
-          <a
-            href="/profile"
-            class="nav-link"
-            routerLink="profile"
-            mdbWavesEffect
-            >{{ username }}</a
-          >
-        </li> -->
+      <li class="nav-item">
+        <a
+          href="/profile"
+          class="nav-link"
+          routerLink="profile"
+          mdbWavesEffect
+          >{{ username }}</a
+        >
+      </li>
       <li class="nav-item">
         <a
           href="https://www.bien-menu.com"
@@ -50,7 +60,7 @@
           *ngIf="!isLoggedIn"
           mdbWavesEffect
         >
-          Explore
+          Learn More
         </a>
       </li>
       <li class="nav-item">

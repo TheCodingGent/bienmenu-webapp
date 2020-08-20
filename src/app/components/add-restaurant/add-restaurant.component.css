@@ -17,9 +17,10 @@
   padding: 20px; */
 }
 
-.submit-button {
-  width: 100px !important;
-  min-width: unset !important;
+label {
+  display: block;
+  width: 12em;
+  color: #009688;
 }
 
 .color-input {
@@ -29,4 +30,8 @@
 
 .color-input:hover {
   cursor: pointer;
+}
+
+.submit-button {
+  width: 100%;
 }

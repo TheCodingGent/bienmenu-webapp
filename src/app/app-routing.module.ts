@@ -20,28 +20,39 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
 import { QrCodeViewerComponent } from './components/qr-code-viewer/qr-code-viewer.component';
+import { SuccessComponent } from './components/success/success.component';
+import { CancelComponent } from './components/cancel/cancel.component';
+import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.component';
 
 const externalUrlProvider = new InjectionToken('externalUrlRedirectResolver');
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+
+  {
+    path: 'pricing-plans',
+    component: PricingPlansComponent,
+  },
+  { path: 'register', component: RegisterComponent },
+  { path: 'success', component: SuccessComponent },
+  { path: 'cancel', component: CancelComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'request-reset-password', component: RequestResetPasswordComponent },
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
+  { path: 'admin', component: AdminBoardComponent },
+  {
+    path: 'qrcode/:id/:color',
+    component: QrCodeViewerComponent,
+  },
   {
     path: 'detail/:id',
     component: RestaurantDetailComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'qrcode/:id/:color',
-    component: QrCodeViewerComponent,
-  },
+
   { path: 'add', component: AddRestaurantComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
-  // { path: 'register', component: RegisterComponent },
-  // { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminBoardComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserBoardComponent, canActivate: [AuthGuard] },
-  // { path: 'request-reset-password', component: RequestResetPasswordComponent },
-  // { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: 'menus/:id', component: MenuListComponent },
   {
     matcher: (url) => {

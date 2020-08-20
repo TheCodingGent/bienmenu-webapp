@@ -12,16 +12,22 @@
         <p>The easy way to manage your QR Code Menu</p>
 
         <div *ngIf="!isLoggedIn">
-          <a
-            href="https://www.bien-menu.com/plans-pricing"
-            class="nav-link waves-light"
-            *ngIf="!isLoggedIn"
-            mdbWavesEffect
-          >
-            <button mat-raised-button class="btn">
+          <div class="join-login-container d-flex flex-column">
+            <button
+              mat-raised-button
+              class="join-btn btn"
+              (click)="goToPricing()"
+            >
               Join Now
             </button>
-          </a>
+
+            <div class="d-flex">
+              Already a member?&nbsp;
+              <a routerLink="/login" mdbWavesEffect>
+                Log In
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -35,6 +35,9 @@ import { MainNavbarComponent } from './components/main-navbar/main-navbar.compon
 import { AddressAutocompleteComponent } from './components/address-autocomplete/address-autocomplete.component';
 import { QrcodeCardSvgComponent } from './components/qrcode-card-svg/qrcode-card-svg.component';
 import { ContactTracingComponent } from './components/contact-tracing/contact-tracing.component';
+import { SuccessComponent } from './components/success/success.component';
+import { CancelComponent } from './components/cancel/cancel.component';
+import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,9 @@ import { ContactTracingComponent } from './components/contact-tracing/contact-tr
     AddressAutocompleteComponent,
     QrcodeCardSvgComponent,
     ContactTracingComponent,
+    SuccessComponent,
+    CancelComponent,
+    PricingPlansComponent,
   ],
   imports: [
     BrowserModule,

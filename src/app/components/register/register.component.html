@@ -1,118 +1,194 @@
-<div class="register container-fluid">
-  <div class="register-content card card-container">
+<div class="register-container container-fluid">
+  <div class="register-container-content card card-container">
     <img
       id="profile-img"
       src="./assets/img/bienmenu-long-logo.png"
       class="profile-img-card"
     />
-    <div class="alert alert-success" *ngIf="isSuccessful">
-      Your registration was successful, go to Home page and login!
+    <div class="alert alert-success" *ngIf="isSubmitted && isSignupSuccessful">
+      Your sign up was successful!
     </div>
+    <div class="alert alert-danger" *ngIf="isSubmitted && isSignupFailed">
+      Signup failed!<br />{{ errorMessage }}
+    </div>
+
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label>First Name</label>
+      <div class="md-form mb-5">
         <input
           type="text"
+          id="firstName"
           formControlName="firstName"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+          mdbInput
+          mdbValidate
+          required
         />
-        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-          <div *ngIf="f.firstName.errors.required">First Name is required</div>
-        </div>
+        <label for="firstName">First name</label>
+        <mdb-error
+          *ngIf="
+            f.firstName.invalid && (f.firstName.dirty || f.firstName.touched)
+          "
+        >
+          <span *ngIf="f.firstName.errors.required"
+            >First name is required</span
+          >
+        </mdb-error>
+        <mdb-success
+          *ngIf="
+            f.firstName.valid && (f.firstName.dirty || f.firstName.touched)
+          "
+          >Valid
+        </mdb-success>
       </div>
-      <div class="form-group">
-        <label>Last Name</label>
+      <div class="md-form mb-5">
         <input
           type="text"
+          id="lastName"
           formControlName="lastName"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+          mdbInput
+          mdbValidate
+          required
         />
-        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-          <div *ngIf="f.lastName.errors.required">Last Name is required</div>
-        </div>
+        <label for="lastName">Last name</label>
+        <mdb-error
+          *ngIf="f.lastName.invalid && (f.lastName.dirty || f.lastName.touched)"
+        >
+          <span *ngIf="f.lastName.errors.required">Last name is required</span>
+        </mdb-error>
+        <mdb-success
+          *ngIf="f.lastName.valid && (f.lastName.dirty || f.lastName.touched)"
+          >Valid
+        </mdb-success>
       </div>
-      <div class="form-group">
-        <label>Username</label>
+      <div class="md-form mb-5">
         <input
           type="text"
+          id="username"
           formControlName="username"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+          mdbInput
+          mdbValidate
+          required
         />
-        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-          <div *ngIf="f.username.errors.required">Username is required</div>
-          <div *ngIf="f.username.errors.minlength">
-            Username must be at least 3 characters
-          </div>
-          <div *ngIf="f.username.errors.maxlength">
-            Username cannot be more than 20 characters
-          </div>
-        </div>
+        <label for="username">Username</label>
+        <mdb-error
+          *ngIf="f.username.invalid && (f.username.dirty || f.username.touched)"
+        >
+          <span *ngIf="f.username.errors.required">Username is required</span>
+          <span *ngIf="f.username.errors.minlength"
+            >Username must be at least 3 characters</span
+          >
+          <span *ngIf="f.username.errors.maxlength"
+            >Username cannot be more than 20 characters</span
+          >
+        </mdb-error>
+        <mdb-success
+          *ngIf="f.username.valid && (f.username.dirty || f.username.touched)"
+          >Valid
+        </mdb-success>
       </div>
-      <div class="form-group">
-        <label>Email</label>
+      <div class="md-form mb-5">
         <input
           type="text"
+          id="email"
           formControlName="email"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+          mdbInput
+          mdbValidate
+          required
         />
-        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-          <div *ngIf="f.email.errors.required">Email is required</div>
-          <div *ngIf="f.email.errors.email">
-            Email must be a valid email address
-          </div>
-        </div>
+        <label for="email">Email</label>
+        <mdb-error
+          *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)"
+        >
+          <span *ngIf="f.email.errors.required">Email is required</span>
+          <span *ngIf="f.email.errors.email">Please enter a valid email</span>
+        </mdb-error>
+        <mdb-success *ngIf="f.email.valid && (f.email.dirty || f.email.touched)"
+          >Valid
+        </mdb-success>
       </div>
-      <div class="form-group">
-        <label>Password</label>
+      <div class="md-form">
         <input
           type="password"
+          id="password"
           formControlName="password"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+          mdbInput
+          mdbValidate
+          required
         />
-        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-          <div *ngIf="f.password.errors.required">Password is required</div>
-          <div *ngIf="f.password.errors.minlength">
-            Password must be at least 6 characters
-          </div>
-        </div>
+        <label for="password">Password</label>
+        <mdb-error
+          *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)"
+        >
+          <span *ngIf="f.password.errors.required">Password is required</span>
+          <span *ngIf="f.password.errors.minlength"
+            >Password must be at least 6 characters</span
+          >
+        </mdb-error>
+        <mdb-success
+          *ngIf="f.password.valid && (f.password.dirty || f.password.touched)"
+          >Valid
+        </mdb-success>
       </div>
-      <div class="form-group">
-        <label>Confirm Password</label>
+      <div class="md-form">
         <input
           type="password"
+          id="confirmPassword"
           formControlName="confirmPassword"
           class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"
+          mdbInput
+          mdbValidate
+          required
         />
-        <div
-          *ngIf="submitted && f.confirmPassword.errors"
-          class="invalid-feedback"
+        <label for="confirmPassword">Confirm Password</label>
+        <mdb-error
+          *ngIf="
+            f.confirmPassword.invalid &&
+            (f.confirmPassword.dirty || f.confirmPassword.touched)
+          "
         >
-          <div *ngIf="f.confirmPassword.errors.required">
-            Confirm Password is required
-          </div>
-          <div *ngIf="f.confirmPassword.errors.mustMatch">
-            Passwords must match
+          <span *ngIf="f.confirmPassword.errors.required"
+            >Confirm password is required</span
+          >
+          <span *ngIf="f.confirmPassword.errors.mustMatch"
+            >Passwords must match</span
+          >
+        </mdb-error>
+        <mdb-success
+          *ngIf="
+            f.confirmPassword.valid &&
+            (f.confirmPassword.dirty || f.confirmPassword.touched)
+          "
+          >Valid
+        </mdb-success>
+      </div>
+      <div class="md-form">
+        <div class="d-flex">
+          <span class="field-name">Select a plan:</span>
+          <div class="country-select flex-fill">
+            <select
+              class="browser-default custom-select"
+              [(ngModel)]="selectedPlan"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <option value="basic">Basic - free</option>
+              <option value="plus">Plus - $5.99/month</option>
+              <option value="plus-yearly">Plus Yearly - $59.99/year</option>
+            </select>
           </div>
         </div>
       </div>
-      <div class="form-group text-center">
-        <button
-          mat-raised-button
-          class="btn btn-primary"
-          [disabled]="isSuccessful"
-        >
-          Register
-        </button>
-      </div>
-      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-        Signup failed!<br />{{ errorMessage }}
-      </div>
+      <button
+        mat-raised-button
+        class="register-btn btn btn-primary"
+        [disabled]="registerForm.invalid || f.submitted"
+        (click)="onSubmit()"
+      >
+        Register
+      </button>
     </form>
   </div>
 </div>

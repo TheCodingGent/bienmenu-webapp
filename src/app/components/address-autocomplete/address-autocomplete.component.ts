@@ -63,7 +63,6 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit {
   }
 
   onChange(event): void {
-    // event will give you full breif of action
     this.autocomplete.setComponentRestrictions({
       country: this.formatCountry(event.target.value),
     });

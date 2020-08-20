@@ -2,10 +2,12 @@
   padding-top: 100px;
 }
 
-.user-board h3 {
-  padding: 20px 0 20px 0;
+.user-board h2 {
+  padding: 20px 0 50px 0;
+  font-family: "Lobster Two";
+  text-align: center;
 }
 
 .add-new {
-  padding-top: 20px;
+  padding-top: 50px;
 }

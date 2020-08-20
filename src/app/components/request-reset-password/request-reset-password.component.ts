@@ -40,7 +40,7 @@ export class RequestResetPasswordComponent implements OnInit {
           (data) => {
             this.RequestResetForm.reset();
             this.successMessage =
-              'Reset password link send to email sucessfully.';
+              'Reset password link has been sent to your email successfully.';
             setTimeout(() => {
               this.successMessage = null;
               this.router.navigate(['login']);

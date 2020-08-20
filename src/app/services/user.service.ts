@@ -60,15 +60,15 @@ export class UserService {
     });
   }
 
-  // updateFeatureExpiry(): Observable<any> {
-  //   return this.http.get(this.userApiUrl + 'features/update-feature-expiry', {
-  //     responseType: 'text',
-  //   });
-  // }
-
   updateRestaurantCount(): Observable<any> {
     return this.http.get(this.userApiUrl + 'features/update-restaurant-count', {
       responseType: 'text',
+    });
+  }
+
+  updateUserPlan(plan: string): Observable<any> {
+    return this.http.post(this.userApiUrl + 'features/update-user-plan', {
+      plan: plan,
     });
   }
 }

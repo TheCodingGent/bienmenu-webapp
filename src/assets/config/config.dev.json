@@ -1,4 +1,5 @@
 {
   "apiBaseUrl": "http://localhost:5000/",
-  "menusBaseUrl": "http://localhost:4200/menus/"
+  "menusBaseUrl": "http://localhost:4200/menus/",
+  "stripeKey": "pk_test_51H9gmxBd2ZddnxHeo5SpUwbTn5PEofkiRPFAyYiJwnyesaIr1MhbqqUEtEXNsf0VdV34u3gYzjjxiuyrCrtR6lsk008QhNC5aF"
 }

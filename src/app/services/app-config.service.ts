@@ -37,4 +37,11 @@ export class AppConfigService {
     }
     return this.appConfig.menusBaseUrl;
   }
+
+  get stripeKey() {
+    if (!this.appConfig) {
+      throw Error('Config file not loaded!');
+    }
+    return this.appConfig.stripeKey;
+  }
 }
