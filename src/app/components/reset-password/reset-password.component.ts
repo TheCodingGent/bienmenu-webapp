@@ -47,7 +47,7 @@ export class ResetPasswordComponent implements OnInit {
     return this.resetForm.controls;
   }
 
-  ResetPassword() {
+  resetPassword() {
     this.submitted = true;
 
     // stop here if form is invalid

@@ -12,16 +12,15 @@ import { Router } from '@angular/router';
   ],
 })
 export class RequestResetPasswordComponent implements OnInit {
-  RequestResetForm: FormGroup;
+  requestResetForm: FormGroup;
   forbiddenEmails: any;
   errorMessage: string;
   successMessage: string;
-  IsvalidForm = true;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.RequestResetForm = new FormGroup({
+    this.requestResetForm = new FormGroup({
       email: new FormControl(
         null,
         [Validators.required, Validators.email],
@@ -30,30 +29,32 @@ export class RequestResetPasswordComponent implements OnInit {
     });
   }
 
-  RequestResetUser(form) {
-    console.log(form);
-    if (form.valid) {
-      this.IsvalidForm = true;
-      this.authService
-        .requestResetPassword(this.RequestResetForm.value)
-        .subscribe(
-          (data) => {
-            this.RequestResetForm.reset();
-            this.successMessage =
-              'Reset password link has been sent to your email successfully.';
-            setTimeout(() => {
-              this.successMessage = null;
-              this.router.navigate(['login']);
-            }, 3000);
-          },
-          (err) => {
-            if (err.error.message) {
-              this.errorMessage = err.error.message;
-            }
-          }
-        );
-    } else {
-      this.IsvalidForm = false;
+  get f() {
+    return this.requestResetForm.controls;
+  }
+
+  requestResetUser() {
+    if (this.requestResetForm.invalid) {
+      return;
     }
+
+    this.authService
+      .requestResetPassword(this.requestResetForm.value)
+      .subscribe(
+        (data) => {
+          this.requestResetForm.reset();
+          this.successMessage =
+            'Reset password link has been sent to your email successfully.';
+          setTimeout(() => {
+            this.successMessage = null;
+            this.router.navigate(['login']);
+          }, 3000);
+        },
+        (err) => {
+          if (err.error.message) {
+            this.errorMessage = err.error.message;
+          }
+        }
+      );
   }
 }
