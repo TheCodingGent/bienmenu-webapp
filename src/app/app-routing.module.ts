@@ -34,7 +34,7 @@ const routes: Routes = [
     component: PricingPlansComponent,
   },
   { path: 'register', component: RegisterComponent },
-  { path: 'success', component: SuccessComponent },
+  { path: 'success/:session_id', component: SuccessComponent },
   { path: 'cancel', component: CancelComponent },
   { path: 'login', component: LoginComponent },
   { path: 'request-reset-password', component: RequestResetPasswordComponent },

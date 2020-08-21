@@ -71,4 +71,8 @@ export class UserService {
       plan: plan,
     });
   }
+
+  updateUserCustomerId(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'features/update-user-customerId');
+  }
 }
