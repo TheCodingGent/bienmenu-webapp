@@ -35,17 +35,6 @@
           information will be kept strictly confidential and used only for
           contact tracing. Thank you in helping us all stay safe.
         </div>
-        <div>
-          ----------
-        </div>
-        <div>
-          Pour votre sécurité et celle de nos employés, veuillez prendre le
-          temps de remplir notre formulaire pour la recherche des contacts en
-          raison du COVID-19. Vos informations resteront strictement
-          confidentielles et ne seront utilisées que pour la recherche des
-          contacts. Nous vous remercions de nous aider à assurer notre sécurité
-          à tous.
-        </div>
         <form [formGroup]="customerForm">
           <div class="md-form mb-5">
             <mdb-icon fas icon="user" class="prefix grey-text"></mdb-icon>
@@ -58,7 +47,7 @@
               mdbValidate
               required
             />
-            <label for="fullname">Full Name / Nom Complet</label>
+            <label for="fullname">Full Name</label>
             <mdb-error
               *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)"
             >
@@ -82,7 +71,7 @@
               mdbValidate
               required
             />
-            <label for="email">Email / Courriel</label>
+            <label for="email">Email</label>
             <mdb-error *ngIf="email.invalid && (email.dirty || email.touched)">
               <span *ngIf="email.errors.required">Email is required</span>
               <span *ngIf="email.errors.email">Please enter a valid email</span>
@@ -102,7 +91,7 @@
               mdbValidate
               required
             />
-            <label for="phone">Phone Number / Numéro de Téléphone</label>
+            <label for="phone">Phone Number</label>
             <mdb-error *ngIf="phone.invalid && (phone.dirty || phone.touched)">
               <span *ngIf="phone.errors.required"
                 >Phone number is required</span
