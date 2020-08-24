@@ -3,7 +3,7 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
 @Component({
   selector: 'app-qrcode-card-svg',
   templateUrl: './qrcode-card-svg.component.html',
-  styleUrls: ['./qrcode-card-svg.component.css'],
+  styleUrls: ['./qrcode-card-svg.component.scss'],
 })
 export class QrcodeCardSvgComponent implements OnInit {
   @Input() color: string;

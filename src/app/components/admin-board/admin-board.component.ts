@@ -6,7 +6,7 @@ import { RestaurantService } from 'src/app/services/restaurant.service';
 @Component({
   selector: 'app-admin-board',
   templateUrl: './admin-board.component.html',
-  styleUrls: ['./admin-board.component.css'],
+  styleUrls: ['./admin-board.component.scss'],
 })
 export class AdminBoardComponent implements OnInit {
   accessAllowed = false;

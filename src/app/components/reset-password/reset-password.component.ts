@@ -7,7 +7,7 @@ import { MustMatch } from 'src/app/helpers/mustmatch.validator';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['../../app.component.css', './reset-password.component.css'],
+  styleUrls: ['../../app.component.scss', './reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;

@@ -26,7 +26,7 @@ import { FormatFilename } from 'src/app/helpers/utilities';
 @Component({
   selector: 'app-add-menu',
   templateUrl: './add-menu.component.html',
-  styleUrls: ['./add-menu.component.css'],
+  styleUrls: ['./add-menu.component.scss'],
 })
 export class AddMenuComponent implements OnInit {
   @Input() restaurant: Restaurant;

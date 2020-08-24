@@ -30,7 +30,7 @@
               "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
               "node_modules/animate.css/animate.css",
               "src/custom-theme.scss",
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
@@ -127,5 +127,10 @@
       }
     }
   },
-  "defaultProject": "bienmenu-webapp"
+  "defaultProject": "bienmenu-webapp",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

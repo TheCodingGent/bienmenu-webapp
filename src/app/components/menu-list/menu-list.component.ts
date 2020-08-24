@@ -18,7 +18,7 @@ import { ModalService } from 'src/app/services/modal.service';
 @Component({
   selector: 'app-menu-list',
   templateUrl: './menu-list.component.html',
-  styleUrls: ['./menu-list.component.css'],
+  styleUrls: ['./menu-list.component.scss'],
   animations: [
     trigger('fadeInOut', [
       state(

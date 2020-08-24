@@ -17,7 +17,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-update-menu',
   templateUrl: './update-menu.component.html',
-  styleUrls: ['./update-menu.component.css'],
+  styleUrls: ['./update-menu.component.scss'],
 })
 export class UpdateMenuComponent implements OnInit {
   @Input() restaurantId: string;

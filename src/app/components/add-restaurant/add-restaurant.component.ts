@@ -28,7 +28,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-add-restaurant',
   templateUrl: './add-restaurant.component.html',
-  styleUrls: ['./add-restaurant.component.css'],
+  styleUrls: ['./add-restaurant.component.scss'],
 })
 export class AddRestaurantComponent implements OnInit {
   restaurantForm: FormGroup;

@@ -14,7 +14,7 @@ import { MapsAPILoader } from '@agm/core';
 @Component({
   selector: 'app-address-autocomplete',
   templateUrl: './address-autocomplete.component.html',
-  styleUrls: ['./address-autocomplete.component.css'],
+  styleUrls: ['./address-autocomplete.component.scss'],
 })
 export class AddressAutocompleteComponent implements OnInit, AfterViewInit {
   @Input() adressType: string;

@@ -10,7 +10,7 @@ declare var Stripe;
 @Component({
   selector: 'app-pricing-plans',
   templateUrl: './pricing-plans.component.html',
-  styleUrls: ['./pricing-plans.component.css'],
+  styleUrls: ['./pricing-plans.component.scss'],
 })
 export class PricingPlansComponent implements OnInit {
   stripe: any;

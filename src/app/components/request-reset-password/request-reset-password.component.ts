@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
   selector: 'app-request-reset-password',
   templateUrl: './request-reset-password.component.html',
   styleUrls: [
-    '../../app.component.css',
-    './request-reset-password.component.css',
+    '../../app.component.scss',
+    './request-reset-password.component.scss',
   ],
 })
 export class RequestResetPasswordComponent implements OnInit {

@@ -19,7 +19,7 @@ import { LightOrDark } from 'src/app/helpers/color.helper';
 @Component({
   selector: 'app-restaurant-detail',
   templateUrl: './restaurant-detail.component.html',
-  styleUrls: ['./restaurant-detail.component.css'],
+  styleUrls: ['./restaurant-detail.component.scss'],
   animations: [
     trigger('EnterLeave', [
       state('flyIn', style({ transform: 'translateX(0)' })),

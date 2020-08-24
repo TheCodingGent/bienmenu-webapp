@@ -11,7 +11,7 @@ declare var Stripe;
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['../../app.component.css', './register.component.css'],
+  styleUrls: ['../../app.component.scss', './register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
   stripe: any;

@@ -9,7 +9,7 @@ import { CollapseComponent } from 'angular-bootstrap-md';
 @Component({
   selector: 'app-user-board',
   templateUrl: './user-board.component.html',
-  styleUrls: ['./user-board.component.css'],
+  styleUrls: ['./user-board.component.scss'],
 })
 export class UserBoardComponent implements OnInit {
   content: string;

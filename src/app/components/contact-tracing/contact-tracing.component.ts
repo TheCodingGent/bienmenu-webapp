@@ -21,7 +21,7 @@ import { CheckboxComponent, ModalOptions } from 'angular-bootstrap-md';
 @Component({
   selector: 'app-contact-tracing',
   templateUrl: './contact-tracing.component.html',
-  styleUrls: ['./contact-tracing.component.css'],
+  styleUrls: ['./contact-tracing.component.scss'],
 })
 export class ContactTracingComponent implements OnInit {
   @Output() closed = new EventEmitter<boolean>();
