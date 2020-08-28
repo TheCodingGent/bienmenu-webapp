@@ -41,7 +41,7 @@ const routes: Routes = [
   { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: 'admin', component: AdminBoardComponent },
   {
-    path: 'qrcode/:id/:color',
+    path: 'qrcode/:id',
     component: QrCodeViewerComponent,
   },
   {

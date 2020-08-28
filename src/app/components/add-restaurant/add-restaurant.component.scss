@@ -1,7 +1,6 @@
 .add-restaurant {
-  padding-top: 80px;
-  padding-bottom: 100px;
-  position: relative;
+  margin: 70px 0 70px 0;
+  position: absolute;
   overflow: auto;
   min-height: 100vh;
   width: 100%;
@@ -13,14 +12,25 @@
 .add-restaurant-content {
   border: none;
   width: 600px;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  padding: 20px; */
+  padding: 15px;
+}
+
+.card-img {
+  width: 100%;
+  height: auto;
 }
 
 label {
   display: block;
   width: 12em;
   color: #009688;
+}
+
+.field-name {
+  font-size: 16px;
+  padding-right: 15px;
+  margin: 0.5em 0;
+  color: #707070;
 }
 
 .color-input {

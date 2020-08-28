@@ -41,9 +41,12 @@ export class RestaurantDetailComponent implements OnInit {
   menuUpdateAllowed = false;
   maxMenuCountReached = true;
   userHasContactTracing = false;
+  hostedInternal = true;
 
   selectedCTSetting = false;
   isCTSettingSubmitted = false;
+
+  isHostingSettingSubmitted = false;
 
   mainColor = '#009688';
 
@@ -113,6 +116,8 @@ export class RestaurantDetailComponent implements OnInit {
       this.restaurant = restaurant;
       this.getMenuMaxCountReached();
       this.selectedCTSetting = restaurant.tracingEnabled;
+      this.hostedInternal = restaurant.hostedInternal;
+
       //this.mainColor = restaurant.color;
       //this.setColorThemeProperty();
     });
@@ -195,7 +200,6 @@ export class RestaurantDetailComponent implements OnInit {
       this.restaurantService
         .updateContactTracing(this.selectedCTSetting, this.restaurant._id)
         .subscribe((data) => {
-          console.log(data);
           this.isCTSettingSubmitted = false;
           window.location.reload();
         }),
@@ -206,8 +210,26 @@ export class RestaurantDetailComponent implements OnInit {
     }
   }
 
-  onChange(value: string) {
-    console.log(value);
+  saveMenuHostingSetting() {
+    if (
+      confirm('Are you sure you want to switch your menu hosting to BienMenu?')
+    ) {
+      this.isHostingSettingSubmitted = true;
+      this.restaurantService
+        .updateMenuHostingSetting(true, this.restaurant._id)
+        .subscribe((data) => {
+          console.log(data);
+          this.isHostingSettingSubmitted = false;
+          window.location.reload();
+        }),
+        (err) => {
+          console.log('An error occurred: ' + err);
+          this.isHostingSettingSubmitted = false;
+        };
+    }
+  }
+
+  onChangeCT(value: string) {
     this.selectedCTSetting = value === 'true';
   }
 }

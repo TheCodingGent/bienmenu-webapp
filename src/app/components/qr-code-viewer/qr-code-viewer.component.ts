@@ -35,13 +35,9 @@ export class QrCodeViewerComponent implements OnInit {
   ngOnInit(): void {}
 
   downloadQrCode() {
+    window.scroll(0, 0);
     html2canvas(this.qrCodeCard.nativeElement).then((canvas) => {
       const imgData = canvas.toDataURL('image/jpeg', 1.0);
-      // var pdf = new jsPDF('p', 'mm', [canvas.width, canvas.height]);
-
-      // pdf.addImage(imgData, 'JPEG', 0, 0);
-      // pdf.save('download.pdf');
-
       var pdf = new jsPDF('p', 'mm', 'letter');
 
       var width = pdf.internal.pageSize.getWidth();

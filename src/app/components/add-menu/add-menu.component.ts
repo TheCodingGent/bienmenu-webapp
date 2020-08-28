@@ -107,7 +107,6 @@ export class AddMenuComponent implements OnInit {
       .addMenu(this.menuForm.value, this.restaurant._id)
       .subscribe(
         (data) => {
-          console.log(data);
           // if menu was added successfully to the db then upload the file
           this.fileUploadService
             .postFile(
@@ -130,13 +129,11 @@ export class AddMenuComponent implements OnInit {
                 );
               },
               (error) => {
-                console.log(error);
                 this.isOperationFailed = true;
               }
             );
         },
         (error) => {
-          console.log('foo' + error);
           this.isOperationFailed = true;
         }
       );

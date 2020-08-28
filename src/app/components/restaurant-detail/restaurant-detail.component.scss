@@ -1,40 +1,16 @@
 .restaurant-detail {
-  padding-top: 100px;
-  padding-left: 0;
-  padding-right: 0;
-  position: relative;
-  display: flex;
+  margin: 70px 0 70px 0;
+  position: absolute;
   overflow: auto;
   min-height: 100vh;
   width: 100%;
-  /* background-color: var(--accent-color); */
+  display: flex;
 }
 
-.restaurant-detail h2 {
+.restaurant-detail-content h2 {
   padding: 20px 0 50px 0;
   font-family: "Lobster Two";
   text-align: center;
-}
-
-.list-group.list-group-root {
-  padding: 0;
-  overflow: hidden;
-}
-
-.list-group.list-group-root .list-group-item {
-  border-radius: 0;
-  border: none;
-  /* border-width: 0 0 1px 0; */
-}
-
-.list-group.list-group-root .menus .list-group-item {
-  border-width: 1px 0 0 0;
-}
-
-.restaurant-detail-field {
-  padding: 10px 15px 10px 5px;
-  text-align: center;
-  font-weight: bold;
 }
 
 .restaurant-detail-section-header h4 {
@@ -42,34 +18,35 @@
   border-bottom: 1px solid black;
 }
 
+.basic-info .list-group-item {
+  border: none;
+}
+
+.menus .list-group-item {
+  border: none;
+}
+
+.restaurant-detail-field {
+  text-align: center;
+  font-weight: bold;
+}
+
 .menu-row {
+  margin: 10px 0 10px 0;
+}
+
+.restaurant-setting {
+  align-items: center;
+}
+
+.enabled-disabled {
   padding: 10px 0 10px 0;
 }
 
-.menu-column {
-  border-bottom: 1px solid black;
-}
-
 .add {
-  padding-bottom: 50px;
+  margin-top: 50px;
 }
 
-.add-btn {
-  margin-bottom: 20px;
-}
-
-.delete-btn {
-  float: right;
-}
-
-.contact-tracing-toggle {
-  padding: 0 0 0 30px;
-}
-
-.tracing-btn {
-  padding-left: 30px;
-}
-
-.contact-tracing-setting {
-  align-items: center;
+.delete {
+  margin-top: 100px;
 }

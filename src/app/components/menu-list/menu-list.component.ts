@@ -41,6 +41,7 @@ export class MenuListComponent implements OnInit {
   isLoggedIn = false;
   isContactTracingEnabled = false;
   isOpeningMenu = false;
+  isHostedInternal = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -80,6 +81,12 @@ export class MenuListComponent implements OnInit {
         this.showSplashScreen = false;
         if (this.isContactTracingEnabled) {
           this.openModal('contacttracingmodal');
+        } else {
+          if (!this.isHostedInternal) {
+            window.location.href = this.formatMenuUrl(
+              this.currentRestaurant.externalMenuLink
+            );
+          }
         }
       }, 3000);
     }
@@ -89,7 +96,14 @@ export class MenuListComponent implements OnInit {
     this.modalService.open(id);
   }
 
-  onClosedModal(_) {}
+  onClosedModal(_) {
+    //navigate to menus
+    if (!this.isHostedInternal) {
+      window.location.href = this.formatMenuUrl(
+        this.currentRestaurant.externalMenuLink
+      );
+    }
+  }
 
   getMenus() {
     this.restaurantService
@@ -98,6 +112,7 @@ export class MenuListComponent implements OnInit {
         this.currentRestaurant = restaurant;
         this.menus = restaurant.menus;
         this.isContactTracingEnabled = restaurant.tracingEnabled;
+        this.isHostedInternal = restaurant.hostedInternal;
         this.mainColor = this.currentRestaurant.color;
         this.setColorThemeProperty();
       });
@@ -125,5 +140,13 @@ export class MenuListComponent implements OnInit {
           this.isOpeningMenu = false;
         }
       );
+  }
+
+  formatMenuUrl(url: string): string {
+    if (url.startsWith('http')) {
+      return url;
+    } else {
+      return '//' + url;
+    }
   }
 }

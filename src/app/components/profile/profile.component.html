@@ -1,20 +1,18 @@
 <div class="profile-container container-fluid">
-  <div class="profile-container-content" *ngIf="currentUser">
-    <div class="card" style="width: 40rem;">
+  <div class="profile-container-content container" *ngIf="currentUser">
+    <div class="card">
       <img
         class="card-img-top"
         src="./assets/img/bienmenu-logo.png"
         alt="Bienmenu"
-        style="width: 100px; margin: 20px;"
+        style="width: 100px; margin: 20px"
       />
       <div class="card-body">
         <h5 class="card-title">
           Welcome <strong>{{ currentUser.firstName }}</strong
           >!
         </h5>
-        <p class="card-text">
-          Here you can see your basic profile info.
-        </p>
+        <p class="card-text">Here you can see your basic profile info.</p>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
@@ -47,10 +45,11 @@
           Upgrade Your Plan
         </button>
 
-        <a class="card-link waves-light" href="mailto:info@bienmenu.com">
-          <button mat-raised-button class="contact-btn btn">
-            Contact Us
-          </button>
+        <a
+          class="card-link waves-light"
+          href="https://www.bien-menu.com/contact"
+        >
+          <button mat-raised-button class="contact-btn btn">Contact Us</button>
         </a>
       </div>
     </div>

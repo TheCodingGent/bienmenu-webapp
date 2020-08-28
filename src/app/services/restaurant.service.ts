@@ -74,6 +74,18 @@ export class RestaurantService {
     );
   }
 
+  updateMenuHostingSetting(
+    hostedInternal: boolean,
+    id: string
+  ): Observable<any> {
+    const url = `${this.restaurantsUrl}/updated-menu-hosting/${id}`;
+    return this.http.post<Menu>(
+      url,
+      { hostedInternal: hostedInternal },
+      this.httpOptions
+    );
+  }
+
   deleteMenu(menu: Menu, id: string): Observable<unknown> {
     const url = `${this.restaurantsUrl}/menus/delete/${id}`;
     return this.http.post(url, JSON.stringify(menu), this.httpOptions);

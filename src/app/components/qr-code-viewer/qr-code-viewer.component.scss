@@ -1,6 +1,6 @@
 .qr-code-viewer {
-  padding-top: 120px;
-  position: relative;
+  margin: 70px 0 70px 0;
+  position: absolute;
   overflow: auto;
   height: 100vh;
   width: 100%;
@@ -10,7 +10,11 @@
 }
 
 .qr-code-viewer-content {
-  margin-bottom: 40px;
+  height: 100%;
+}
+
+.top-notice {
+  margin-top: 20px;
 }
 
 .card {
@@ -42,15 +46,6 @@
 
 .qr-code {
   position: absolute;
-  top: 265px;
+  top: 262px;
   left: 135px;
-  /* z-index: 2; */
-}
-
-.language-select {
-  margin-top: 20px;
-}
-
-.download-btn {
-  margin-top: 20px;
 }

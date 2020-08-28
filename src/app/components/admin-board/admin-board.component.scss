@@ -1,11 +1,18 @@
 .admin-board {
-  padding: 100px;
+  margin: 70px 0 70px 0;
+  position: absolute;
+  overflow: auto;
+  display: flex;
 }
 
 .admin-board h2 {
   padding: 20px 0 50px 0;
   font-family: "Lobster Two";
   text-align: center;
+}
+
+.admin-board button {
+  margin: 5px 0 5px 0;
 }
 
 .add-new {

@@ -1,4 +1,10 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  NgZone,
+  ChangeDetectorRef,
+  AfterViewChecked,
+} from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -30,12 +36,13 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   templateUrl: './add-restaurant.component.html',
   styleUrls: ['./add-restaurant.component.scss'],
 })
-export class AddRestaurantComponent implements OnInit {
+export class AddRestaurantComponent implements OnInit, AfterViewChecked {
   restaurantForm: FormGroup;
   restaurant: Restaurant;
   menus: FormArray;
   name: FormControl;
   color: FormControl;
+  externalMenuLink: FormControl;
 
   country: string;
   province: string;
@@ -43,6 +50,7 @@ export class AddRestaurantComponent implements OnInit {
   postalCode: string;
   address: string;
   phone: string;
+  selectedMenuOption: string = 'internal';
 
   menuFiles: Map<string, File>;
   menuFilesValid: Map<string, boolean>;
@@ -63,7 +71,8 @@ export class AddRestaurantComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private router: Router,
     private ngZone: NgZone,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -71,6 +80,7 @@ export class AddRestaurantComponent implements OnInit {
     this.menuFilesValid = new Map<string, boolean>();
 
     this.name = this.formBuilder.control('', Validators.required);
+    this.externalMenuLink = this.formBuilder.control('');
     this.color = this.formBuilder.control({ value: '', disabled: true }, [
       Validators.pattern('^[#][a-zA-Z0-9]{6}$'),
     ]); // ensure color starts with # and has 6 characters
@@ -78,6 +88,7 @@ export class AddRestaurantComponent implements OnInit {
     this.restaurantForm = this.formBuilder.group({
       _id: [new ObjectID()],
       name: this.name,
+      externalMenuLink: this.externalMenuLink,
       menus: this.formBuilder.array([this.createMenu()]),
       color: this.color,
     });
@@ -86,6 +97,11 @@ export class AddRestaurantComponent implements OnInit {
 
     // get max menus allowed
     this.getMenuMaxCount();
+  }
+
+  // to prevent error of changed after checked error
+  ngAfterViewChecked() {
+    this.changeDetector.detectChanges();
   }
 
   createMenu(): FormGroup {
@@ -182,6 +198,25 @@ export class AddRestaurantComponent implements OnInit {
     this.restaurant.address = this.address;
     this.restaurant.phone = this.phone;
     this.restaurant.color = this.selectedColor;
+    this.restaurant.hostedInternal = this.selectedMenuOption === 'internal';
+  }
+
+  onMenuOptionChange(menuOption) {
+    if (menuOption === 'external') {
+      this.menus = this.restaurantForm.get('menus') as FormArray;
+      this.menuFiles.clear();
+      this.menuFilesValid.clear();
+      this.menus.clear();
+
+      this.restaurantForm
+        .get('externalMenuLink')
+        .setValidators(Validators.required);
+      this.restaurantForm.get('externalMenuLink').updateValueAndValidity();
+    } else {
+      this.restaurantForm.get('externalMenuLink').reset();
+      this.restaurantForm.get('externalMenuLink').clearValidators();
+      this.restaurantForm.get('externalMenuLink').updateValueAndValidity();
+    }
   }
 
   onSubmit() {

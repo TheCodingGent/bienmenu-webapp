@@ -13,4 +13,6 @@ export interface Restaurant {
   rating: Number;
   color: string;
   tracingEnabled: boolean;
+  externalMenuLink: string;
+  hostedInternal: boolean;
 }

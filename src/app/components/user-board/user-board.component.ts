@@ -5,6 +5,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { Location } from '@angular/common';
 import { UserService } from 'src/app/services/user.service';
 import { CollapseComponent } from 'angular-bootstrap-md';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-board',
@@ -21,7 +22,8 @@ export class UserBoardComponent implements OnInit {
     private restaurantService: RestaurantService,
     private tokenStorageService: TokenStorageService,
     private userService: UserService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -57,5 +59,9 @@ export class UserBoardComponent implements OnInit {
         this.enableAdd = false;
       }
     );
+  }
+
+  goToRoute(url: string): void {
+    this.router.navigateByUrl(url);
   }
 }

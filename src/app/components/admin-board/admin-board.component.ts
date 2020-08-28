@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Restaurant } from 'src/app/models/restaurant';
 import { RestaurantService } from 'src/app/services/restaurant.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-board',
@@ -15,7 +16,8 @@ export class AdminBoardComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -34,5 +36,9 @@ export class AdminBoardComponent implements OnInit {
     this.restaurantService
       .getRestaurants()
       .subscribe((restaurants) => (this.restaurants = restaurants));
+  }
+
+  goToRoute(url: string): void {
+    this.router.navigateByUrl(url);
   }
 }

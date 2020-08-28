@@ -1,5 +1,5 @@
 <div class="qr-code-viewer container-fluid">
-  <div class="qr-code-viewer-content">
+  <div class="qr-code-viewer-content container">
     <div class="top-notice alert alert-info">
       If you would like a custom QR code tailored specifically for your
       restaurant and brand or if you would like us to print and deliver your QR
@@ -9,36 +9,40 @@
       Canada: +1(514)755-9103<br />
       US: +1(214)799-7058
     </div>
-    <div class="d-flex">
-      <div class="card card-container p-2">
-        <div #qrcodecard>
-          <div class="card-instructions">
-            <p *ngIf="language == 'FR' || language == 'FR/EN'">
-              Scannez pour le menu
-            </p>
-            <p *ngIf="language == 'ES' || language == 'ES/EN'">
-              Escanear para el menu
-            </p>
-            <p
-              *ngIf="
-                language == 'EN' || language == 'FR/EN' || language == 'ES/EN'
-              "
-            >
-              Scan for the menu
-            </p>
+    <div class="row">
+      <div class="col-md-auto">
+        <div class="card card-container p-2">
+          <div #qrcodecard>
+            <div class="card-instructions">
+              <p *ngIf="language == 'FR' || language == 'FR/EN'">
+                Scannez pour le menu
+              </p>
+              <p *ngIf="language == 'ES' || language == 'ES/EN'">
+                Escanear para el menu
+              </p>
+              <p
+                *ngIf="
+                  language == 'EN' || language == 'FR/EN' || language == 'ES/EN'
+                "
+              >
+                Scan for the menu
+              </p>
+            </div>
+            <app-qrcode-card-svg [color]="restaurantColor">
+            </app-qrcode-card-svg>
+            <qrcode
+              class="qr-code"
+              [qrdata]="restaurantQrCode"
+              [width]="147"
+              [elementType]="'url'"
+              [errorCorrectionLevel]="'M'"
+            ></qrcode>
           </div>
-          <app-qrcode-card-svg [color]="restaurantColor"> </app-qrcode-card-svg>
-          <qrcode
-            class="qr-code"
-            [qrdata]="restaurantQrCode"
-            [width]="145"
-            [elementType]="'url'"
-            [errorCorrectionLevel]="'M'"
-          ></qrcode>
         </div>
       </div>
-      <div class="flex-grow-1">
+      <div class="col-md-auto">
         <div class="d-flex flex-column options-container">
+          <div class="vertical-divider"></div>
           <div class="replication-select">
             <select
               class="browser-default custom-select"
@@ -48,6 +52,7 @@
               <option value="4">4 x Page</option>
             </select>
           </div>
+          <div class="vertical-divider"></div>
           <div class="language-select">
             <select
               class="browser-default custom-select"
@@ -60,14 +65,17 @@
               <option value="ES/EN">Español/English</option>
             </select>
           </div>
-          <button
-            mat-raised-button
-            type="button"
-            class="download-btn btn"
-            (click)="downloadQrCode()"
-          >
-            Download
-          </button>
+          <div class="vertical-divider"></div>
+          <div>
+            <button
+              mat-raised-button
+              type="button"
+              class="download-btn btn btn-block"
+              (click)="downloadQrCode()"
+            >
+              Download
+            </button>
+          </div>
         </div>
       </div>
     </div>

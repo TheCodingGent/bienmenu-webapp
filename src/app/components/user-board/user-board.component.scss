@@ -1,11 +1,18 @@
 .user-board {
-  padding-top: 100px;
+  margin: 70px 0 70px 0;
+  position: absolute;
+  overflow: auto;
+  display: flex;
 }
 
 .user-board h2 {
   padding: 20px 0 50px 0;
   font-family: "Lobster Two";
   text-align: center;
+}
+
+.user-board button {
+  margin: 5px 0 5px 0;
 }
 
 .add-new {

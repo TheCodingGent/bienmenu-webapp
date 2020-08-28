@@ -5,8 +5,10 @@
   <div class="restaurant-detail-content container">
     <div *ngIf="restaurant">
       <h2>{{ restaurant.name }} Details</h2>
-      <div class="list-group list-group-root">
-        <div class="list-group-item restaurant-detail-section-header">
+      <div class="basic-info list-group">
+        <div
+          class="list-group-item first-item restaurant-detail-section-header"
+        >
           <h4>Basic Info</h4>
         </div>
         <div class="list-group-item">
@@ -21,132 +23,152 @@
           >{{ restaurant.address }}
         </div>
         <div class="list-group-item" *ngIf="userHasContactTracing">
-          <div class="d-flex contact-tracing-setting">
-            <span class="restaurant-detail-field">Contact Tracing: </span>
-            <div
-              class="enabled-disabled"
-              *ngIf="restaurant.tracingEnabled"
-              style="padding: 0 30px 0 15px; color: green;"
-            >
-              Enabled
+          <div class="row restaurant-setting">
+            <div class="col-md-2">
+              <span class="restaurant-detail-field">Contact Tracing: </span>
             </div>
-            <div
-              class="enabled-disabled"
-              *ngIf="!restaurant.tracingEnabled"
-              style="padding: 0 30px 0 15px; color: red;"
-            >
-              Disabled
-            </div>
-            <div class="contact-tracing-select">
-              <select
-                class="browser-default custom-select"
-                [(ngModel)]="selectedCTSetting"
-                (ngModelChange)="onChange($event)"
+            <div class="col-md-auto">
+              <div
+                class="enabled-disabled"
+                *ngIf="restaurant.tracingEnabled"
+                style="color: green"
               >
-                <option value="true">Enable Contact Tracing</option>
-                <option value="false">Disable Contact Tracing</option>
-              </select>
+                Enabled
+              </div>
+              <div
+                class="enabled-disabled"
+                *ngIf="!restaurant.tracingEnabled"
+                style="color: red"
+              >
+                Disabled
+              </div>
             </div>
-            <div class="tracing-btn">
+            <div class="col-md-auto">
+              <div class="contact-tracing-select">
+                <select
+                  class="browser-default custom-select"
+                  [(ngModel)]="selectedCTSetting"
+                  (ngModelChange)="onChangeCT($event)"
+                >
+                  <option value="true">Enable Contact Tracing</option>
+                  <option value="false">Disable Contact Tracing</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="tracing-btn">
+                <button
+                  mat-raised-button
+                  type="button"
+                  class="btn"
+                  (click)="saveContactTracing()"
+                  [disabled]="
+                    selectedCTSetting == restaurant.tracingEnabled ||
+                    isCTSettingSubmitted
+                  "
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item" *ngIf="!hostedInternal">
+          <div class="row restaurant-setting">
+            <div class="col-md-3">
+              <span class="restaurant-detail-field">Menus available at:</span>
+            </div>
+            <div class="col-md-3">
+              <div class="enabled-disabled">
+                {{ restaurant.externalMenuLink }}
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="setting-btn" *ngIf="!hostedInternal">
+                <button
+                  mat-raised-button
+                  type="button"
+                  class="btn"
+                  (click)="saveMenuHostingSetting()"
+                  [disabled]="isHostingSettingSubmitted"
+                >
+                  Manage Menus on BienMenu
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vertical-divider"></div>
+      <div class="menus list-group" *ngIf="hostedInternal">
+        <div
+          class="list-group-item first-item restaurant-detail-section-header"
+        >
+          <h4>Restaurant Menus</h4>
+        </div>
+
+        <div
+          *ngFor="let menu of restaurant.menus; let i = index"
+          class="list-group-item"
+        >
+          <div class="row menu-row justify-content-between">
+            <div class="col-md-10">
+              <span class="restaurant-detail-field">Menu Name: </span
+              >{{ menu.name }}
+            </div>
+            <div class="col-md-auto">
               <button
                 mat-raised-button
                 type="button"
-                class="btn"
-                (click)="saveContactTracing()"
-                [disabled]="
-                  selectedCTSetting == restaurant.tracingEnabled ||
-                  isCTSettingSubmitted
-                "
+                class="delete-btn btn btn-block"
+                (click)="deleteMenu(menu, restaurant._id)"
               >
-                Save
+                Delete Menu
               </button>
             </div>
           </div>
-          <!-- <div class="d-flex contact-tracing-setting">
-            <div>
-              <span class="restaurant-detail-field">Contact Tracing: </span
-              >{{ getContactTracingValue() }}
+          <div class="row menu-row justify-content-between">
+            <div class="col-md-10">
+              <span class="restaurant-detail-field">Last Updated: </span
+              >{{ formatDate(menu.lastupdated) }}
             </div>
-            <div class="contact-tracing-toggle">
-              <mdb-checkbox [(ngModel)]="contactTracingChecked"></mdb-checkbox>
-            </div>
-            <div class="tracing-btn">
+            <div class="col-md-auto">
               <button
                 mat-raised-button
                 type="button"
-                class="btn"
-                (click)="saveContactTracing()"
-                [disabled]="
-                  contactTracingChecked == restaurant.tracingEnabled ||
-                  isSettingUpdatedSubmitted
-                "
+                class="btn btn-block"
+                (click)="openModal('updatemenumodal' + menu._id, i)"
+                [disabled]="!menuUpdateAllowed"
               >
-                Save
+                Update Menu
               </button>
             </div>
-          </div> -->
-        </div>
-        <div class="list-group-item restaurant-detail-section-header">
-          <h4>Restaurant Menus</h4>
-        </div>
-        <div class="menus list-group">
-          <ul>
-            <li
-              *ngFor="let menu of restaurant.menus; let i = index"
-              class="list-group-item"
-            >
-              <div class="menu-column d-flex flex-column">
-                <div class="menu-row d-flex justify-content-between">
-                  <span class="restaurant-detail-field">{{ menu.name }}</span>
-                  <button
-                    mat-raised-button
-                    type="button"
-                    class="delete-btn btn"
-                    (click)="deleteMenu(menu, restaurant._id)"
-                  >
-                    Delete Menu
-                  </button>
-                </div>
-                <div class="menu-row d-flex justify-content-between">
-                  <div>
-                    <span class="restaurant-detail-field"
-                      >Menu File Last Updated: </span
-                    >{{ formatDate(menu.lastupdated) }}
-                  </div>
-                  <button
-                    mat-raised-button
-                    type="button"
-                    class="btn"
-                    (click)="openModal('updatemenumodal' + menu._id, i)"
-                    [disabled]="!menuUpdateAllowed"
-                  >
-                    Update Menu
-                  </button>
-                </div>
-                <app-update-menu
-                  [restaurantId]="restaurant._id"
-                  [menu]="menu"
-                  (success)="updateSuccess($event)"
-                ></app-update-menu>
-                <div
-                  class="menu-update-alert alert alert-success"
-                  *ngIf="menuUpdating == i && success"
-                >
-                  Menu updated successfully!
-                </div>
+            <div class="col-md-auto">
+              <div
+                class="menu-update-alert alert alert-success"
+                *ngIf="menuUpdating == i && success"
+              >
+                Menu updated successfully!
               </div>
-            </li>
-          </ul>
+            </div>
+            <app-update-menu
+              [restaurantId]="restaurant._id"
+              [menu]="menu"
+              (success)="updateSuccess($event)"
+            ></app-update-menu>
+          </div>
         </div>
       </div>
-      <div class="form-footer d-flex flex-column">
+      <div class="d-flex flex-column">
         <div class="add">
           <button
             mat-raised-button
             type="button"
             class="add-btn btn"
             (click)="openModal('addmenumodal', -1)"
-            [disabled]="!menuUpdateAllowed || maxMenuCountReached"
+            [disabled]="
+              !menuUpdateAllowed || maxMenuCountReached || !hostedInternal
+            "
           >
             Add Menu
           </button>
@@ -169,13 +191,12 @@
               <button mat-raised-button class="btn">Upgrade Now</button>
             </a>
           </div>
-
           <app-add-menu
             [restaurant]="restaurant"
             (closed)="onClosedModal($event)"
           ></app-add-menu>
         </div>
-        <div>
+        <div class="delete">
           <button
             mat-raised-button
             type="button"
