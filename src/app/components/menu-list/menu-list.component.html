@@ -55,4 +55,7 @@
     </div>
   </div>
 </div>
-<app-contact-tracing (closed)="onClosedModal($event)"></app-contact-tracing>
+<app-contact-tracing
+  (closed)="onClosedModal($event)"
+  [province]="currentRestaurant.province"
+></app-contact-tracing>

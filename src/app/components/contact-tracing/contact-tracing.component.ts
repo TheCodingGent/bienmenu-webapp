@@ -24,6 +24,7 @@ import { CheckboxComponent, ModalOptions } from 'angular-bootstrap-md';
   styleUrls: ['./contact-tracing.component.scss'],
 })
 export class ContactTracingComponent implements OnInit {
+  @Input() province: string;
   @Output() closed = new EventEmitter<boolean>();
   @ViewChild('contacttracingmodal') contacttracingmodal;
 

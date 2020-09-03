@@ -29,6 +29,14 @@
         </button>
       </div>
       <div class="modal-body mx-3">
+        <div *ngIf="province === 'QC'">
+          Pour votre sécurité et celle de nos employés, veuillez prendre le
+          temps de remplir notre formulaire pour la recherche des contacts en
+          raison du COVID-19. Vos informations resteront strictement
+          confidentielles et ne seront utilisées que pour la recherche des
+          contacts. Nous vous remercions de nous aider à assurer notre sécurité
+          à tous.
+        </div>
         <div>
           For your safety and the safety of our employees please take the time
           to fill in our form for contact tracing due to COVID-19. Your
@@ -47,7 +55,7 @@
               mdbValidate
               required
             />
-            <label for="fullname">Full Name</label>
+            <label for="fullname">Name</label>
             <mdb-error
               *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)"
             >
@@ -91,7 +99,7 @@
               mdbValidate
               required
             />
-            <label for="phone">Phone Number</label>
+            <label for="phone">Telephone</label>
             <mdb-error *ngIf="phone.invalid && (phone.dirty || phone.touched)">
               <span *ngIf="phone.errors.required"
                 >Phone number is required</span
@@ -105,11 +113,16 @@
             </mdb-success>
           </div>
           <div class="agreement-checkbox">
-            <mdb-checkbox formControlName="terms"
-              >By clicking this box I agree to the
-              <a href="https://www.bien-menu.com/privacy" target="_blank"
-                >terms and conditions</a
-              >.
+            <mdb-checkbox formControlName="terms">
+              <div>
+                By clicking this box I agree to the
+                <span *ngIf="province === 'QC'">
+                  / En cochant cette boîte, j'accepte les
+                </span>
+                <a href="https://www.bien-menu.com/terms" target="_blank"
+                  >terms & conditions</a
+                >.
+              </div>
             </mdb-checkbox>
           </div>
         </form>

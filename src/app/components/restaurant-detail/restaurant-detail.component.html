@@ -111,7 +111,7 @@
           *ngFor="let menu of restaurant.menus; let i = index"
           class="list-group-item"
         >
-          <div class="row menu-row justify-content-between">
+          <div class="row menu-row">
             <div class="col-md-10">
               <span class="restaurant-detail-field">Menu Name: </span
               >{{ menu.name }}
@@ -127,7 +127,7 @@
               </button>
             </div>
           </div>
-          <div class="row menu-row justify-content-between">
+          <div class="row menu-row">
             <div class="col-md-10">
               <span class="restaurant-detail-field">Last Updated: </span
               >{{ formatDate(menu.lastupdated) }}
@@ -143,11 +143,8 @@
                 Update Menu
               </button>
             </div>
-            <div class="col-md-auto">
-              <div
-                class="menu-update-alert alert alert-success"
-                *ngIf="menuUpdating == i && success"
-              >
+            <div class="col-md-auto" *ngIf="menuUpdating == i && success">
+              <div class="menu-update-alert alert alert-success">
                 Menu updated successfully!
               </div>
             </div>
