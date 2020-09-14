@@ -242,7 +242,6 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     this.restaurantService
       .addRestaurantForUser(this.restaurant)
       .subscribe((restaurant) => {
-        console.log(restaurant);
         this.userService.updateRestaurantCount().subscribe(
           (_) => {
             console.log('Restaurant updated successfully');

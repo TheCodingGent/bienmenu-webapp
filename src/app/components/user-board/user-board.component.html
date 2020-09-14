@@ -16,9 +16,9 @@
                     <button
                       mat-raised-button
                       class="btn btn-block"
-                      (click)="goToRoute('/menus/' + restaurant._id)"
+                      (click)="goToRoute('/create-menu')"
                     >
-                      View Menus
+                      Create Menu
                     </button>
                   </div>
                   <div class="col-sm-auto">
@@ -28,6 +28,15 @@
                       (click)="goToRoute('/detail/' + restaurant._id)"
                     >
                       Manage Menus
+                    </button>
+                  </div>
+                  <div class="col-sm-auto">
+                    <button
+                      mat-raised-button
+                      class="btn btn-block"
+                      (click)="goToRoute('/menus/' + restaurant._id)"
+                    >
+                      View Menus
                     </button>
                   </div>
                   <div class="col-sm-2">

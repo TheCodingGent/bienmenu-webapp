@@ -23,6 +23,8 @@ import { QrCodeViewerComponent } from './components/qr-code-viewer/qr-code-viewe
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
 import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.component';
+import { CreateMenuComponent } from './components/create-menu/create-menu.component';
+import { FoodItemManagerComponent } from './components/food-item-manager/food-item-manager.component';
 
 const externalUrlProvider = new InjectionToken('externalUrlRedirectResolver');
 
@@ -53,6 +55,8 @@ const routes: Routes = [
   { path: 'add', component: AddRestaurantComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserBoardComponent, canActivate: [AuthGuard] },
+  { path: 'create-menu', component: CreateMenuComponent },
+  { path: 'food-items', component: FoodItemManagerComponent },
   { path: 'menus/:id', component: MenuListComponent },
   {
     matcher: (url) => {

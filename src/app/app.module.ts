@@ -38,6 +38,8 @@ import { ContactTracingComponent } from './components/contact-tracing/contact-tr
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
 import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.component';
+import { CreateMenuComponent } from './components/create-menu/create-menu.component';
+import { FoodItemManagerComponent } from './components/food-item-manager/food-item-manager.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.
     SuccessComponent,
     CancelComponent,
     PricingPlansComponent,
+    CreateMenuComponent,
+    FoodItemManagerComponent,
   ],
   imports: [
     BrowserModule,

@@ -34,6 +34,16 @@
       </li>
       <li class="nav-item">
         <a
+          href="/food-items"
+          class="nav-link waves-light"
+          *ngIf="isLoggedIn"
+          routerLink="food-items"
+          mdbWavesEffect
+          >Food Items</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
           href="/pricing-plans"
           class="nav-link waves-light"
           *ngIf="!isLoggedIn"
