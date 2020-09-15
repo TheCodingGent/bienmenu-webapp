@@ -4,4 +4,6 @@ export class FoodItem {
   description: string;
   imageUrl: string;
   tags: string[];
+  price: number;
+  promotionPrice: number;
 }
