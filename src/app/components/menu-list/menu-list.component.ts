@@ -119,17 +119,20 @@ export class MenuListComponent implements OnInit {
   }
 
   openMenu(filename: string) {
-    console.log('menu clicked');
     this.isOpeningMenu = true;
+
+    var windowReference = window.open();
+
     this.restaurantService
       .getMenuForRestaurant(this.currentRestaurantId, filename)
       .subscribe(
         (data) => {
           var file = new Blob([data], { type: 'application/pdf' });
-          //var fileURL = URL.createObjectURL(file);
-          this.pdfSrc = URL.createObjectURL(file);
+          var fileURL = URL.createObjectURL(file);
+          //this.pdfSrc = URL.createObjectURL(file);
           this.isOpeningMenu = false;
           //window.open(fileURL);
+          windowReference.location.href = fileURL;
         },
         (err) => {
           console.log(
