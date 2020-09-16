@@ -126,10 +126,10 @@ export class MenuListComponent implements OnInit {
       .subscribe(
         (data) => {
           var file = new Blob([data], { type: 'application/pdf' });
-          var fileURL = URL.createObjectURL(file);
-          //this.pdfSrc = URL.createObjectURL(file);
+          //var fileURL = URL.createObjectURL(file);
+          this.pdfSrc = URL.createObjectURL(file);
           this.isOpeningMenu = false;
-          window.open(fileURL);
+          //window.open(fileURL);
         },
         (err) => {
           console.log(
