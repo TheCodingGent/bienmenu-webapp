@@ -40,6 +40,7 @@ import { CancelComponent } from './components/cancel/cancel.component';
 import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.component';
 import { CreateMenuComponent } from './components/create-menu/create-menu.component';
 import { FoodItemManagerComponent } from './components/food-item-manager/food-item-manager.component';
+import { AddFoodItemComponent } from './components/add-food-item/add-food-item.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { FoodItemManagerComponent } from './components/food-item-manager/food-it
     PricingPlansComponent,
     CreateMenuComponent,
     FoodItemManagerComponent,
+    AddFoodItemComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,86 @@
+<div
+  mdbModal
+  #addfooditemmodal="mdbModal"
+  class="modal fade left"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Add Food Item</h4>
+        <button
+          type="button"
+          class="close"
+          #closeButton
+          mat-raised-button
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="close()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <form [formGroup]="foodItemForm">
+          <div class="md-form">
+            <mdb-icon fas icon="utensils" class="prefix grey-text"></mdb-icon>
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-control"
+              mdbInput
+              mdbValidate
+              required
+            />
+            <label for="name">Food item name</label>
+            <mdb-error
+              *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)"
+            >
+              <span *ngIf="f.name.errors.required"
+                >Food item name is required</span
+              >
+              <span *ngIf="f.name.errors.duplicate"
+                >Food item name is already in use, food item names must be
+                unique</span
+              >
+            </mdb-error>
+            <mdb-success
+              *ngIf="f.name.valid && (f.name.dirty || f.name.touched)"
+              >Valid
+            </mdb-success>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex flex-column justify-content-center">
+        <button
+          type="button"
+          class="btn"
+          id="saveButton"
+          data-dismiss="modal"
+          mdbWavesEffect
+          mat-raised-button
+          (click)="saveFoodItem()"
+          [disabled]="
+            foodItemForm.invalid || (isSubmitted && !isOperationFailed)
+          "
+        >
+          Save
+        </button>
+        <!-- <div class="alert alert-danger" *ngIf="isOperationFailed">
+          Failed to add menu...either you have exceeded the limit of allowed
+          menus or there's an issue with the server.
+        </div>
+        <div class="alert alert-danger" *ngIf="!isValidFile && fileToUpload">
+          File must not exceed 5 MB and must be in PDF format...
+        </div>
+        <div class="alert alert-info" *ngIf="isSubmitted && !isOperationFailed">
+          Menu is uploading...this window will close if the menu is added
+          successfully!
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

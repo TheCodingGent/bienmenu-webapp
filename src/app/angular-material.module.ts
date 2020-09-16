@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatSidenavModule,
     MatListModule,
     MatSlideToggleModule,
+    MatExpansionModule,
   ],
   exports: [
     MatToolbarModule,
@@ -40,6 +42,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatSidenavModule,
     MatListModule,
     MatSlideToggleModule,
+    MatExpansionModule,
   ],
   providers: [],
 })

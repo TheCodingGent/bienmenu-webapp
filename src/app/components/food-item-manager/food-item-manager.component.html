@@ -1,7 +1,36 @@
 <div class="food-item-manager container-fluid">
   <div class="food-item-manager-content">
-    <div>
-      <p>food-item-manager works!</p>
+    <div class="example-action-buttons">
+      <button mat-button (click)="accordion.openAll()">Expand All</button>
+      <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+    </div>
+
+    <mat-accordion class="example-headers-align" multi>
+      <div *ngFor="let foodItem of foodItems">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> {{ foodItem.name }} </mat-panel-title>
+            <mat-panel-description>
+              ${{ foodItem.price }}
+              <mat-icon>fastfood</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div>
+            <p>{{ foodItem.description }}</p>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </mat-accordion>
+    <div class="add">
+      <button
+        mat-raised-button
+        type="button"
+        class="add-btn btn"
+        (click)="openModal('addfooditemmodal')"
+      >
+        Add Food Item
+      </button>
+      <app-add-food-item (closed)="onClosedModal($event)"></app-add-food-item>
     </div>
   </div>
 </div>
