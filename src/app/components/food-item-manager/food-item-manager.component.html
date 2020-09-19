@@ -1,11 +1,16 @@
 <div class="food-item-manager container-fluid">
   <div class="food-item-manager-content">
     <div class="example-action-buttons">
-      <button mat-button (click)="accordion.openAll()">Expand All</button>
-      <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+      <button mat-raised-button (click)="accordion.openAll()">
+        Expand All
+      </button>
+      <div class="divider"></div>
+      <button mat-raised-button (click)="accordion.closeAll()">
+        Collapse All
+      </button>
     </div>
 
-    <mat-accordion class="example-headers-align" multi>
+    <mat-accordion class="food-items-accordion" multi>
       <div *ngFor="let foodItem of foodItems">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
@@ -16,7 +21,29 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div>
-            <p>{{ foodItem.description }}</p>
+            <div>
+              {{ foodItem.description }}
+            </div>
+            <div class="vertical-divider"></div>
+            <div><span>Calories: </span>{{ foodItem.calories }}</div>
+            <div class="vertical-divider"></div>
+            <div>
+              <mat-chip-list aria-label="Fish selection">
+                <div *ngFor="let tag of foodItem.tags">
+                  <mat-chip color="primary" selected>{{ tag }}</mat-chip>
+                </div>
+              </mat-chip-list>
+            </div>
+            <div>
+              <button
+                mat-raised-button
+                type="button"
+                class="edit-btn btn float-right"
+                (click)="openModal('addFoodItemModal', foodItem)"
+              >
+                Edit
+              </button>
+            </div>
           </div>
         </mat-expansion-panel>
       </div>
@@ -26,11 +53,14 @@
         mat-raised-button
         type="button"
         class="add-btn btn"
-        (click)="openModal('addfooditemmodal')"
+        (click)="openModal('addFoodItemModal')"
       >
         Add Food Item
       </button>
-      <app-add-food-item (closed)="onClosedModal($event)"></app-add-food-item>
+      <app-add-food-item
+        #addFoodItem
+        (closed)="onClosedModal($event)"
+      ></app-add-food-item>
     </div>
   </div>
 </div>

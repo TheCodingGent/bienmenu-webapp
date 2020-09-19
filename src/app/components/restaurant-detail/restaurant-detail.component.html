@@ -137,7 +137,7 @@
                 mat-raised-button
                 type="button"
                 class="btn btn-block"
-                (click)="openModal('updatemenumodal' + menu._id, i)"
+                (click)="openModal('updateMenuModal' + menu._id, i)"
                 [disabled]="!menuUpdateAllowed"
               >
                 Update Menu
@@ -162,7 +162,7 @@
             mat-raised-button
             type="button"
             class="add-btn btn"
-            (click)="openModal('addmenumodal', -1)"
+            (click)="openModal('addMenuModal', -1)"
             [disabled]="
               !menuUpdateAllowed || maxMenuCountReached || !hostedInternal
             "

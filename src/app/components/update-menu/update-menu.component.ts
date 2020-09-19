@@ -23,10 +23,10 @@ export class UpdateMenuComponent implements OnInit {
   @Input() restaurantId: string;
   @Input() menu: Menu;
   @Output() success = new EventEmitter<boolean>();
-  @ViewChild('updatemenumodal') updatemenumodal;
+  @ViewChild('updateMenuModal') updatemenumodal;
   @ViewChild('menufile') menuFile: ElementRef;
 
-  id = 'updatemenumodal'; // modal id used by modal service
+  id = 'updateMenuModal'; // modal id used by modal service
 
   fileToUpload: File;
   isOperationFailed = false;

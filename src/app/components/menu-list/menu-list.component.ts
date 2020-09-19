@@ -88,7 +88,7 @@ export class MenuListComponent implements OnInit {
             );
           }
         }
-      }, 3000);
+      }, 2000);
     }
   }
 

@@ -1,4 +1,4 @@
-export class FoodItem {
+export interface FoodItem {
   _id: string;
   name: string;
   description: string;
@@ -6,4 +6,5 @@ export class FoodItem {
   tags: string[];
   price: number;
   promotionPrice: number;
+  calories: number;
 }

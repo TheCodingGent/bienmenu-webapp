@@ -31,10 +31,9 @@ import { FormatFilename } from 'src/app/helpers/utilities';
 export class AddMenuComponent implements OnInit {
   @Input() restaurant: Restaurant;
   @Output() closed = new EventEmitter<boolean>();
-  @ViewChild('addmenumodal') addmenumodal;
-  @ViewChild('menufile') menuFile: ElementRef;
+  @ViewChild('addMenuModal') addMenuModal;
 
-  id = 'addmenumodal'; // modal id used by modal service
+  id = 'addMenuModal'; // modal id used by modal service
 
   isOperationFailed = false;
   isValidFile = false;
@@ -77,13 +76,13 @@ export class AddMenuComponent implements OnInit {
 
   // open modal
   open(): void {
-    this.addmenumodal.show();
+    this.addMenuModal.show();
   }
 
   // close modal
   close(): void {
     this.menuForm.reset();
-    this.addmenumodal.hide();
+    this.addMenuModal.hide();
     this.closed.emit(true);
   }
 

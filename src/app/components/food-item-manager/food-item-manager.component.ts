@@ -1,42 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { FoodItem } from 'src/app/models/food-item';
+import { FoodItemService } from 'src/app/services/food-item.service';
 import { ModalService } from 'src/app/services/modal.service';
-
-const foodItems = {
-  foodItems: [
-    {
-      _id: 'abcd',
-      name: 'foodItem1',
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      imageUrl: 'some-url',
-      tags: ['vegetrian', 'spicy'],
-      price: 15,
-      promotionPrice: 12,
-    },
-    {
-      _id: 'efgh',
-      name: 'foodItem2',
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      imageUrl: 'some-url',
-      tags: ['vegetrian', 'spicy'],
-      price: 10,
-      promotionPrice: 7,
-    },
-    {
-      _id: 'ijkl',
-      name: 'foodItem3',
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      imageUrl: 'some-url',
-      tags: ['vegetrian', 'spicy'],
-      price: 21,
-      promotionPrice: 8,
-    },
-  ],
-};
 
 @Component({
   selector: 'app-food-item-manager',
@@ -45,21 +11,40 @@ const foodItems = {
 })
 export class FoodItemManagerComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
+  @ViewChild('addFoodItem') addFoodItem;
 
   foodItems: FoodItem[];
 
-  constructor(private modalService: ModalService) {
-    this.foodItems = foodItems.foodItems;
-    console.log(this.foodItems);
+  constructor(
+    private modalService: ModalService,
+    private foodItemService: FoodItemService
+  ) {}
+
+  ngOnInit(): void {
+    this.getUserFoodItems();
   }
 
-  ngOnInit(): void {}
-
-  openModal(id: string) {
+  openModal(id: string, foodItem?: any) {
+    if (foodItem) {
+      this.addFoodItem.isEditing = true;
+      this.addFoodItem.currentFoodItem = foodItem;
+    }
     this.modalService.open(id);
   }
 
-  onClosedModal(_) {
-    this.ngOnInit();
+  onClosedModal(foodItem: FoodItem) {
+    if (foodItem) {
+      const i = this.foodItems.findIndex((item) => item._id === foodItem._id);
+      // replace if exists
+      if (i > -1) this.foodItems[i] = foodItem;
+      // add if does not exist
+      else this.foodItems.push(foodItem);
+    }
+  }
+
+  getUserFoodItems(): void {
+    this.foodItemService
+      .getFoodItemsForUser()
+      .subscribe((data) => (this.foodItems = data.foodItems));
   }
 }
