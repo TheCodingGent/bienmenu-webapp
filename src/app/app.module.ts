@@ -40,6 +40,8 @@ import { CancelComponent } from './components/cancel/cancel.component';
 import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.component';
 import { CreateMenuComponent } from './components/create-menu/create-menu.component';
 import { FoodItemManagerComponent } from './components/food-item-manager/food-item-manager.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MenuSectionComponent } from './components/menu-section/menu-section.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,7 @@ import { FoodItemManagerComponent } from './components/food-item-manager/food-it
     PricingPlansComponent,
     CreateMenuComponent,
     FoodItemManagerComponent,
+    MenuSectionComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +85,7 @@ import { FoodItemManagerComponent } from './components/food-item-manager/food-it
     PdfViewerModule,
     RxReactiveFormsModule,
     ColorPickerModule,
+    DragDropModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC5OKLO-8r7Jy-SJszBQww_g7ci6n_jMGc',
       libraries: ['places'],

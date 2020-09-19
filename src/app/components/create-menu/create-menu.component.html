@@ -1,7 +1,37 @@
 <div class="create-menu container-fluid">
-  <div class="create-menu-content">
+  <div class="container">
+    <div class="d-flex flex-column ">
+      <h2>Customize your Menu</h2>
+      <div class="col-md-12">
+        <br>
+        <div class="form-group">
+          <input type="text" class="form-control" id="menu-name" [(ngModel)]="menuName" required>
+          <label for="usr">Add Menu Name</label>
+        </div>
+      </div>
+    </div>
     <div>
-      <p>create-menu works!</p>
+      <div class="drag-container col-md-3">
+        <div class="section-heading">Food Bank</div>
+        <div cdkDropList id="foodItemsList" #foodItemList="cdkDropList" [cdkDropListData]="foodItems"
+          [cdkDropListConnectedTo]="allSectionsList" class="item-list" (cdkDropListDropped)="drop($event)">
+          <div class="item-box" *ngFor="let item of foodItems" cdkDrag>{{item.name}}</div>
+        </div>
+      </div>
+      <div class="drag-container col-md-8">
+        <div class="section-heading">Menu Creator</div>
+        <div cdkDropList #sectionItemList="cdkDropList" [cdkDropListData]="menuSections"
+          (cdkDropListDropped)="drop($event)" style="cursor: move;">
+          <app-menu-section cdkDrag *ngFor="let menuSection of menuSections" [menuSection]="menuSection"
+            [allSectionsList]="allSectionsList" (sectionRemoved)="onSectionRemoved($event)">
+
+          </app-menu-section>
+          <div class="addSectionContainer">
+            <button (click)="addSection()" class="btn btn-primary btn-circle btn-circle-sm m-1"><i
+                class="fa fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

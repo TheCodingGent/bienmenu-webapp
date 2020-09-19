@@ -1,0 +1,37 @@
+.example-list {
+    border: solid 1px #ccc;
+    min-height: 130px;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .item-box {
+    padding: 8px 10px;
+    border: solid 1px #ccc;
+
+    margin: 10px 10px 10px 10px;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  input[type=text] {
+    width: 80%;
+    padding: 12px 20px;
+    margin-left: 10px;
+    margin-top: 10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  

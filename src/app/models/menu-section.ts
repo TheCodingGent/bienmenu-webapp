@@ -1,3 +1,4 @@
+import { FoodItem } from './food-item';
 import { MenuSectionItem } from './menu-section-item';
 
 export class MenuSection {
@@ -7,4 +8,5 @@ export class MenuSection {
   order: number;
   menuSectionItems: MenuSectionItem[];
   isActive: boolean;
+  foodItems: FoodItem[];
 }

@@ -1,0 +1,7 @@
+<div cdkDropList id="{{menuSection._id}}" [cdkDropListData]="menuSection.foodItems"
+  [cdkDropListConnectedTo]="allSectionsList" class="example-list" (cdkDropListDropped)="drop($event)">
+  <input id="section-name-{{menuSection._id}}" type="text" [(ngModel)]="menuSection.name" placeholder="Section Name">
+  <mdb-icon fas icon="trash-alt" class="grey-text pl-2" (click)="removeSection()" style="cursor: pointer;">
+  </mdb-icon>
+  <div class="item-box" *ngFor="let item of menuSection.foodItems" cdkDrag>{{item.name}}</div>
+</div>
