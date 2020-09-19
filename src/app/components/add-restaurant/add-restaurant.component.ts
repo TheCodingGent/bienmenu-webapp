@@ -188,7 +188,7 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  createRestaurantFromForm() {
+  buildRestaurant() {
     this.restaurant = this.restaurantForm.value;
 
     this.restaurant.country = this.country;
@@ -237,7 +237,7 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     }
 
     // build restaurant object to be sent to the server
-    this.createRestaurantFromForm();
+    this.buildRestaurant();
 
     this.restaurantService
       .addRestaurantForUser(this.restaurant)

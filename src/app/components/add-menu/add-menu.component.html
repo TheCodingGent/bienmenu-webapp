@@ -1,6 +1,6 @@
 <div
   mdbModal
-  #addmenumodal="mdbModal"
+  #addMenuModal="mdbModal"
   class="modal fade left"
   tabindex="-1"
   role="dialog"
@@ -83,8 +83,12 @@
           File must not exceed 5 MB and must be in PDF format...
         </div>
         <div class="alert alert-info" *ngIf="isSubmitted && !isOperationFailed">
-          Menu is uploading...this window will close if the menu is added
-          successfully!
+          <div class="row">
+            <div class="col-md-2">
+              <mat-spinner diameter="20"></mat-spinner>
+            </div>
+            <div class="col-md-auto">Saving menu...</div>
+          </div>
         </div>
       </div>
     </div>

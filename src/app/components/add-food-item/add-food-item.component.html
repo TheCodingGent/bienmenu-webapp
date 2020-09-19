@@ -1,0 +1,191 @@
+<div
+  mdbModal
+  #addFoodItemModal="mdbModal"
+  class="modal fade left"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+  [config]="{
+    backdrop: false,
+    ignoreBackdropClick: true,
+    keyboard: false,
+    animated: true
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Add Food Item</h4>
+        <button
+          type="button"
+          class="close"
+          #closeButton
+          mat-raised-button
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="close()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <form [formGroup]="foodItemForm">
+          <div class="md-form">
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-control"
+              mdbInput
+              mdbValidate
+              required
+            />
+            <label for="name">Name</label>
+            <mdb-error
+              *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)"
+            >
+              <span *ngIf="f.name.errors.required"
+                >Food item name is required</span
+              >
+              <span *ngIf="f.name.errors.duplicate"
+                >Food item name is already in use, food item names must be
+                unique</span
+              >
+            </mdb-error>
+            <mdb-success
+              *ngIf="f.name.valid && (f.name.dirty || f.name.touched)"
+              >Valid
+            </mdb-success>
+          </div>
+          <div class="md-form">
+            <textarea
+              type="text"
+              id="description"
+              formControlName="description"
+              class="md-textarea form-control"
+              mdbInput
+            ></textarea>
+            <label for="description">Description</label>
+          </div>
+          <div class="md-form">
+            <input
+              type="text"
+              id="price"
+              formControlName="price"
+              class="form-control"
+              mdbInput
+              mdbValidate
+              required
+            />
+            <label for="price">Price ($)</label>
+            <mdb-error
+              *ngIf="f.price.invalid && (f.price.dirty || f.price.touched)"
+            >
+              <span *ngIf="f.price.errors.required"
+                >Food item price is required</span
+              >
+              <span *ngIf="f.price.errors.pattern"
+                >Please enter a valid price</span
+              >
+            </mdb-error>
+            <mdb-success
+              *ngIf="f.price.valid && (f.price.dirty || f.price.touched)"
+              >Valid
+            </mdb-success>
+          </div>
+          <div class="md-form">
+            <input
+              type="text"
+              id="calories"
+              formControlName="calories"
+              class="form-control"
+              mdbInput
+              mdbValidate
+              required
+            />
+            <label for="calories">Calories</label>
+            <mdb-error
+              *ngIf="
+                f.calories.invalid && (f.calories.dirty || f.calories.touched)
+              "
+            >
+              <span *ngIf="f.calories.errors.pattern"
+                >Please enter a valid calorie value</span
+              >
+            </mdb-error>
+            <mdb-success
+              *ngIf="
+                f.calories.valid && (f.calories.dirty || f.calories.touched)
+              "
+              >Valid
+            </mdb-success>
+          </div>
+          <div class="md-form">
+            <mdb-icon fas icon="file-image" class="prefix grey-text"></mdb-icon>
+            <input
+              type="file"
+              #imageFile
+              (change)="handleInputFiles($event.target.files)"
+            />
+          </div>
+          <div class="md-form">
+            <mat-form-field class="tag-list">
+              <mat-chip-list #tagsChipList aria-label="Tag selection">
+                <mat-chip
+                  *ngFor="let tag of tags"
+                  [selectable]="selectable"
+                  [removable]="removable"
+                  (removed)="remove(tag)"
+                >
+                  {{ tag }}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Tags"
+                  [matChipInputFor]="tagsChipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addOnBlur"
+                  (matChipInputTokenEnd)="add($event)"
+                  mdbInput
+                  mdbValidate
+                />
+              </mat-chip-list>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex flex-column justify-content-center">
+        <button
+          type="button"
+          class="btn"
+          id="saveButton"
+          data-dismiss="modal"
+          mdbWavesEffect
+          mat-raised-button
+          (click)="saveFoodItem()"
+          [disabled]="
+            foodItemForm.invalid || (isSubmitted && !isOperationFailed)
+          "
+        >
+          Save
+        </button>
+        <div class="alert alert-danger" *ngIf="isOperationFailed">
+          Failed to add menu...either you have exceeded the limit of allowed
+          menus or there's an issue with the server.
+        </div>
+        <div class="alert alert-danger" *ngIf="!isValidFile && fileToUpload">
+          Image file must not exceed 5 MB and must be in one of the following
+          formats: jpeg or png.
+        </div>
+        <div class="alert alert-info" *ngIf="isSubmitted && !isOperationFailed">
+          <div class="row">
+            <div class="col-md-2">
+              <mat-spinner diameter="20"></mat-spinner>
+            </div>
+            <div class="col-md-auto">Saving food item...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
