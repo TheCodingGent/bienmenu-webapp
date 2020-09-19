@@ -71,11 +71,8 @@ import { AddFoodItemComponent } from './components/add-food-item/add-food-item.c
     PricingPlansComponent,
     CreateMenuComponent,
     FoodItemManagerComponent,
-<<<<<<< HEAD
     MenuSectionComponent,
-=======
     AddFoodItemComponent,
->>>>>>> 37b626a52b67bd7a7052f8c3267298c82b7deb92
   ],
   imports: [
     BrowserModule,
