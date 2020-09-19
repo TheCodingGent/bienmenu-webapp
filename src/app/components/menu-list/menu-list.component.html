@@ -55,7 +55,9 @@
     </div>
   </div>
 </div>
-<app-contact-tracing
-  (closed)="onClosedModal($event)"
-  [province]="currentRestaurant.province"
-></app-contact-tracing>
+<div *ngIf="currentRestaurant">
+  <app-contact-tracing
+    (closed)="onClosedModal($event)"
+    [province]="currentRestaurant.province"
+  ></app-contact-tracing>
+</div>
