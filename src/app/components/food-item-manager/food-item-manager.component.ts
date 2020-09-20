@@ -34,9 +34,11 @@ export class FoodItemManagerComponent implements OnInit {
 
   onClosedModal(foodItem: FoodItem) {
     if (foodItem) {
-      const i = this.foodItems.findIndex((item) => item._id === foodItem._id);
+      const index = this.foodItems.findIndex(
+        (item) => item._id === foodItem._id
+      );
       // replace if exists
-      if (i > -1) this.foodItems[i] = foodItem;
+      if (index > -1) this.foodItems[index] = foodItem;
       // add if does not exist
       else this.foodItems.push(foodItem);
     }
@@ -46,5 +48,16 @@ export class FoodItemManagerComponent implements OnInit {
     this.foodItemService
       .getFoodItemsForUser()
       .subscribe((data) => (this.foodItems = data.foodItems));
+  }
+
+  deleteFoodItem(foodItem: FoodItem) {
+    const index = this.foodItems.findIndex((item) => item._id === foodItem._id);
+    if (index > -1) {
+      this.foodItems.splice(index, 1);
+      // delete food item from database
+      this.foodItemService
+        .deletFoodItemById(foodItem._id)
+        .subscribe((data) => console.log(data));
+    }
   }
 }

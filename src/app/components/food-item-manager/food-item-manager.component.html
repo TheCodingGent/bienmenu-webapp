@@ -1,6 +1,6 @@
 <div class="food-item-manager container-fluid">
   <div class="food-item-manager-content">
-    <div class="example-action-buttons">
+    <div class="action-buttons">
       <button mat-raised-button (click)="accordion.openAll()">
         Expand All
       </button>
@@ -35,14 +35,25 @@
               </mat-chip-list>
             </div>
             <div>
-              <button
-                mat-raised-button
-                type="button"
-                class="edit-btn btn float-right"
-                (click)="openModal('addFoodItemModal', foodItem)"
-              >
-                Edit
-              </button>
+              <div class="action-buttons">
+                <button
+                  mat-raised-button
+                  type="button"
+                  class="edit-btn btn float-right"
+                  (click)="openModal('addFoodItemModal', foodItem)"
+                >
+                  Edit
+                </button>
+                <div class="divider"></div>
+                <button
+                  mat-raised-button
+                  type="button"
+                  class="delete-btn btn float-right"
+                  (click)="deleteFoodItem(foodItem)"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         </mat-expansion-panel>

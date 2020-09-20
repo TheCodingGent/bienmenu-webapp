@@ -32,7 +32,7 @@ export class FoodItemService {
 
   addFoodItem(foodItem: FoodItem): Observable<FoodItem> {
     return this.http.post<FoodItem>(
-      `${this.foodItemsApiUrl}/add`,
+      `${this.foodItemsApiUrl}/food-item/add`,
       foodItem,
       this.httpOptions
     );
@@ -40,8 +40,16 @@ export class FoodItemService {
 
   addFoodItemForUser(foodItem: FoodItem): Observable<FoodItem> {
     return this.http.post<FoodItem>(
-      `${this.foodItemsApiUrl}/add/user`,
+      `${this.foodItemsApiUrl}food-item/add/user`,
       foodItem,
+      this.httpOptions
+    );
+  }
+
+  deletFoodItemById(foodItemId: string): Observable<FoodItem> {
+    return this.http.post<FoodItem>(
+      `${this.foodItemsApiUrl}/food-item/delete`,
+      { foodItemId: foodItemId },
       this.httpOptions
     );
   }
