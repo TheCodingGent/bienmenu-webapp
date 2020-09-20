@@ -1,7 +1,7 @@
 import { MenuSection } from './menu-section';
 import { WeekDay } from '@angular/common';
 
-export interface Menu {
+export class Menu {
   _id: string;
   name: string;
   type: string;

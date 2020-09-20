@@ -1,0 +1,38 @@
+  {
+    "_id": " 5f66a2d2912cf4015c9b6aaa",
+    "name": "BienMenu Menu",
+    "type": "",
+    "filename": "",
+    "lastupdated": "9/19/2020, 8:33:15 PM",
+    "sections": [{
+        "_id": "5f66a2d291dcf4015c9b6aaa",
+        "order": "1",
+        "name": "secondsection",
+        "menuSectionItems": [{
+          "foodItemId": "ijkl",
+          "order": 1,
+          "_id": "5f66a444912cf4015c9b6ab9"
+        }]
+      },
+      {
+        "_id": "5f66a2d2912cf4015c9b6aaa",
+        "order": "1",
+        "name": "first section",
+        "menuSectionItems": [{
+            "foodItemId": "abcd",
+            "order": 1,
+            "_id": "5f66a444912cf4015c9b6ab9"
+          },
+          {
+            "foodItemId": "efgh",
+            "order": 2,
+            "_id": "5f66a444912cf4015c9b6ac8"
+          }
+        ]
+      }
+
+    ],
+    "isActive": "true",
+    "schedule": []
+
+  }

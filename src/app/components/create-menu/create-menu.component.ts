@@ -4,6 +4,13 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ObjectID } from 'bson';
 import { Subscription } from 'rxjs';
@@ -22,38 +29,36 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;
   private menuID: string;
   private menu: Menu;
-  public menuName: string;
   public foodItems: FoodItem[];
   private isEditMode = false;
 
-  public menuSections: MenuSection[] = [
-    {
-      _id: [new ObjectID()].toString(),
-      menuId: '',
-      name: '',
-      order: 1,
-      menuSectionItems: [],
-      isActive: true,
-      foodItems: [],
-    },
-  ];
+  menuForm: FormGroup;
+  ctrlMenuName: FormControl;
+  ctrlMenuSections: FormArray;
 
-  allSectionsList = ['foodItemsList', ...this.menuSections.map((_) => _._id)];
-
+  // allSectionsList = ['foodItemsList', ...this.menuSections.map((_) => _._id)];
+  allSectionsList = ['foodItemsList'];
   constructor(
     private route: ActivatedRoute,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.ctrlMenuName = this.fb.control('', Validators.required);
+    this.ctrlMenuSections = this.fb.array([]);
+    this.menuForm = this.fb.group({
+      ctrlMenuName: this.ctrlMenuName,
+      ctrlMenuSections: this.ctrlMenuSections,
+    });
+
     this.routeSub = this.route.queryParams.subscribe((params) => {
       if (params['menuID']) {
         this.menuID = params['menuID'];
-        this.menuSections = [];
         this.isEditMode = true;
       } else {
         this.menuID = [new ObjectID()].toString();
-        this.menuSections[0].menuId = this.menuID;
+        this.createSectionControl(null);
       }
       this.getFoodItems();
     });
@@ -63,14 +68,48 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     this.routeSub.unsubscribe();
   }
 
+  initSection(menuSection: MenuSection): FormGroup {
+    const generatedID = [new ObjectID()].toString();
+    this.allSectionsList.push(generatedID);
+
+    if (menuSection) {
+      return this.fb.group({
+        _id: menuSection._id,
+        menuId: menuSection.menuId,
+        name: [menuSection.name, [Validators.required]],
+        order: menuSection.order,
+        menuSectionItems: menuSection.menuSectionItems,
+        isActive: menuSection.isActive,
+        foodItems: [menuSection.foodItems],
+      });
+    } else {
+      return this.fb.group({
+        _id: generatedID,
+        menuId: this.menuID,
+        name: ['', [Validators.required]],
+        order: this.ctrlMenuSections.length + 1,
+        menuSectionItems: [[]],
+        isActive: true,
+        foodItems: [[]],
+      });
+    }
+  }
+  createSectionControl(menuSection: MenuSection) {
+    const control = <FormArray>this.menuForm.controls['ctrlMenuSections'];
+    const addrCtrl = this.initSection(menuSection);
+    control.push(addrCtrl);
+  }
+
   getMenu(_menuID: string): void {
     this.menuService.getMenu(_menuID).subscribe((data) => {
       if (data) {
         this.menu = data;
       }
-      this.menuName = this.menu.name;
-      this.menuSections = this.menu.sections;
-      this.convertMenuSectionItemToFoodItem();
+      this.ctrlMenuName.setValue(this.menu.name);
+      this.convertMenuSectionItemToFoodItem(this.menu.sections);
+      this.menu.sections.forEach((item) => {
+        this.createSectionControl(item);
+      });
     });
   }
 
@@ -86,25 +125,28 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   }
 
   addSection() {
-    const generatedID = [new ObjectID()].toString();
-    this.menuSections.push({
-      _id: generatedID,
-      menuId: this.menuID,
-      name: '',
-      order: this.menuSections.length + 1,
-      menuSectionItems: [],
-      isActive: true,
-      foodItems: [],
-    });
-    this.allSectionsList.push(generatedID);
+    this.createSectionControl(null);
   }
 
-  onSectionRemoved(_menuSection: MenuSection) {
-    this.foodItems.push(..._menuSection.foodItems);
-    this.menuSections.splice(this.menuSections.indexOf(_menuSection), 1);
+  onSectionRemoved(section) {
+    this.foodItems.push(...section.currentform.controls.foodItems.value);
+    this.allSectionsList = this.allSectionsList.filter(
+      (arrayItem) => arrayItem !== section.currentform.controls._id.value
+    );
+    const control = <FormArray>this.menuForm.controls['ctrlMenuSections'];
+    control.removeAt(section.index);
+  }
+
+  onSubmit(): void {
+    this.createMenuObject();
   }
 
   createMenuObject(): void {
+    if (!this.menu) {
+      this.menu = new Menu();
+      this.menu._id = this.menuID;
+    }
+    this.menu.name = this.ctrlMenuName.value;
     this.menu.isActive = true;
     this.menu.lastupdated = new Date().toLocaleString();
     this.menu.sections = this.convertFoodItemToMenuSectionItem();
@@ -112,23 +154,30 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     console.log(this.menu);
   }
   convertFoodItemToMenuSectionItem(): MenuSection[] {
-    this.menuSections.forEach((element, index) => {
-      const menuSectionItemList: MenuSectionItem[] = [];
-      element.menuId = this.menuID;
-      element.order = index + 1;
-      element.foodItems.forEach((item, index) => {
-        const menuSectionItem: MenuSectionItem = new MenuSectionItem();
-        menuSectionItem._id = [new ObjectID()].toString();
-        menuSectionItem.foodItemId = item._id;
-        menuSectionItem.order = index + 1;
-        menuSectionItemList.push(menuSectionItem);
-      });
-      element.menuSectionItems = menuSectionItemList;
-    });
-    return this.menuSections;
+    let menuSections: MenuSection[] = [];
+    this.ctrlMenuSections.controls.forEach(
+      (element: FormGroup, index: number) => {
+        let menuSection: MenuSection = new MenuSection();
+        const menuSectionItemList: MenuSectionItem[] = [];
+        menuSection.menuId = this.menuID;
+        menuSection.order = index + 1;
+        element.controls.foodItems.value.forEach(
+          (item: FoodItem, index: number) => {
+            const menuSectionItem: MenuSectionItem = new MenuSectionItem();
+            menuSectionItem._id = [new ObjectID()].toString();
+            menuSectionItem.foodItemId = item._id;
+            menuSectionItem.order = index + 1;
+            menuSectionItemList.push(menuSectionItem);
+          }
+        );
+        menuSection.menuSectionItems = menuSectionItemList;
+        menuSections.push(menuSection);
+      }
+    );
+    return menuSections;
   }
-  convertMenuSectionItemToFoodItem() {
-    this.menuSections.forEach((element) => {
+  convertMenuSectionItemToFoodItem(menuSections: MenuSection[]) {
+    menuSections.forEach((element) => {
       const foodItemList: FoodItem[] = [];
       element.menuSectionItems.forEach((item) => {
         foodItemList.push(
@@ -137,17 +186,26 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
       });
       element.foodItems = foodItemList;
     });
-    this.getUnAssignedFoodItems(this.foodItems);
+    this.getUnAssignedFoodItems(menuSections);
   }
 
-  getUnAssignedFoodItems(activeFoodItems: FoodItem[]) {
+  getUnAssignedFoodItems(menuSections: MenuSection[]) {
     let sectionFoodItems: FoodItem[] = [];
-    this.menuSections.forEach((item) => {
+    let activeFoodItems = this.foodItems;
+    menuSections.forEach((item) => {
       sectionFoodItems.push(...item.foodItems);
     });
     this.foodItems = activeFoodItems.filter(
       (entry1) => !sectionFoodItems.some((entry2) => entry1._id === entry2._id)
     );
+  }
+
+  getSectionControls() {
+    return (this.menuForm.get('ctrlMenuSections') as FormArray).controls;
+  }
+
+  getSectionControlsIndex(index: number) {
+    return (this.menuForm.get('ctrlMenuSections') as FormArray).controls[index];
   }
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {

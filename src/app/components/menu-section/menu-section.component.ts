@@ -1,34 +1,53 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {FoodItem} from '../../models/food-item'
+import { FormControl, FormGroup } from '@angular/forms';
+import { FoodItem } from '../../models/food-item';
 
 @Component({
   selector: 'app-menu-section',
   templateUrl: './menu-section.component.html',
-  styleUrls: ['./menu-section.component.scss']
+  styleUrls: ['./menu-section.component.scss'],
 })
 export class MenuSectionComponent implements OnInit {
-
-  @Input() menuSection;
+  @Input() index;
   @Input() allSectionsList;
-  @Output() sectionRemoved = new EventEmitter<FoodItem[]>();
-  constructor() { }
+  @Input() sectionForm: FormGroup;
+  @Output() sectionRemoved = new EventEmitter<{
+    currentform: FormGroup;
+    index: number;
+  }>();
+
+  constructor() {}
 
   ngOnInit(): void {
+    console.log(this.allSectionsList);
+    console.log(this.sectionForm.controls.foodItems);
   }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     } else {
-      transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
   }
   removeSection() {
-    this.sectionRemoved.emit(this.menuSection);
+    this.sectionRemoved.emit({
+      currentform: this.sectionForm,
+      index: this.index,
+    });
   }
 }
-
