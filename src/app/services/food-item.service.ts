@@ -40,7 +40,7 @@ export class FoodItemService {
 
   addFoodItemForUser(foodItem: FoodItem): Observable<FoodItem> {
     return this.http.post<FoodItem>(
-      `${this.foodItemsApiUrl}food-item/add/user`,
+      `${this.foodItemsApiUrl}/food-item/add/user`,
       foodItem,
       this.httpOptions
     );

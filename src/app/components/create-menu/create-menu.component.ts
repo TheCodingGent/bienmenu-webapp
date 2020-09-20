@@ -33,7 +33,7 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;
   private menuID: string;
   private menu: Menu;
-  public foodItems: FoodItem[];
+  public foodItems: FoodItem[] = [];
   private isEditMode = false;
 
   menuForm: FormGroup;
