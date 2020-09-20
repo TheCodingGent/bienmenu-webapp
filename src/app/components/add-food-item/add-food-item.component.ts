@@ -4,7 +4,6 @@ import {
   Output,
   ViewChild,
   EventEmitter,
-  Input,
 } from '@angular/core';
 import { ObjectID } from 'bson';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -127,7 +126,11 @@ export class AddFoodItemComponent implements OnInit {
   }
 
   handleInputFiles(files: FileList) {
-    this.isValidFile = ValidateFile(files.item(0), 5242880, ['jpeg', 'png']);
+    this.isValidFile = ValidateFile(files.item(0), 5242880, [
+      'jpeg',
+      'png',
+      'jpg',
+    ]);
 
     if (this.isValidFile) {
       this.fileToUpload = files.item(0);
@@ -169,8 +172,22 @@ export class AddFoodItemComponent implements OnInit {
       (data) => {
         // to-do if food item was added successfully to the db then upload the image file
         // this emits the food item back to the food item manager
-        this.close();
-        this.isSubmitted = false;
+        if (this.fileToUpload) {
+          this.fileUploadService
+            .uploadImage(
+              this.currentFoodItem._id,
+              this.fileToUpload,
+              this.currentFoodItem.imageUrl
+            )
+            .subscribe((data) => {
+              console.log(data);
+              this.close();
+              this.isSubmitted = false;
+            });
+        } else {
+          this.close();
+          this.isSubmitted = false;
+        }
       },
       (error) => {
         this.isOperationFailed = true;

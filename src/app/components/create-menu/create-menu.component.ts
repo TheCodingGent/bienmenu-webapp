@@ -3,7 +3,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -18,7 +18,9 @@ import { FoodItem } from 'src/app/models/food-item';
 import { Menu } from 'src/app/models/menu';
 import { MenuSection } from 'src/app/models/menu-section';
 import { MenuSectionItem } from 'src/app/models/menu-section-item';
+import { FoodItemService } from 'src/app/services/food-item.service';
 import { MenuService } from 'src/app/services/menu.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-create-menu',
@@ -26,6 +28,8 @@ import { MenuService } from 'src/app/services/menu.service';
   styleUrls: ['./create-menu.component.scss'],
 })
 export class CreateMenuComponent implements OnInit, OnDestroy {
+  @ViewChild('addFoodItem') addFoodItem;
+
   private routeSub: Subscription;
   private menuID: string;
   private menu: Menu;
@@ -41,7 +45,9 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private menuService: MenuService,
-    private fb: FormBuilder
+    private foodItemService: FoodItemService,
+    private fb: FormBuilder,
+    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -114,9 +120,17 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   }
 
   getFoodItems(): void {
-    this.menuService.getFoodItems().subscribe((data) => {
+    // this.menuService.getFoodItems().subscribe((data) => {
+    //   if (data) {
+    //     this.foodItems = data;
+    //   }
+    //   if (this.isEditMode) {
+    //     this.getMenu(this.menuID);
+    //   }
+    // });
+    this.foodItemService.getFoodItemsForUser().subscribe((data) => {
       if (data) {
-        this.foodItems = data;
+        this.foodItems = data.foodItems;
       }
       if (this.isEditMode) {
         this.getMenu(this.menuID);
@@ -135,6 +149,24 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     );
     const control = <FormArray>this.menuForm.controls['ctrlMenuSections'];
     control.removeAt(section.index);
+  }
+
+  openFoodItemModal(id: string, foodItem?: any) {
+    if (foodItem) {
+      this.addFoodItem.isEditing = true;
+      this.addFoodItem.currentFoodItem = foodItem;
+    }
+    this.modalService.open(id);
+  }
+
+  onClosedModal(foodItem: FoodItem) {
+    if (foodItem) {
+      const i = this.foodItems.findIndex((item) => item._id === foodItem._id);
+      // replace if exists
+      if (i > -1) this.foodItems[i] = foodItem;
+      // add if does not exist
+      else this.foodItems.push(foodItem);
+    }
   }
 
   onSubmit(): void {
