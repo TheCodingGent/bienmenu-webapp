@@ -40,8 +40,8 @@ export class QrCodeViewerComponent implements OnInit {
       const imgData = canvas.toDataURL('image/jpeg', 1.0);
       var pdf = new jsPDF('p', 'mm', 'letter');
 
-      var width = pdf.internal.pageSize.getWidth();
-      var height = pdf.internal.pageSize.getHeight();
+      var width = pdf.internal.pageSize.getWidth() - 5;
+      var height = pdf.internal.pageSize.getHeight() - 5;
 
       if (this.replication === '1') {
         pdf.addImage(imgData, 'JPEG', 0, 0, width, height);
