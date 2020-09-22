@@ -23,10 +23,7 @@ export class MenuSectionComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.allSectionsList);
-    console.log(this.sectionForm.controls.foodItems);
-  }
+  ngOnInit(): void {}
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {

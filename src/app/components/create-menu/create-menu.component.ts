@@ -255,4 +255,16 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
       );
     }
   }
+
+  isAnySectionEmpty(): boolean {
+    let isEmpty: boolean = false;
+    this.ctrlMenuSections.controls.forEach((element: FormGroup) => {
+      console.log(element.controls.foodItems.value);
+      if (element.controls.foodItems.value.length === 0) {
+        isEmpty = true;
+        return;
+      }
+    });
+    return isEmpty;
+  }
 }
