@@ -15,6 +15,8 @@ import {
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { ModalService } from 'src/app/services/modal.service';
 
+const menuBucketUrl = 'https://bienmenu.s3.amazonaws.com/menus/';
+
 @Component({
   selector: 'app-menu-list',
   templateUrl: './menu-list.component.html',
@@ -88,7 +90,7 @@ export class MenuListComponent implements OnInit {
             );
           }
         }
-      }, 3000);
+      }, 1500);
     }
   }
 
@@ -121,27 +123,31 @@ export class MenuListComponent implements OnInit {
   openMenu(filename: string) {
     this.isOpeningMenu = true;
 
-    var windowReference = window.open();
+    window.location.href = this.formatMenuUrl(
+      menuBucketUrl + this.currentRestaurant._id + '/' + filename + '.pdf'
+    );
 
-    this.restaurantService
-      .getMenuForRestaurant(this.currentRestaurantId, filename)
-      .subscribe(
-        (data) => {
-          var file = new Blob([data], { type: 'application/pdf' });
-          var fileURL = URL.createObjectURL(file);
-          //this.pdfSrc = URL.createObjectURL(file);
-          this.isOpeningMenu = false;
-          //window.open(fileURL);
-          windowReference.location.href = fileURL;
-        },
-        (err) => {
-          console.log(
-            'An error occurred while retrieving pdf file for menu...' +
-              err.message
-          );
-          this.isOpeningMenu = false;
-        }
-      );
+    // var windowReference = window.open();
+
+    // this.restaurantService
+    //   .getMenuForRestaurant(this.currentRestaurantId, filename)
+    //   .subscribe(
+    //     (data) => {
+    //       var file = new Blob([data], { type: 'application/pdf' });
+    //       var fileURL = URL.createObjectURL(file);
+    //       //this.pdfSrc = URL.createObjectURL(file);
+    //       this.isOpeningMenu = false;
+    //       //window.open(fileURL);
+    //       windowReference.location.href = fileURL;
+    //     },
+    //     (err) => {
+    //       console.log(
+    //         'An error occurred while retrieving pdf file for menu...' +
+    //           err.message
+    //       );
+    //       this.isOpeningMenu = false;
+    //     }
+    //   );
   }
 
   formatMenuUrl(url: string): string {
