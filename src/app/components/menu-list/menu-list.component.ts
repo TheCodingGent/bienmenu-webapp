@@ -123,11 +123,17 @@ export class MenuListComponent implements OnInit {
   openMenu(filename: string) {
     this.isOpeningMenu = true;
 
-    window.location.href = this.formatMenuUrl(
+    var windowReference = window.open();
+
+    windowReference.location.href = this.formatMenuUrl(
       menuBucketUrl + this.currentRestaurant._id + '/' + filename + '.pdf'
     );
 
-    // var windowReference = window.open();
+    // window.location.href = this.formatMenuUrl(
+    //   menuBucketUrl + this.currentRestaurant._id + '/' + filename + '.pdf'
+    // );
+
+    this.isOpeningMenu = false;
 
     // this.restaurantService
     //   .getMenuForRestaurant(this.currentRestaurantId, filename)
