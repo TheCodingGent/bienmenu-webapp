@@ -22,7 +22,14 @@
           </mat-expansion-panel-header>
           <div>
             <div>
-              {{ foodItem.description }}
+              <div class="row">
+                <div class="col-md-9">
+                  {{ foodItem.description }}
+                </div>
+                <div class="col-md-auto">
+                  <img width="170px" [src]="foodItem.imageUrl" />
+                </div>
+              </div>
             </div>
             <div class="vertical-divider"></div>
             <div><span>Calories: </span>{{ foodItem.calories }}</div>

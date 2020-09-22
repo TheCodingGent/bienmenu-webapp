@@ -15,6 +15,7 @@ import { FoodItem } from 'src/app/models/food-item';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { FoodItemService } from 'src/app/services/food-item.service';
 import { FormatFilename } from 'src/app/helpers/utilities';
+import { AppConfigService } from 'src/app/services/app-config.service';
 
 @Component({
   selector: 'app-add-food-item',
@@ -49,7 +50,8 @@ export class AddFoodItemComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: ModalService,
     private fileUploadService: FileUploadService,
-    private foodItemService: FoodItemService
+    private foodItemService: FoodItemService,
+    private appCofigService: AppConfigService
   ) {}
 
   ngOnInit() {
@@ -156,9 +158,19 @@ export class AddFoodItemComponent implements OnInit {
       }
 
       // update the image url
-      this.currentFoodItem.imageUrl = FormatFilename(this.currentFoodItem.name);
+      this.currentFoodItem.imageUrl = `${
+        this.appCofigService.mainS3BucketUrl
+      }/fooditems/${id}/${FormatFilename(
+        this.currentFoodItem.name
+      )}.${this.fileToUpload.name.split('.').pop()}`;
+
+      console.log(this.currentFoodItem.imageUrl);
     }
     this.currentFoodItem.tags = this.tags;
+  }
+
+  getFoodItemUrl(imageKey: string): string {
+    return this.appCofigService.mainS3BucketUrl + 'fooditems/' + imageKey;
   }
 
   saveFoodItem(): void {
@@ -177,7 +189,7 @@ export class AddFoodItemComponent implements OnInit {
             .uploadImage(
               this.currentFoodItem._id,
               this.fileToUpload,
-              this.currentFoodItem.imageUrl
+              FormatFilename(this.currentFoodItem.name)
             )
             .subscribe((data) => {
               console.log(data);

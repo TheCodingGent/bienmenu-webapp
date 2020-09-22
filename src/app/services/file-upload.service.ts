@@ -28,9 +28,11 @@ export class FileUploadService {
 
   uploadImage(foodItemId: String, image: File, name?: string): Observable<any> {
     const url = `${this.fileServerUrl}food-item/image/upload/${foodItemId}`;
-    const filename = name ? name + image.name.split('.').pop() : image.name;
+    const filename = name
+      ? name + '.' + image.name.split('.').pop()
+      : image.name;
     const formData = new FormData();
-    formData.append('image', image);
+    formData.append('image', image, filename);
     return this.http.post(url, formData);
   }
 }
