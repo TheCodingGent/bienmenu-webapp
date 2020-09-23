@@ -33,6 +33,6 @@
 
     ],
     "isActive": "true",
-    "schedule": []
+    "schedule": [false, true, true, true, false, false, true]
 
   }

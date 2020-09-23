@@ -9,5 +9,5 @@ export class Menu {
   lastupdated: string;
   sections: MenuSection[];
   isActive: boolean;
-  schedule: WeekDay[];
+  schedule: boolean[];
 }
