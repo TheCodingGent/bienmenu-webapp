@@ -160,17 +160,11 @@ export class AddFoodItemComponent implements OnInit {
       // update the image url
       this.currentFoodItem.imageUrl = `${
         this.appCofigService.mainS3BucketUrl
-      }/fooditems/${id}/${FormatFilename(
+      }foodItems/${id}/${FormatFilename(
         this.currentFoodItem.name
       )}.${this.fileToUpload.name.split('.').pop()}`;
-
-      console.log(this.currentFoodItem.imageUrl);
     }
     this.currentFoodItem.tags = this.tags;
-  }
-
-  getFoodItemUrl(imageKey: string): string {
-    return this.appCofigService.mainS3BucketUrl + 'fooditems/' + imageKey;
   }
 
   saveFoodItem(): void {
