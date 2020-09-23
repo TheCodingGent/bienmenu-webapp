@@ -101,18 +101,8 @@
               class="form-control"
               mdbInput
               mdbValidate
-              required
             />
             <label for="calories">Calories</label>
-            <mdb-error
-              *ngIf="
-                f.calories.invalid && (f.calories.dirty || f.calories.touched)
-              "
-            >
-              <span *ngIf="f.calories.errors.pattern"
-                >Please enter a valid calorie value</span
-              >
-            </mdb-error>
             <mdb-success
               *ngIf="
                 f.calories.valid && (f.calories.dirty || f.calories.touched)
