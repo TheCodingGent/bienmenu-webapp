@@ -43,6 +43,7 @@ import { FoodItemManagerComponent } from './components/food-item-manager/food-it
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MenuSectionComponent } from './components/menu-section/menu-section.component';
 import { AddFoodItemComponent } from './components/add-food-item/add-food-item.component';
+import { DisplayMenuComponent } from './components/display-menu/display-menu.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { AddFoodItemComponent } from './components/add-food-item/add-food-item.c
     FoodItemManagerComponent,
     MenuSectionComponent,
     AddFoodItemComponent,
+    DisplayMenuComponent,
   ],
   imports: [
     BrowserModule,

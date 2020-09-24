@@ -1,4 +1,4 @@
-export interface FoodItem {
+export class FoodItem {
   _id: string;
   name: string;
   description: string;

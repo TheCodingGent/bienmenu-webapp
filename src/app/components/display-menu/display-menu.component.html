@@ -1,0 +1,138 @@
+<div class="display-menu container-fluid">
+  <div class="container">
+    <div class="d-flex flex-column">
+      <div class="title-container">
+        <h1 class="menu-title">
+          {{ menu.name }}
+        </h1>
+      </div>
+
+      <div *ngFor="let section of sections">
+        <div class="section-container">
+          <h3 class="section-title">
+            {{ section.name }}
+            <hr />
+          </h3>
+        </div>
+
+        <mat-accordion class="food-items-accordion" multi>
+          <div
+            *ngFor="let foodItem of section.foodItems"
+            style="padding-bottom: 30px"
+          >
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h5 style="font-weight: 400">
+                    {{ foodItem.name }}
+                  </h5>
+
+                  <mat-icon
+                    *ngIf="foodItem.promotionPrice > 0"
+                    style="padding-left: 10px"
+                    color="primary"
+                    >verified</mat-icon
+                  >
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div *ngIf="foodItem.promotionPrice > 0">
+                    <div
+                      style="
+                        -webkit-text-decoration-line: line-through; /* Safari */
+                        text-decoration-line: line-through;
+                        color: rgb(165, 164, 164);
+                      "
+                    >
+                      ${{ foodItem.price }}
+                    </div>
+                    <div style="color: black">
+                      ${{ foodItem.promotionPrice }}
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="foodItem.promotionPrice <= 0"
+                    style="color: black"
+                  >
+                    ${{ foodItem.price }}
+                  </div>
+
+                  <mat-icon
+                    *ngIf="section.name.toLocaleLowerCase() === 'drinks'"
+                    style="padding-right: 5px"
+                    color="primary"
+                    >wine_bar</mat-icon
+                  >
+                  <mat-icon
+                    *ngIf="section.name.toLocaleLowerCase() === 'plates'"
+                    style="padding-right: 5px"
+                    color="primary"
+                    >restaurant</mat-icon
+                  >
+
+                  <mat-icon
+                    *ngIf="section.name.toLocaleLowerCase() === 'desserts'"
+                    color="primary"
+                    style="padding-right: 5px"
+                    >cake</mat-icon
+                  >
+                  <mat-icon
+                    *ngIf="
+                      section.name.toLocaleLowerCase() !== 'drinks' &&
+                      section.name.toLocaleLowerCase() !== 'plates' &&
+                      section.name.toLocaleLowerCase() !== 'desserts'
+                    "
+                    color="primary"
+                    style="padding-right: 5px"
+                    >fastfood</mat-icon
+                  >
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div>
+                <div>
+                  <div class="row">
+                    <div class="col-md-6 food-description">
+                      {{ foodItem.description }}
+                      <div class="vertical-divider"></div>
+                      <div>
+                        <span
+                          ><mat-icon style="padding-right: 10px; height: 20px"
+                            >room_service</mat-icon
+                          >
+                          Calories: </span
+                        >{{ foodItem.calories }} kcal
+                      </div>
+                      <div class="vertical-divider"></div>
+                      <div style="padding-bottom: 20px">
+                        <mat-chip-list aria-label="Fish selection">
+                          <div *ngFor="let tag of foodItem.tags">
+                            <mat-chip color="primary" selected
+                              ><img
+                                style="padding-right: 5px"
+                                *ngIf="tag.toLocaleLowerCase() === 'spicy'"
+                                src="/assets/img/tag-images/spicy.png"
+                              />
+                              <img
+                                style="padding-right: 5px"
+                                *ngIf="tag.toLocaleLowerCase() === 'vegetarian'"
+                                src="/assets/img/tag-images/vegetarian.png"
+                              />{{ tag }}</mat-chip
+                            >
+                          </div>
+                        </mat-chip-list>
+                      </div>
+                    </div>
+                    <div class="col-md-auto">
+                      <img width="300px" [src]="foodItem.imageUrl" />
+                    </div>
+                  </div>
+                </div>
+
+                <div></div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+</div>

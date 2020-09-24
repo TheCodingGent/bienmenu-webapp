@@ -25,6 +25,7 @@ import { CancelComponent } from './components/cancel/cancel.component';
 import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.component';
 import { CreateMenuComponent } from './components/create-menu/create-menu.component';
 import { FoodItemManagerComponent } from './components/food-item-manager/food-item-manager.component';
+import { DisplayMenuComponent } from './components/display-menu/display-menu.component';
 
 const externalUrlProvider = new InjectionToken('externalUrlRedirectResolver');
 
@@ -57,6 +58,7 @@ const routes: Routes = [
   { path: 'user', component: UserBoardComponent, canActivate: [AuthGuard] },
   { path: 'create-menu', component: CreateMenuComponent },
   { path: 'food-items', component: FoodItemManagerComponent },
+  { path: 'display-menu/:id', component: DisplayMenuComponent },
   { path: 'menus/:id', component: MenuListComponent },
   {
     matcher: (url) => {
