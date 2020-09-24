@@ -26,9 +26,12 @@ export class MenuService {
     const url = 'http://localhost:4200/assets/demoData/menu.json';
     return this.http.get<Menu>(url);
   }
-  getFoodItems(): Observable<FoodItem[]> {
-    // const url = `${this.menusUrl}`;
-    const url = 'http://localhost:4200/assets/demoData/foodItems.json';
-    return this.http.get<FoodItem[]>(url);
+
+  addMenuForUser(menu: Menu): Observable<Menu> {
+    return this.http.post<Menu>(
+      `${this.menusUrl}/menu/add/user`,
+      menu,
+      this.httpOptions
+    );
   }
 }

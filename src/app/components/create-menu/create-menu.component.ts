@@ -105,6 +105,13 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     this.menu.lastupdated = new Date().toLocaleString();
     this.menu.sections = this.convertFoodItemToMenuSectionItem();
     this.menu.schedule = this.ctrlScheduleDays.value;
+
+    // this.menuService.addMenuForUser(this.menu).subscribe(
+    //   (data) => {
+    //     this.menuForm.reset();
+    //   },
+    //   (error) => {}
+    // );
     console.log(this.menu);
   }
 
@@ -249,14 +256,6 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   }
 
   getFoodItems(): void {
-    // this.menuService.getFoodItems().subscribe((data) => {
-    //   if (data) {
-    //     this.foodItems = data;
-    //   }
-    //   if (this.isEditMode) {
-    //     this.getMenu(this.menuID);
-    //   }
-    // });
     this.foodItemService.getFoodItemsForUser().subscribe((data) => {
       if (data) {
         this.foodItems = data.foodItems;

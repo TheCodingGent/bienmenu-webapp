@@ -75,7 +75,7 @@
             </div>
             <div class="day-box" formArrayName="ctrlScheduleDays"
               *ngFor="let schedule of scheduleDaysControl; let i = index">
-              <input class="item-box" type="checkbox" [formControlName]="i" (change)="checkIfAllSelected()">
+              <input type="checkbox" [formControlName]="i" (change)="checkIfAllSelected()">
               <label style="margin-left: 5px;">{{scheduleDays[i]}}</label>
 
             </div>
