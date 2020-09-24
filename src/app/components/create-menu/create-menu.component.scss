@@ -43,7 +43,7 @@
   font-weight: bold;
 }
 
-.drag-container {
+.fragment-container {
   margin: 0 25px 25px 0;
   display: inline-block;
   vertical-align: top;
@@ -69,6 +69,21 @@
   justify-content: space-between;
   box-sizing: border-box;
   cursor: move;
+  background: white;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.day-box {
+  padding: 8px 10px;
+  border: solid 1px #ccc;
+  margin-bottom: 5px;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  box-sizing: border-box;
   background: white;
   font-size: 14px;
   border-radius: 4px;

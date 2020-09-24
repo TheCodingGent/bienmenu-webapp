@@ -33,15 +33,28 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;
   private menuID: string;
   private menu: Menu;
+
+  isEditMode = false;
+  isSelectAllScheduleDays = false;
+
   public foodItems: FoodItem[] = [];
-  private isEditMode = false;
+  public allSectionsList = ['foodItemsList'];
 
   menuForm: FormGroup;
   ctrlMenuName: FormControl;
   ctrlMenuSections: FormArray;
+  ctrlScheduleDays: FormArray;
 
-  // allSectionsList = ['foodItemsList', ...this.menuSections.map((_) => _._id)];
-  allSectionsList = ['foodItemsList'];
+  scheduleDays = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+
   constructor(
     private route: ActivatedRoute,
     private menuService: MenuService,
@@ -53,9 +66,13 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.ctrlMenuName = this.fb.control('', Validators.required);
     this.ctrlMenuSections = this.fb.array([]);
+    this.ctrlScheduleDays = this.fb.array(
+      this.scheduleDays.map(() => this.fb.control(false))
+    );
     this.menuForm = this.fb.group({
       ctrlMenuName: this.ctrlMenuName,
       ctrlMenuSections: this.ctrlMenuSections,
+      ctrlScheduleDays: this.ctrlScheduleDays,
     });
 
     this.routeSub = this.route.queryParams.subscribe((params) => {
@@ -72,6 +89,34 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();
+  }
+  onSubmit(): void {
+    this.createMenuObject();
+  }
+
+  createMenuObject(): void {
+    if (!this.menu) {
+      this.menu = new Menu();
+      this.menu._id = this.menuID;
+    }
+    this.menu.name = this.ctrlMenuName.value;
+    this.menu.isActive = true;
+    this.menu.type = 'normal';
+    this.menu.lastupdated = new Date().toLocaleString();
+    this.menu.sections = this.convertFoodItemToMenuSectionItem();
+    this.menu.schedule = this.ctrlScheduleDays.value;
+
+    // this.menuService.addMenuForUser(this.menu).subscribe(
+    //   (data) => {
+    //     this.menuForm.reset();
+    //   },
+    //   (error) => {}
+    // );
+    console.log(this.menu);
+  }
+
+  addSection() {
+    this.createSectionControl(null);
   }
 
   initSection(menuSection: MenuSection): FormGroup {
@@ -100,46 +145,11 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   createSectionControl(menuSection: MenuSection) {
     const control = <FormArray>this.menuForm.controls['ctrlMenuSections'];
     const addrCtrl = this.initSection(menuSection);
     control.push(addrCtrl);
-  }
-
-  getMenu(_menuID: string): void {
-    this.menuService.getMenu(_menuID).subscribe((data) => {
-      if (data) {
-        this.menu = data;
-      }
-      this.ctrlMenuName.setValue(this.menu.name);
-      this.convertMenuSectionItemToFoodItem(this.menu.sections);
-      this.menu.sections.forEach((item) => {
-        this.createSectionControl(item);
-      });
-    });
-  }
-
-  getFoodItems(): void {
-    // this.menuService.getFoodItems().subscribe((data) => {
-    //   if (data) {
-    //     this.foodItems = data;
-    //   }
-    //   if (this.isEditMode) {
-    //     this.getMenu(this.menuID);
-    //   }
-    // });
-    this.foodItemService.getFoodItemsForUser().subscribe((data) => {
-      if (data) {
-        this.foodItems = data.foodItems;
-      }
-      if (this.isEditMode) {
-        this.getMenu(this.menuID);
-      }
-    });
-  }
-
-  addSection() {
-    this.createSectionControl(null);
   }
 
   onSectionRemoved(section) {
@@ -169,22 +179,6 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(): void {
-    this.createMenuObject();
-  }
-
-  createMenuObject(): void {
-    if (!this.menu) {
-      this.menu = new Menu();
-      this.menu._id = this.menuID;
-    }
-    this.menu.name = this.ctrlMenuName.value;
-    this.menu.isActive = true;
-    this.menu.lastupdated = new Date().toLocaleString();
-    this.menu.sections = this.convertFoodItemToMenuSectionItem();
-
-    console.log(this.menu);
-  }
   convertFoodItemToMenuSectionItem(): MenuSection[] {
     let menuSections: MenuSection[] = [];
     this.ctrlMenuSections.controls.forEach(
@@ -192,7 +186,9 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
         let menuSection: MenuSection = new MenuSection();
         const menuSectionItemList: MenuSectionItem[] = [];
         menuSection.menuId = this.menuID;
+        menuSection.name = element.controls.name.value;
         menuSection.order = index + 1;
+        menuSection.isActive = true;
         element.controls.foodItems.value.forEach(
           (item: FoodItem, index: number) => {
             const menuSectionItem: MenuSectionItem = new MenuSectionItem();
@@ -239,6 +235,37 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   getSectionControlsIndex(index: number) {
     return (this.menuForm.get('ctrlMenuSections') as FormArray).controls[index];
   }
+
+  get scheduleDaysControl() {
+    return (this.menuForm.get('ctrlScheduleDays') as FormArray).controls;
+  }
+
+  getMenu(_menuID: string): void {
+    this.menuService.getMenu(_menuID).subscribe((data) => {
+      if (data) {
+        this.menu = data;
+      }
+      this.ctrlMenuName.setValue(this.menu.name);
+      this.convertMenuSectionItemToFoodItem(this.menu.sections);
+      this.ctrlScheduleDays.setValue(this.menu.schedule);
+      this.checkIfAllSelected();
+      this.menu.sections.forEach((item) => {
+        this.createSectionControl(item);
+      });
+    });
+  }
+
+  getFoodItems(): void {
+    this.foodItemService.getFoodItemsForUser().subscribe((data) => {
+      if (data) {
+        this.foodItems = data.foodItems;
+      }
+      if (this.isEditMode) {
+        this.getMenu(this.menuID);
+      }
+    });
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
@@ -258,12 +285,39 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
 
   isAnySectionEmpty(): boolean {
     let isEmpty: boolean = false;
+    if (this.ctrlMenuSections) {
+    }
     this.ctrlMenuSections.controls.forEach((element: FormGroup) => {
-      if (element.controls.foodItems.value.length === 0) {
+      if (element.controls && element.controls.foodItems.value.length === 0) {
         isEmpty = true;
         return;
       }
     });
     return isEmpty;
+  }
+
+  selectAllScheduleDays(): void {
+    this.isSelectAllScheduleDays = !this.isSelectAllScheduleDays;
+
+    if (this.isSelectAllScheduleDays) {
+      this.scheduleDaysControl.map((control) => control.setValue(true));
+    } else {
+      this.scheduleDaysControl.map((control) => control.setValue(false));
+    }
+  }
+
+  checkIfAllSelected() {
+    this.isSelectAllScheduleDays = this.scheduleDaysControl.every(function (
+      item: any
+    ) {
+      return item.value == true;
+    });
+    console.log(this.isSelectAllScheduleDays);
+  }
+
+  checkShcedulDaysSelected(): boolean {
+    return this.scheduleDaysControl.some(function (item: any) {
+      return item.value == true;
+    });
   }
 }

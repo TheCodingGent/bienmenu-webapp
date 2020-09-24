@@ -22,10 +22,9 @@
     <div class="item-box" *ngFor="let item of sectionForm.controls.foodItems.value" cdkDrag>
       {{item.name}}
     </div>
-    <mat-error>
-      <span class="ml-3" *ngIf="sectionForm.controls.foodItems.value.length===0">
-        Add Food To Section is required
-      </span>
-    </mat-error>
+    <span class="ml-3 p-1 badge badge-info" *ngIf="sectionForm.controls.foodItems.value.length===0">Add Food
+      To
+      Section is required</span>
+
   </div>
 </div>
