@@ -1,38 +1,168 @@
-  {
-    "_id": " 5f66a2d2912cf4015c9b6aaa",
-    "name": "BienMenu Menu",
-    "type": "",
-    "filename": "",
-    "lastupdated": "9/19/2020, 8:33:15 PM",
-    "sections": [{
-        "_id": "5f66a2d291dcf4015c9b6aaa",
-        "order": "1",
-        "name": "secondsection",
-        "menuSectionItems": [{
-          "foodItemId": "ijkl",
+{
+  "_id": " 5f66a2d2912cf4015c9b6aaa",
+  "name": "BienMenu Menu",
+  "type": "",
+  "filename": "",
+  "lastupdated": "9/19/2020, 8:33:15 PM",
+  "sections": [
+    {
+      "_id": "5f66a2d291dcf4015c9b6aaa",
+      "order": "1",
+      "name": "drinks",
+      "menuSectionItems": [
+        {
+          "foodItemId": "5f67a3230b876cce3963fc73",
           "order": 1,
           "_id": "5f66a444912cf4015c9b6ab9"
-        }]
-      },
-      {
-        "_id": "5f66a2d2912cf4015c9b6aaa",
-        "order": "1",
-        "name": "first section",
-        "menuSectionItems": [{
-            "foodItemId": "abcd",
-            "order": 1,
-            "_id": "5f66a444912cf4015c9b6ab9"
-          },
-          {
-            "foodItemId": "efgh",
-            "order": 2,
-            "_id": "5f66a444912cf4015c9b6ac8"
-          }
-        ]
-      }
+        }
+      ],
+      "foodItems": [
+        {
+          "_id": "5f67a3230b876cce3963fc73",
+          "name": "Coke",
+          "calories": 12,
+          "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronicLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic",
+          "imageUrl": "/assets/img/burger.jpg",
+          "tags": ["vegetarian", "spicy"],
+          "price": 3,
+          "promotionPrice": 0
+        },
+        {
+          "_id": "5f67a3230b876cce3963fc74",
+          "name": "Canada Dry",
+          "calories": 12,
+          "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic",
+          "imageUrl": "some-url",
+          "tags": ["vegetarian", "spicy"],
+          "price": 3,
+          "promotionPrice": 0
+        }
+      ]
+    },
 
-    ],
-    "isActive": "true",
-    "schedule": [false, true, true, true, false, false, true]
-
-  }
+    {
+      "_id": "5f66a2d2912cf4015c9b6aaa",
+      "order": "1",
+      "name": "plates",
+      "menuSectionItems": [
+        {
+          "foodItemId": "5f693ac6f7e5f45fe69b166a",
+          "order": 2,
+          "_id": "5f66a444912cf4015c9b6ab9"
+        },
+        {
+          "foodItemId": "5f6b83083cda518f9a8a2e27",
+          "order": 2,
+          "_id": "5f66a444912cf4015c9b6ac8"
+        }
+      ],
+      "foodItems": [
+        {
+          "_id": "5f693ac6f7e5f45fe69b167a",
+          "calories": 12,
+          "name": "Burger",
+          "description": "FOODI",
+          "imageUrl": "some-url",
+          "tags": ["vegetarian", "spicy"],
+          "price": 10,
+          "promotionPrice": 0
+        },
+        {
+          "_id": "5f693ac6f7e5f45fe69b166a",
+          "calories": 12,
+          "name": "pizza",
+          "description": "FOODI",
+          "imageUrl": "some-url",
+          "tags": ["vegetarian", "spicy"],
+          "price": 10,
+          "promotionPrice": 0
+        },
+        {
+          "_id": "5f6b83083cda518f9a8a2e27",
+          "calories": 12,
+          "name": "pasta",
+          "description": "FOODI",
+          "imageUrl": "some-url",
+          "tags": ["vegetarian", "spicy"],
+          "price": 10,
+          "promotionPrice": 7
+        }
+      ]
+    },
+    {
+      "_id": "5f66a2d291dcf4015c9b6aaa",
+      "order": "1",
+      "name": "kids meals",
+      "menuSectionItems": [
+        {
+          "foodItemId": "5f67a3230b876cce3963fc73",
+          "order": 1,
+          "_id": "5f66a444912cf4015c9b6ab9"
+        }
+      ],
+      "foodItems": [
+        {
+          "_id": "5f67a3230b876cce3963fc73",
+          "name": "chicken nugets",
+          "calories": 12,
+          "description": "FOODI",
+          "imageUrl": "some-url",
+          "tags": ["vegetarian", "spicy"],
+          "price": 3,
+          "promotionPrice": 0
+        },
+        {
+          "_id": "5f67a3230b876cce3963fc74",
+          "name": "small pizza",
+          "calories": 12,
+          "description": "FOODI",
+          "imageUrl": "some-url",
+          "tags": ["vegetarian", "spicy"],
+          "price": 3,
+          "promotionPrice": 0
+        }
+      ]
+    },
+    {
+      "_id": "5f66a2d2912cf4015c9b6aaa",
+      "order": "1",
+      "name": "desserts",
+      "menuSectionItems": [
+        {
+          "foodItemId": "5f693ac6f7e5f45fe69b1675",
+          "order": 2,
+          "_id": "5f66a444912cf4015c9b6ab9"
+        },
+        {
+          "foodItemId": "5f693ac6f7e5f45fe69b1679",
+          "order": 2,
+          "_id": "5f66a444912cf4015c9b6ac8"
+        }
+      ],
+      "foodItems": [
+        {
+          "_id": "5f693ac6f7e5f45fe69b1675",
+          "calories": 12,
+          "name": "Ice Cream",
+          "description": "FOODI",
+          "imageUrl": "some-url",
+          "tags": ["vegetarian", "spicy"],
+          "price": 10,
+          "promotionPrice": 7
+        },
+        {
+          "_id": "5f693ac6f7e5f45fe69b1679",
+          "calories": 12,
+          "name": "Cheese Cake",
+          "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic",
+          "imageUrl": "some-url",
+          "tags": ["vegetarian", "spicy"],
+          "price": 10,
+          "promotionPrice": 0
+        }
+      ]
+    }
+  ],
+  "isActive": "true",
+  "schedule": []
+}
