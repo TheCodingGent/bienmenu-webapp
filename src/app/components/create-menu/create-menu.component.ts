@@ -11,7 +11,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ObjectID } from 'bson';
 import { Subscription } from 'rxjs';
 import { FoodItem } from 'src/app/models/food-item';
@@ -60,6 +60,7 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     private menuService: MenuService,
     private foodItemService: FoodItemService,
     private fb: FormBuilder,
+    private router: Router,
     private modalService: ModalService
   ) {}
 
@@ -106,12 +107,17 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     this.menu.sections = this.convertFoodItemToMenuSectionItem();
     this.menu.schedule = this.ctrlScheduleDays.value;
 
-    // this.menuService.addMenuForUser(this.menu).subscribe(
-    //   (data) => {
-    //     this.menuForm.reset();
-    //   },
-    //   (error) => {}
-    // );
+    this.menuService.addMenu(this.menu).subscribe(
+      (data) => {
+        this.router.navigate(['/user']).then(() => {
+          window.location.reload();
+        });
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     console.log(this.menu);
   }
 
@@ -243,6 +249,7 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   getMenu(_menuID: string): void {
     this.menuService.getMenu(_menuID).subscribe((data) => {
       if (data) {
+        console.log(data);
         this.menu = data;
       }
       this.ctrlMenuName.setValue(this.menu.name);
@@ -312,7 +319,6 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     ) {
       return item.value == true;
     });
-    console.log(this.isSelectAllScheduleDays);
   }
 
   checkShcedulDaysSelected(): boolean {
