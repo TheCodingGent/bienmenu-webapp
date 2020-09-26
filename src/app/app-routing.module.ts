@@ -56,7 +56,11 @@ const routes: Routes = [
   { path: 'add', component: AddRestaurantComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserBoardComponent, canActivate: [AuthGuard] },
-  { path: 'create-menu', component: CreateMenuComponent },
+  {
+    path: 'create-menu/:id/:menuId',
+    component: CreateMenuComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'food-items', component: FoodItemManagerComponent },
   { path: 'display-menu/:id', component: DisplayMenuComponent },
   { path: 'menus/:id', component: MenuListComponent },

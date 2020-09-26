@@ -27,11 +27,11 @@ import { ModalService } from 'src/app/services/modal.service';
   templateUrl: './create-menu.component.html',
   styleUrls: ['./create-menu.component.scss'],
 })
-export class CreateMenuComponent implements OnInit, OnDestroy {
+export class CreateMenuComponent implements OnInit {
   @ViewChild('addFoodItem') addFoodItem;
 
-  private routeSub: Subscription;
   private menuID: string;
+  private restaurantID: string;
   private menu: Menu;
 
   isEditMode = false;
@@ -75,22 +75,17 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
       ctrlMenuSections: this.ctrlMenuSections,
       ctrlScheduleDays: this.ctrlScheduleDays,
     });
-
-    this.routeSub = this.route.queryParams.subscribe((params) => {
-      if (params['menuID']) {
-        this.menuID = params['menuID'];
-        this.isEditMode = true;
-      } else {
-        this.menuID = [new ObjectID()].toString();
-        this.createSectionControl(null);
-      }
-      this.getFoodItems();
-    });
+    this.restaurantID = this.route.snapshot.paramMap.get('id');
+    this.menuID = this.route.snapshot.paramMap.get('menuId');
+    if (this.menuID && this.menuID !== 'new-menu') {
+      this.isEditMode = true;
+    } else {
+      this.menuID = [new ObjectID()].toString();
+      this.createSectionControl(null);
+    }
+    this.getFoodItems();
   }
 
-  ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
-  }
   onSubmit(): void {
     this.createMenuObject();
   }
@@ -107,17 +102,19 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     this.menu.sections = this.convertFoodItemToMenuSectionItem();
     this.menu.schedule = this.ctrlScheduleDays.value;
 
-    this.menuService.addMenu(this.menu).subscribe(
-      (data) => {
-        this.router.navigate(['/user']).then(() => {
-          window.location.reload();
-        });
-        console.log(data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.menuService
+      .addMenuForRestaurant(this.restaurantID, this.menu)
+      .subscribe(
+        (data) => {
+          this.router.navigate(['/user']).then(() => {
+            window.location.reload();
+          });
+          console.log(data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     console.log(this.menu);
   }
 
