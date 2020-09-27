@@ -13,7 +13,6 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ObjectID } from 'bson';
-import { Subscription } from 'rxjs';
 import { FoodItem } from 'src/app/models/food-item';
 import { Menu } from 'src/app/models/menu';
 import { MenuSection } from 'src/app/models/menu-section';
@@ -123,10 +122,8 @@ export class CreateMenuComponent implements OnInit {
   }
 
   initSection(menuSection: MenuSection): FormGroup {
-    const generatedID = [new ObjectID()].toString();
-    this.allSectionsList.push(generatedID);
-
     if (menuSection) {
+      this.allSectionsList.push(menuSection._id);
       return this.fb.group({
         _id: menuSection._id,
         menuId: menuSection.menuId,
@@ -137,6 +134,8 @@ export class CreateMenuComponent implements OnInit {
         foodItems: [menuSection.foodItems],
       });
     } else {
+      const generatedID = [new ObjectID()].toString();
+      this.allSectionsList.push(generatedID);
       return this.fb.group({
         _id: generatedID,
         menuId: this.menuID,
@@ -188,6 +187,7 @@ export class CreateMenuComponent implements OnInit {
       (element: FormGroup, index: number) => {
         let menuSection: MenuSection = new MenuSection();
         const menuSectionItemList: MenuSectionItem[] = [];
+        menuSection._id = element.controls._id.value;
         menuSection.menuId = this.menuID;
         menuSection.name = element.controls.name.value;
         menuSection.order = index + 1;
