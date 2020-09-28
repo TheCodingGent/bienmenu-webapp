@@ -16,7 +16,6 @@ import { ModalService } from 'src/app/services/modal.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { Customer } from '../../models/customer';
 import { ActivatedRoute } from '@angular/router';
-import { CheckboxComponent, ModalOptions } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-contact-tracing',
@@ -26,9 +25,9 @@ import { CheckboxComponent, ModalOptions } from 'angular-bootstrap-md';
 export class ContactTracingComponent implements OnInit {
   @Input() province: string;
   @Output() closed = new EventEmitter<boolean>();
-  @ViewChild('contacttracingmodal') contacttracingmodal;
+  @ViewChild('contactTracingModal') contactTracingModal;
 
-  id = 'contacttracingmodal'; // modal id used by modal service
+  id = 'contactTracingModal'; // modal id used by modal service
   customer: Customer;
   restaurantId: string;
 
@@ -60,7 +59,6 @@ export class ContactTracingComponent implements OnInit {
       Validators.email,
     ]);
     this.phone = this.formBuilder.control('', [
-      Validators.required,
       Validators.pattern('^[0-9]{10,10}$'),
     ]);
     this.subscribed = new FormControl(false);
@@ -81,20 +79,14 @@ export class ContactTracingComponent implements OnInit {
 
   // open modal
   open(): void {
-    this.contacttracingmodal.show();
+    this.contactTracingModal.show();
   }
 
   // close modal
   close(): void {
-    var timeout = 0;
-    if (this.isSubmitted && !this.isOperationFailed) {
-      timeout = 3000;
-    }
-    setTimeout(() => {
-      this.customerForm.reset();
-      this.contacttracingmodal.hide();
-      this.closed.emit(true);
-    }, timeout);
+    this.customerForm.reset();
+    this.contactTracingModal.hide();
+    this.closed.emit(this.isSubmitted);
   }
 
   saveCustomer() {
@@ -104,15 +96,14 @@ export class ContactTracingComponent implements OnInit {
     this.customer.date = new Date().toISOString();
     this.customer.restaurant = this.restaurantId;
 
-    console.log(this.customer);
-
     this.customerService.addCustomer(this.customer).subscribe(
-      (data) => {
-        console.log(data);
+      (_) => {
         this.close();
+        this.isSubmitted = false;
       },
       (error) => {
         console.log(error);
+        this.isSubmitted = false;
         this.isOperationFailed = true;
       }
     );

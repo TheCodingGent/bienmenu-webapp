@@ -3,10 +3,10 @@ import { Menu } from './menu';
 export interface Restaurant {
   _id: string;
   name: string;
-  country: String;
-  province: String;
+  country: string;
+  province: string;
   city: string;
-  postalCode: String;
+  postalCode: string;
   address: string;
   phone: string;
   menus: [Menu];
@@ -15,4 +15,5 @@ export interface Restaurant {
   tracingEnabled: boolean;
   externalMenuLink: string;
   hostedInternal: boolean;
+  coverPhotoUrl: string;
 }

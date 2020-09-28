@@ -5,23 +5,33 @@ import {
   state,
   style,
   transition,
-  animate,
+  useAnimation,
 } from '@angular/animations';
 import { Router } from '@angular/router';
+import { fadeIn, fadeInDown } from 'ng-animate';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   animations: [
-    trigger('fadeInOut', [
+    trigger('fadeIn', [
       state(
         'void',
         style({
           opacity: 0,
         })
       ),
-      transition('void <=> *', animate(1000)),
+      transition('void => *', useAnimation(fadeIn)),
+    ]),
+    trigger('fadeInDown', [
+      state(
+        'void',
+        style({
+          opacity: 0,
+        })
+      ),
+      transition('void => *', useAnimation(fadeInDown)),
     ]),
   ],
 })

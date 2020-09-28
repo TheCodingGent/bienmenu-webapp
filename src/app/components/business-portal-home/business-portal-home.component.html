@@ -1,0 +1,65 @@
+<div
+  class="business-portal-home container-fluid"
+  *ngIf="!showSplashScreen"
+  [ngClass]="{ 'top-padding': isLoggedIn }"
+>
+  <div class="top-div" [@fadeIn]>
+    <img class="cover-photo" [src]="currentRestaurant.coverPhotoUrl" />
+  </div>
+  <div class="business-portal-home-content" *ngIf="currentRestaurant">
+    <div class="row justify-content-center portal-buttons">
+      <div class="col-md-auto d-flex justify-content-center">
+        <div *ngIf="isContactTracingEnabled" [@tada]>
+          <button
+            mat-fab
+            type="button"
+            class="btn btn-portal"
+            (click)="openModal('contactTracingModal')"
+          >
+            <mat-icon class="btn-portal-icon">perm_contact_calendar</mat-icon>
+          </button>
+          <div class="btn-portal-label">Check In</div>
+        </div>
+        <div *ngIf="hasMenus" [@tada]>
+          <button
+            mat-fab
+            type="button"
+            class="btn btn-portal"
+            (click)="goToMenus()"
+          >
+            <mat-icon class="btn-portal-icon">menu_book</mat-icon>
+          </button>
+          <div class="btn-portal-label">Menus</div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="thank-you-message alert alert-success"
+      *ngIf="showThankYouMessage"
+    >
+      You're information has been securely and successfully saved. Thank you and
+      stay safe! 🙏🏼
+    </div>
+  </div>
+
+  <app-contact-tracing
+    (closed)="onClosedModal($event)"
+    [province]="currentRestaurant.province"
+  ></app-contact-tracing>
+</div>
+<div
+  class="splash-screen container-fluid"
+  *ngIf="showSplashScreen && currentRestaurant"
+  [@fadeIn]
+>
+  <div class="container">
+    <div class="d-flex flex-column">
+      <h4>Powered by</h4>
+
+      <img
+        class="bienmenu-long-logo"
+        src="./assets/img/bienmenu-long-logo.png"
+      />
+    </div>
+  </div>
+</div>

@@ -14,9 +14,9 @@ export class QrCodeViewerComponent implements OnInit {
   qrCodeCard: ElementRef;
   restaurantColor: string;
   replication: string = '1';
-  language: string = 'EN';
 
-  isChecked = false;
+  firstLineText: string = 'CHECK IN';
+  secondLineText: string = '';
 
   public restaurantQrCode: string = null;
 
@@ -44,18 +44,72 @@ export class QrCodeViewerComponent implements OnInit {
       var height = pdf.internal.pageSize.getHeight() - 5;
 
       if (this.replication === '1') {
-        pdf.addImage(imgData, 'JPEG', 0, 0, width, height);
+        pdf.addImage(imgData, 'jpeg', 0, 0, width, height);
       } else if (this.replication === '4') {
-        pdf.addImage(imgData, 'JPEG', 0, 0, width / 2, height / 2);
-        pdf.addImage(imgData, 'JPEG', width / 2, 0, width / 2, height / 2);
-        pdf.addImage(imgData, 'JPEG', 0, height / 2, width / 2, height / 2);
+        pdf.addImage(imgData, 'jpeg', 0, 0, width / 2, height / 2);
+        pdf.addImage(imgData, 'jpeg', width / 2, 0, width / 2, height / 2);
+        pdf.addImage(imgData, 'jpeg', 0, height / 2, width / 2, height / 2);
         pdf.addImage(
           imgData,
-          'JPEG',
+          'jpeg',
           width / 2,
           height / 2,
           width / 2,
           height / 2
+        );
+      } else if (this.replication === '9') {
+        pdf.addImage(imgData, 'jpeg', 0, 0, width / 3, height / 3);
+        pdf.addImage(imgData, 'jpeg', width / 3, 0, width / 3, height / 3);
+        pdf.addImage(
+          imgData,
+          'jpeg',
+          (2 * width) / 3,
+          0,
+          width / 3,
+          height / 3
+        );
+
+        pdf.addImage(imgData, 'jpeg', 0, height / 3, width / 3, height / 3);
+        pdf.addImage(
+          imgData,
+          'jpeg',
+          width / 3,
+          height / 3,
+          width / 3,
+          height / 3
+        );
+        pdf.addImage(
+          imgData,
+          'jpeg',
+          (2 * width) / 3,
+          height / 3,
+          width / 3,
+          height / 3
+        );
+
+        pdf.addImage(
+          imgData,
+          'jpeg',
+          0,
+          (2 * height) / 3,
+          width / 3,
+          height / 3
+        );
+        pdf.addImage(
+          imgData,
+          'jpeg',
+          width / 3,
+          (2 * height) / 3,
+          width / 3,
+          height / 3
+        );
+        pdf.addImage(
+          imgData,
+          'jpeg',
+          (2 * width) / 3,
+          (2 * height) / 3,
+          width / 3,
+          height / 3
         );
       }
 
@@ -67,7 +121,7 @@ export class QrCodeViewerComponent implements OnInit {
     this.replication = event.target.value;
   }
 
-  onLanguageChange(event): void {
-    this.language = event.target.value;
+  getMarginTop() {
+    return this.secondLineText === '' ? 20 : 0;
   }
 }

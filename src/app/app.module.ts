@@ -38,6 +38,8 @@ import { ContactTracingComponent } from './components/contact-tracing/contact-tr
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
 import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.component';
+import { ContactTracingHomeComponent } from './components/contact-tracing-home/contact-tracing-home.component';
+import { BusinessPortalHomeComponent } from './components/business-portal-home/business-portal-home.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.
     SuccessComponent,
     CancelComponent,
     PricingPlansComponent,
+    ContactTracingHomeComponent,
+    BusinessPortalHomeComponent,
   ],
   imports: [
     BrowserModule,

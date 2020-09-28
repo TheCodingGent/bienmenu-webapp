@@ -1,7 +1,7 @@
 <div class="user-board container-fluid">
   <div class="user-board-content container">
     <div class="d-flex flex-column">
-      <h2>Your Restaurants</h2>
+      <h2>Your Businesses</h2>
 
       <ul class="restaurants list-group">
         <li *ngFor="let restaurant of restaurants" class="list-group-item">
@@ -12,31 +12,32 @@
               </div>
               <div class="col-md-10">
                 <div class="row justify-content-end">
-                  <div class="col-sm-2">
+                  <div class="col-sm-auto">
                     <button
                       mat-raised-button
                       class="btn btn-block"
-                      (click)="goToRoute('/menus/' + restaurant._id)"
+                      (click)="goToRoute('/' + restaurant._id)"
                     >
-                      View Menus
+                      Preview
                     </button>
                   </div>
                   <div class="col-sm-auto">
                     <button
                       mat-raised-button
                       class="btn btn-block"
-                      (click)="goToRoute('/detail/' + restaurant._id)"
-                    >
-                      Manage Menus
-                    </button>
-                  </div>
-                  <div class="col-sm-2">
-                    <button
-                      mat-raised-button
-                      class="btn btn-block"
                       (click)="goToRoute('/qrcode/' + restaurant._id)"
                     >
-                      Get QR Code
+                      QR Code
+                    </button>
+                  </div>
+                  <div class="col-sm-auto">
+                    <button
+                      mat-mini-fab
+                      color="primary"
+                      aria-label="Edit and manage business"
+                      (click)="goToRoute('/detail/' + restaurant._id)"
+                    >
+                      <mat-icon>edit</mat-icon>
                     </button>
                   </div>
                 </div>
@@ -47,7 +48,7 @@
       </ul>
       <div class="add-new" *ngIf="enableAdd">
         <a routerLink="/add">
-          <button mat-raised-button class="btn">Add Restaurant</button>
+          <button mat-raised-button class="btn">Add Business</button>
         </a>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <div
   mdbModal
-  #contacttracingmodal="mdbModal"
+  #contactTracingModal="mdbModal"
   class="modal fade left"
   tabindex="-1"
   role="dialog"
@@ -41,7 +41,11 @@
           For your safety and the safety of our employees please take the time
           to fill in our form for contact tracing due to COVID-19. Your
           information will be kept strictly confidential and used only for
-          contact tracing. Thank you in helping us all stay safe.
+          contact tracing. Thank you in helping us all stay safe.<br /><br />
+          <strong
+            >If you do not choose to subscribe to further news or updates, your
+            information will be automatically deleted after 30 days.</strong
+          >
         </div>
         <form [formGroup]="customerForm">
           <div class="md-form mb-5">
@@ -97,13 +101,9 @@
               class="form-control"
               mdbInput
               mdbValidate
-              required
             />
             <label for="phone">Telephone</label>
             <mdb-error *ngIf="phone.invalid && (phone.dirty || phone.touched)">
-              <span *ngIf="phone.errors.required"
-                >Phone number is required</span
-              >
               <span *ngIf="phone.errors.pattern"
                 >Please enter a valid phone number</span
               >
@@ -122,6 +122,15 @@
                 <a href="https://www.bien-menu.com/terms" target="_blank"
                   >terms & conditions</a
                 >.
+              </div>
+            </mdb-checkbox>
+          </div>
+          <div class="vertical-divider"></div>
+          <div class="agreement-checkbox">
+            <mdb-checkbox formControlName="subscribed">
+              <div>
+                Subscribe to recieve news, updates and promotions from BienMenu
+                or any of BienMenu's partners.
               </div>
             </mdb-checkbox>
           </div>
@@ -146,12 +155,6 @@
         <div class="alert alert-danger" *ngIf="isOperationFailed">
           Failed to register contact information at this given time...we
           apologize for the inconvenience.
-        </div>
-        <div
-          class="alert alert-success"
-          *ngIf="isSubmitted && !isOperationFailed"
-        >
-          Thank you, enjoy your meal!
         </div>
       </div>
     </div>

@@ -11,9 +11,10 @@ import {
   style,
   transition,
   animate,
+  useAnimation,
 } from '@angular/animations';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { ModalService } from 'src/app/services/modal.service';
+import { rubberBand } from 'ng-animate';
 
 const menuBucketUrl = 'https://bienmenu.s3.amazonaws.com/menus/';
 
@@ -31,6 +32,14 @@ const menuBucketUrl = 'https://bienmenu.s3.amazonaws.com/menus/';
       ),
       transition('void <=> *', animate(1000)),
     ]),
+    trigger('rubberBand', [
+      transition(
+        '* => *',
+        useAnimation(rubberBand, {
+          params: { timing: 1, delay: 1 },
+        })
+      ),
+    ]),
   ],
 })
 export class MenuListComponent implements OnInit {
@@ -39,9 +48,7 @@ export class MenuListComponent implements OnInit {
   menus: Menu[];
   mainColor = '#009688';
   pdfSrc: string;
-  showSplashScreen = true;
   isLoggedIn = false;
-  isContactTracingEnabled = false;
   isOpeningMenu = false;
   isHostedInternal = true;
 
@@ -50,8 +57,7 @@ export class MenuListComponent implements OnInit {
     private restaurantService: RestaurantService,
     private elRef: ElementRef,
     private navbarService: NavbarService,
-    private tokenStorageService: TokenStorageService,
-    private modalService: ModalService
+    private tokenStorageService: TokenStorageService
   ) {}
 
   setColorThemeProperty() {
@@ -79,31 +85,11 @@ export class MenuListComponent implements OnInit {
 
     if (this.currentRestaurantId) {
       this.getMenus();
-      setTimeout(() => {
-        this.showSplashScreen = false;
-        if (this.isContactTracingEnabled) {
-          this.openModal('contacttracingmodal');
-        } else {
-          if (!this.isHostedInternal) {
-            window.location.href = this.formatMenuUrl(
-              this.currentRestaurant.externalMenuLink
-            );
-          }
-        }
-      }, 1500);
-    }
-  }
-
-  openModal(id: string) {
-    this.modalService.open(id);
-  }
-
-  onClosedModal(_) {
-    //navigate to menus
-    if (!this.isHostedInternal) {
-      window.location.href = this.formatMenuUrl(
-        this.currentRestaurant.externalMenuLink
-      );
+      if (!this.isHostedInternal) {
+        window.location.href = this.formatMenuUrl(
+          this.currentRestaurant.externalMenuLink
+        );
+      }
     }
   }
 
@@ -113,7 +99,6 @@ export class MenuListComponent implements OnInit {
       .subscribe((restaurant) => {
         this.currentRestaurant = restaurant;
         this.menus = restaurant.menus;
-        this.isContactTracingEnabled = restaurant.tracingEnabled;
         this.isHostedInternal = restaurant.hostedInternal;
         this.mainColor = this.currentRestaurant.color;
         this.setColorThemeProperty();
@@ -129,31 +114,7 @@ export class MenuListComponent implements OnInit {
       menuBucketUrl + this.currentRestaurant._id + '/' + filename + '.pdf'
     );
 
-    // window.location.href = this.formatMenuUrl(
-    //   menuBucketUrl + this.currentRestaurant._id + '/' + filename + '.pdf'
-    // );
-
     this.isOpeningMenu = false;
-
-    // this.restaurantService
-    //   .getMenuForRestaurant(this.currentRestaurantId, filename)
-    //   .subscribe(
-    //     (data) => {
-    //       var file = new Blob([data], { type: 'application/pdf' });
-    //       var fileURL = URL.createObjectURL(file);
-    //       //this.pdfSrc = URL.createObjectURL(file);
-    //       this.isOpeningMenu = false;
-    //       //window.open(fileURL);
-    //       windowReference.location.href = fileURL;
-    //     },
-    //     (err) => {
-    //       console.log(
-    //         'An error occurred while retrieving pdf file for menu...' +
-    //           err.message
-    //       );
-    //       this.isOpeningMenu = false;
-    //     }
-    //   );
   }
 
   formatMenuUrl(url: string): string {

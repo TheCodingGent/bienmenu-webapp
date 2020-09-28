@@ -29,17 +29,69 @@
           *ngIf="isLoggedIn"
           routerLink="user"
           mdbWavesEffect
-          >Restaurants</a
+          >Home</a
+        >
+      </li>
+
+      <!-- <li class="nav-item dropdown" dropdown>
+        <a
+          dropdownToggle
+          mdbWavesEffect
+          type="button"
+          class="nav-link dropdown-toggle waves-light"
+          mdbWavesEffect
+        >
+          Services<span class="caret"></span
+        ></a>
+        <div
+          *dropdownMenu
+          class="dropdown-menu dropdown dropdown-primary"
+          role="menu"
+        >
+          <a
+            href="/pricing-plans"
+            class="dropdown-item waves-light"
+            *ngIf="!isLoggedIn"
+            routerLink="pricing-plans"
+            mdbWavesEffect
+            >Menu Management</a
+          >
+          <a
+            href="/pricing-plans"
+            class="dropdown-item waves-light"
+            *ngIf="!isLoggedIn"
+            routerLink="pricing-plans"
+            mdbWavesEffect
+            >Contact Tracing</a
+          >
+          <a
+            href="/pricing-plans"
+            class="dropdown-item waves-light"
+            *ngIf="!isLoggedIn"
+            routerLink="pricing-plans"
+            mdbWavesEffect
+            >Custom QR Codes</a
+          >
+        </div>
+      </li> -->
+      <li class="nav-item">
+        <a
+          href="/pricing-plans"
+          routerLink="pricing-plans"
+          class="nav-link waves-light"
+          *ngIf="!isLoggedIn"
+          mdbWavesEffect
+          >Menu Management</a
         >
       </li>
       <li class="nav-item">
         <a
-          href="/pricing-plans"
+          href="/contact-tracing-home"
+          routerLink="contact-tracing-home"
           class="nav-link waves-light"
           *ngIf="!isLoggedIn"
-          routerLink="pricing-plans"
           mdbWavesEffect
-          >Pricing and Plans</a
+          >Contact Tracing</a
         >
       </li>
     </ul>
@@ -51,6 +103,15 @@
           routerLink="profile"
           mdbWavesEffect
           >{{ username }}</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          href="https://www.bien-menu.com/contact"
+          class="nav-link waves-light"
+          *ngIf="!isLoggedIn"
+          mdbWavesEffect
+          >Contact</a
         >
       </li>
       <li class="nav-item">

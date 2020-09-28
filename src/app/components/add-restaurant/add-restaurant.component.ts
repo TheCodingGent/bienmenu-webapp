@@ -30,6 +30,7 @@ import {
   getPostCode,
 } from 'src/app/helpers/google.address.formatter';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { AppConfigService } from 'src/app/services/app-config.service';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -44,6 +45,9 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
   color: FormControl;
   externalMenuLink: FormControl;
 
+  currentUser: any;
+  currentPlan: string;
+
   country: string;
   province: string;
   city: string;
@@ -54,6 +58,9 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
 
   menuFiles: Map<string, File>;
   menuFilesValid: Map<string, boolean>;
+
+  isValidImage = false;
+  coverPhotoToUpload: File;
 
   isAddressSet = false;
   isOperationFailed = false;
@@ -72,10 +79,15 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     private router: Router,
     private ngZone: NgZone,
     private tokenStorageService: TokenStorageService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private token: TokenStorageService,
+    private appConfigService: AppConfigService
   ) {}
 
   ngOnInit() {
+    this.currentUser = this.token.getUser();
+    this.currentPlan = this.currentUser.plan;
+
     this.menuFiles = new Map<string, File>();
     this.menuFilesValid = new Map<string, boolean>();
 
@@ -89,7 +101,7 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
       _id: [new ObjectID()],
       name: this.name,
       externalMenuLink: this.externalMenuLink,
-      menus: this.formBuilder.array([this.createMenu()]),
+      menus: this.formBuilder.array([]),
       color: this.color,
     });
 
@@ -145,7 +157,19 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  uploadFileToServer(fileToUpload: File, filename: string) {
+  handleImageFile(files: FileList) {
+    this.isValidImage = ValidateFile(files.item(0), 5242880, [
+      'png',
+      'jpeg',
+      'jpg',
+    ]);
+
+    if (this.isValidImage) {
+      this.coverPhotoToUpload = files.item(0);
+    }
+  }
+
+  async uploadFileToServer(fileToUpload: File, filename: string) {
     this.fileUploadService
       .postFile(
         fileToUpload,
@@ -199,6 +223,16 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     this.restaurant.phone = this.phone;
     this.restaurant.color = this.selectedColor;
     this.restaurant.hostedInternal = this.selectedMenuOption === 'internal';
+    if (this.currentPlan === 'contact-tracing') {
+      this.restaurant.tracingEnabled = true;
+    }
+    if (this.coverPhotoToUpload) {
+      this.restaurant.coverPhotoUrl = `${
+        this.appConfigService.mainS3BucketUrl
+      }businesses/${this.restaurant._id}/${FormatFilename(
+        this.restaurant.name
+      )}.${this.coverPhotoToUpload.name.split('.').pop()}`;
+    }
   }
 
   onMenuOptionChange(menuOption) {
@@ -219,8 +253,9 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.isSubmitted = true;
+    this.restaurantForm.disable();
 
     //populate the menu file names
     for (let menu of this.menus.controls) {
@@ -233,7 +268,7 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
 
       let filename = menu.get('filename').value;
 
-      this.uploadFileToServer(file, filename);
+      await this.uploadFileToServer(file, filename);
     }
 
     // build restaurant object to be sent to the server
@@ -242,21 +277,41 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     this.restaurantService
       .addRestaurantForUser(this.restaurant)
       .subscribe((restaurant) => {
-        console.log(restaurant);
         this.userService.updateRestaurantCount().subscribe(
           (_) => {
-            console.log('Restaurant updated successfully');
-            this.isSuccess = true;
-            this.isOperationFailed = false;
-            this.tokenStorageService.saveRestaurant(this.restaurant);
-            this.router.navigate(['/user']).then(() => {
-              window.location.reload();
-            });
+            if (this.coverPhotoToUpload) {
+              this.fileUploadService
+                .uploadImage(
+                  'businesses',
+                  this.restaurant._id,
+                  this.coverPhotoToUpload,
+                  FormatFilename(this.restaurant.name)
+                )
+                .subscribe((_) => {
+                  this.isSubmitted = false;
+                  this.isSuccess = true;
+                  this.isOperationFailed = false;
+                  this.tokenStorageService.saveRestaurant(this.restaurant);
+                  this.router.navigate(['/user']).then(() => {
+                    window.location.reload();
+                  });
+                });
+            } else {
+              this.isSubmitted = false;
+              this.isSuccess = true;
+              this.isOperationFailed = false;
+              this.tokenStorageService.saveRestaurant(this.restaurant);
+              this.router.navigate(['/user']).then(() => {
+                window.location.reload();
+              });
+            }
           },
           (err) => {
             console.log(JSON.parse(err.error).message);
+            this.isSubmitted = false;
             this.isOperationFailed = true;
             this.isSuccess = false;
+            this.restaurantForm.enable();
           }
         );
       });

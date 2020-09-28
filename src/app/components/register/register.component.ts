@@ -8,6 +8,8 @@ import { AppConfigService } from 'src/app/services/app-config.service';
 
 declare var Stripe;
 
+const freePlans = ['basic', 'contact-tracing'];
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -102,7 +104,7 @@ export class RegisterComponent implements OnInit {
 
     this.authService.register(this.user).subscribe(
       (_) => {
-        if (this.selectedPlan === 'basic') {
+        if (freePlans.includes(this.selectedPlan)) {
           this.isSignupSuccessful = true;
           this.isSignupFailed = false;
           this.router.navigate(['/login']).then(() => {
