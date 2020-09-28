@@ -3,8 +3,8 @@
   *ngIf="!showSplashScreen"
   [ngClass]="{ 'top-padding': isLoggedIn }"
 >
-  <div class="top-div" [@fadeIn]>
-    <img class="cover-photo" [src]="currentRestaurant.coverPhotoUrl" />
+  <div class="top-div">
+    <img [@fadeIn] [src]="currentRestaurant.coverPhotoUrl" />
   </div>
   <div class="business-portal-home-content" *ngIf="currentRestaurant">
     <div class="row justify-content-center portal-buttons">
