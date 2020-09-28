@@ -1,7 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FoodItem } from 'src/app/models/food-item';
 import { Menu } from 'src/app/models/menu';
 import { AppConfigService } from './app-config.service';
 
@@ -17,20 +16,39 @@ export class MenuService {
       'Content-Type': 'application/json',
     }),
   };
-  constructor(private http: HttpClient, private appConfig: AppConfigService) {
+  constructor(private http: HttpClient, appConfig: AppConfigService) {
     this.menusUrl = appConfig.apiBaseUrl + 'menus';
   }
 
   getMenu(id: string): Observable<Menu> {
-    // const url = `${this.menusUrl}/${id}`;
-    const url = 'http://localhost:4200/assets/demoData/menu.json';
+    const url = `${this.menusUrl}/menu/${id}`;
     return this.http.get<Menu>(url);
   }
 
-  addMenuForUser(menu: Menu): Observable<Menu> {
+  getMenusForRestaurant(restaurantId: string): Observable<any> {
+    return this.http.get(`${this.menusUrl}/restaurnt/${restaurantId}`);
+  }
+
+  addMenu(menu: Menu): Observable<Menu> {
     return this.http.post<Menu>(
-      `${this.menusUrl}/menu/add/user`,
+      `${this.menusUrl}/menu/add`,
       menu,
+      this.httpOptions
+    );
+  }
+
+  addMenuForRestaurant(restaurantId: string, menu: Menu): Observable<Menu> {
+    return this.http.post<Menu>(
+      `${this.menusUrl}/menu/add/restaurant/${restaurantId}`,
+      menu,
+      this.httpOptions
+    );
+  }
+
+  deleteMenuById(restaurantId: string, menuId: string): Observable<Menu> {
+    return this.http.post<Menu>(
+      `${this.menusUrl}/menu/delete/${restaurantId}`,
+      { menuId: menuId },
       this.httpOptions
     );
   }

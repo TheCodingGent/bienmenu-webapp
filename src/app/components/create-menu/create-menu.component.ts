@@ -11,9 +11,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ObjectID } from 'bson';
-import { Subscription } from 'rxjs';
 import { FoodItem } from 'src/app/models/food-item';
 import { Menu } from 'src/app/models/menu';
 import { MenuSection } from 'src/app/models/menu-section';
@@ -27,11 +26,11 @@ import { ModalService } from 'src/app/services/modal.service';
   templateUrl: './create-menu.component.html',
   styleUrls: ['./create-menu.component.scss'],
 })
-export class CreateMenuComponent implements OnInit, OnDestroy {
+export class CreateMenuComponent implements OnInit {
   @ViewChild('addFoodItem') addFoodItem;
 
-  private routeSub: Subscription;
   private menuID: string;
+  private restaurantID: string;
   private menu: Menu;
 
   isEditMode = false;
@@ -60,6 +59,7 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     private menuService: MenuService,
     private foodItemService: FoodItemService,
     private fb: FormBuilder,
+    private router: Router,
     private modalService: ModalService
   ) {}
 
@@ -74,22 +74,17 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
       ctrlMenuSections: this.ctrlMenuSections,
       ctrlScheduleDays: this.ctrlScheduleDays,
     });
-
-    this.routeSub = this.route.queryParams.subscribe((params) => {
-      if (params['menuID']) {
-        this.menuID = params['menuID'];
-        this.isEditMode = true;
-      } else {
-        this.menuID = [new ObjectID()].toString();
-        this.createSectionControl(null);
-      }
-      this.getFoodItems();
-    });
+    this.restaurantID = this.route.snapshot.paramMap.get('id');
+    this.menuID = this.route.snapshot.paramMap.get('menuId');
+    if (this.menuID && this.menuID !== 'new-menu') {
+      this.isEditMode = true;
+    } else {
+      this.menuID = [new ObjectID()].toString();
+      this.createSectionControl(null);
+    }
+    this.getFoodItems();
   }
 
-  ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
-  }
   onSubmit(): void {
     this.createMenuObject();
   }
@@ -106,12 +101,19 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     this.menu.sections = this.convertFoodItemToMenuSectionItem();
     this.menu.schedule = this.ctrlScheduleDays.value;
 
-    // this.menuService.addMenuForUser(this.menu).subscribe(
-    //   (data) => {
-    //     this.menuForm.reset();
-    //   },
-    //   (error) => {}
-    // );
+    this.menuService
+      .addMenuForRestaurant(this.restaurantID, this.menu)
+      .subscribe(
+        (data) => {
+          this.router.navigate(['/user']).then(() => {
+            window.location.reload();
+          });
+          console.log(data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     console.log(this.menu);
   }
 
@@ -120,10 +122,8 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   }
 
   initSection(menuSection: MenuSection): FormGroup {
-    const generatedID = [new ObjectID()].toString();
-    this.allSectionsList.push(generatedID);
-
     if (menuSection) {
+      this.allSectionsList.push(menuSection._id);
       return this.fb.group({
         _id: menuSection._id,
         menuId: menuSection.menuId,
@@ -134,6 +134,8 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
         foodItems: [menuSection.foodItems],
       });
     } else {
+      const generatedID = [new ObjectID()].toString();
+      this.allSectionsList.push(generatedID);
       return this.fb.group({
         _id: generatedID,
         menuId: this.menuID,
@@ -185,6 +187,7 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
       (element: FormGroup, index: number) => {
         let menuSection: MenuSection = new MenuSection();
         const menuSectionItemList: MenuSectionItem[] = [];
+        menuSection._id = element.controls._id.value;
         menuSection.menuId = this.menuID;
         menuSection.name = element.controls.name.value;
         menuSection.order = index + 1;
@@ -243,6 +246,7 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
   getMenu(_menuID: string): void {
     this.menuService.getMenu(_menuID).subscribe((data) => {
       if (data) {
+        console.log(data);
         this.menu = data;
       }
       this.ctrlMenuName.setValue(this.menu.name);
@@ -312,7 +316,6 @@ export class CreateMenuComponent implements OnInit, OnDestroy {
     ) {
       return item.value == true;
     });
-    console.log(this.isSelectAllScheduleDays);
   }
 
   checkShcedulDaysSelected(): boolean {
