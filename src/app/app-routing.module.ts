@@ -58,7 +58,7 @@ const routes: Routes = [
   { path: 'user', component: UserBoardComponent, canActivate: [AuthGuard] },
   { path: 'create-menu', component: CreateMenuComponent },
   { path: 'food-items', component: FoodItemManagerComponent },
-  { path: 'display-menu/:id', component: DisplayMenuComponent },
+  { path: 'display-menu/:id/:color', component: DisplayMenuComponent },
   { path: 'menus/:id', component: MenuListComponent },
   {
     matcher: (url) => {

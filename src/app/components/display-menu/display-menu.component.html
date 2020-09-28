@@ -11,26 +11,27 @@
         <div class="section-container">
           <h3 class="section-title">
             {{ section.name }}
-            <hr />
+            <hr class="hr" />
           </h3>
         </div>
 
         <mat-accordion class="food-items-accordion" multi>
           <div
             *ngFor="let foodItem of section.foodItems"
-            style="padding-bottom: 30px"
+            style="padding-bottom: 10px"
           >
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <h5 style="font-weight: 400">
+                  <div style="padding-right: 10px">
+                    <img class="small-img" src="{{ foodItem.imageUrl }}" />
+                  </div>
+
+                  <h5 style="font-weight: 400; padding-top: 8px">
                     {{ foodItem.name }}
                   </h5>
 
-                  <mat-icon
-                    *ngIf="foodItem.promotionPrice > 0"
-                    style="padding-left: 10px"
-                    color="primary"
+                  <mat-icon *ngIf="foodItem.promotionPrice > 0"
                     >verified</mat-icon
                   >
                 </mat-panel-title>
@@ -59,19 +60,16 @@
                   <mat-icon
                     *ngIf="section.name.toLocaleLowerCase() === 'drinks'"
                     style="padding-right: 5px"
-                    color="primary"
                     >wine_bar</mat-icon
                   >
                   <mat-icon
                     *ngIf="section.name.toLocaleLowerCase() === 'plates'"
                     style="padding-right: 5px"
-                    color="primary"
                     >restaurant</mat-icon
                   >
 
                   <mat-icon
                     *ngIf="section.name.toLocaleLowerCase() === 'desserts'"
-                    color="primary"
                     style="padding-right: 5px"
                     >cake</mat-icon
                   >
@@ -81,7 +79,6 @@
                       section.name.toLocaleLowerCase() !== 'plates' &&
                       section.name.toLocaleLowerCase() !== 'desserts'
                     "
-                    color="primary"
                     style="padding-right: 5px"
                     >fastfood</mat-icon
                   >
@@ -94,18 +91,16 @@
                       {{ foodItem.description }}
                       <div class="vertical-divider"></div>
                       <div>
-                        <span
-                          ><mat-icon style="padding-right: 10px; height: 20px"
-                            >room_service</mat-icon
-                          >
-                          Calories: </span
-                        >{{ foodItem.calories }} kcal
+                        <mat-icon>room_service</mat-icon>
+                        <span> Calories: </span>{{ foodItem.calories }} kcal
                       </div>
                       <div class="vertical-divider"></div>
                       <div style="padding-bottom: 20px">
                         <mat-chip-list aria-label="Fish selection">
                           <div *ngFor="let tag of foodItem.tags">
-                            <mat-chip color="primary" selected
+                            <mat-chip
+                              style="background-color: var(--accent-color)"
+                              selected
                               ><img
                                 style="padding-right: 5px"
                                 *ngIf="tag.toLocaleLowerCase() === 'spicy'"

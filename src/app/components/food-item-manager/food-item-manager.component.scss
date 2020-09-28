@@ -1,3 +1,9 @@
+.mat-icon {
+  vertical-align: middle;
+}
+.food-description {
+  font-size: smaller;
+}
 .food-item-manager {
   margin: 80px 0 70px 0;
   position: absolute;
@@ -8,7 +14,11 @@
 .food-item-manager-content {
   width: 100%;
 }
+.small-img {
+  width: 40px;
 
+  border-radius: 30px;
+}
 .action-buttons {
   padding-bottom: 20px;
 }

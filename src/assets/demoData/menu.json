@@ -32,7 +32,7 @@
           "name": "Canada Dry",
           "calories": 12,
           "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic",
-          "imageUrl": "some-url",
+          "imageUrl": "/assets/img/burger.jpg",
           "tags": ["vegetarian", "spicy"],
           "price": 3,
           "promotionPrice": 0
@@ -62,7 +62,7 @@
           "calories": 12,
           "name": "Burger",
           "description": "FOODI",
-          "imageUrl": "some-url",
+          "imageUrl": "/assets/img/burger.jpg",
           "tags": ["vegetarian", "spicy"],
           "price": 10,
           "promotionPrice": 0
@@ -72,7 +72,7 @@
           "calories": 12,
           "name": "pizza",
           "description": "FOODI",
-          "imageUrl": "some-url",
+          "imageUrl": "/assets/img/burger.jpg",
           "tags": ["vegetarian", "spicy"],
           "price": 10,
           "promotionPrice": 0
@@ -82,7 +82,7 @@
           "calories": 12,
           "name": "pasta",
           "description": "FOODI",
-          "imageUrl": "some-url",
+          "imageUrl": "/assets/img/burger.jpg",
           "tags": ["vegetarian", "spicy"],
           "price": 10,
           "promotionPrice": 7
@@ -106,7 +106,7 @@
           "name": "chicken nugets",
           "calories": 12,
           "description": "FOODI",
-          "imageUrl": "some-url",
+          "imageUrl": "/assets/img/burger.jpg",
           "tags": ["vegetarian", "spicy"],
           "price": 3,
           "promotionPrice": 0
@@ -116,7 +116,7 @@
           "name": "small pizza",
           "calories": 12,
           "description": "FOODI",
-          "imageUrl": "some-url",
+          "imageUrl": "/assets/img/burger.jpg",
           "tags": ["vegetarian", "spicy"],
           "price": 3,
           "promotionPrice": 0
@@ -145,7 +145,7 @@
           "calories": 12,
           "name": "Ice Cream",
           "description": "FOODI",
-          "imageUrl": "some-url",
+          "imageUrl": "/assets/img/burger.jpg",
           "tags": ["vegetarian", "spicy"],
           "price": 10,
           "promotionPrice": 7
@@ -155,7 +155,7 @@
           "calories": 12,
           "name": "Cheese Cake",
           "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic",
-          "imageUrl": "some-url",
+          "imageUrl": "/assets/img/burger.jpg",
           "tags": ["vegetarian", "spicy"],
           "price": 10,
           "promotionPrice": 0
