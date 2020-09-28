@@ -72,136 +72,186 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="list-group-item" *ngIf="!hostedInternal">
-          <div class="row restaurant-setting">
-            <div class="col-md-2">
-              <span class="restaurant-detail-field">Menus available at:</span>
-            </div>
-            <div class="col-md-auto">
-              <div class="enabled-disabled">
-                {{ restaurant.externalMenuLink }}
+          <div class="list-group-item" *ngIf="!hostedInternal">
+            <div class="row restaurant-setting">
+              <div class="col-md-2">
+                <span class="restaurant-detail-field">Menus available at:</span>
+              </div>
+              <div class="col-md-auto">
+                <div class="enabled-disabled">
+                  {{ restaurant.externalMenuLink }}
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="setting-btn" *ngIf="!hostedInternal">
+                  <button
+                    mat-raised-button
+                    type="button"
+                    class="btn"
+                    (click)="saveMenuHostingSetting()"
+                    [disabled]="isHostingSettingSubmitted"
+                  >
+                    Manage Menus on BienMenu
+                  </button>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="list-group-item">
+          <div class="row restaurant-setting">
+            <div class="col-md-2">
+              <span class="restaurant-detail-field">Current Cover Photo: </span>
+            </div>
+            <div class="col-md-auto">
+              <img style="width: 150px" [src]="restaurant.coverPhotoUrl" />
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item">
+          <div class="row restaurant-setting">
+            <div class="col-md-2">
+              <span class="restaurant-detail-field"> Update Cover Photo: </span>
+            </div>
+            <div class="col-md-auto">
+              <input
+                type="file"
+                #coverPhotoImage
+                (change)="handleImageFile($event.target.files)"
+              />
+            </div>
             <div class="col-md-3">
-              <div class="setting-btn" *ngIf="!hostedInternal">
+              <div class="tracing-btn">
                 <button
                   mat-raised-button
                   type="button"
                   class="btn"
-                  (click)="saveMenuHostingSetting()"
-                  [disabled]="isHostingSettingSubmitted"
+                  (click)="uploadCoverPhoto()"
+                  [disabled]="!isValidImage || isSubmitted"
                 >
-                  Manage Menus on BienMenu
+                  Upload
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="vertical-divider"></div>
-      <div class="menus list-group" *ngIf="hostedInternal">
-        <div
-          class="list-group-item first-item restaurant-detail-section-header"
-        >
-          <h4>Restaurant Menus</h4>
-        </div>
-
-        <div
-          *ngFor="let menu of restaurant.menus; let i = index"
-          class="list-group-item"
-        >
-          <div class="row menu-row">
-            <div class="col-md-10">
-              <span class="restaurant-detail-field">Menu Name: </span
-              >{{ menu.name }}
-            </div>
-            <div class="col-md-auto">
-              <button
-                mat-raised-button
-                type="button"
-                class="delete-btn btn btn-block"
-                (click)="deleteMenu(menu, restaurant._id)"
-              >
-                Delete Menu
-              </button>
-            </div>
-          </div>
-          <div class="row menu-row">
-            <div class="col-md-10">
-              <span class="restaurant-detail-field">Last Updated: </span
-              >{{ formatDate(menu.lastupdated) }}
-            </div>
-            <div class="col-md-auto">
-              <button
-                mat-raised-button
-                type="button"
-                class="btn btn-block"
-                (click)="openModal('updatemenumodal' + menu._id, i)"
-                [disabled]="!menuUpdateAllowed"
-              >
-                Update Menu
-              </button>
-            </div>
-            <div class="col-md-auto" *ngIf="menuUpdating == i && success">
-              <div class="menu-update-alert alert alert-success">
-                Menu updated successfully!
+            <div
+              class="alert alert-info"
+              *ngIf="isSubmitted && !isOperationFailed"
+            >
+              <div class="row">
+                <div class="col-md-2">
+                  <mat-spinner diameter="20"></mat-spinner>
+                </div>
+                <div class="col-md-auto">Uploading image...</div>
               </div>
             </div>
-            <app-update-menu
-              [restaurantId]="restaurant._id"
-              [menu]="menu"
-              (success)="updateSuccess($event)"
-            ></app-update-menu>
           </div>
         </div>
-      </div>
-      <div class="d-flex flex-column">
-        <div class="add">
-          <button
-            mat-raised-button
-            type="button"
-            class="add-btn btn"
-            (click)="openModal('addmenumodal', -1)"
-            [disabled]="
-              !menuUpdateAllowed || maxMenuCountReached || !hostedInternal
-            "
-          >
-            Add Menu
-          </button>
-          <div
-            class="menu-update-alert alert alert-info"
-            *ngIf="!menuUpdateAllowed"
-          >
-            The maximum menu updates has been reached for this month. You can
-            upgrade your plan for unlimited updates!
+        <div class="vertical-divider"></div>
+        <div *ngIf="currentPlan !== 'contact-tracing'">
+          <div class="menus list-group" *ngIf="hostedInternal">
+            <div
+              class="list-group-item first-item restaurant-detail-section-header"
+            >
+              <h4>Restaurant Menus</h4>
+            </div>
+
+            <div
+              *ngFor="let menu of restaurant.menus; let i = index"
+              class="list-group-item"
+            >
+              <div class="row menu-row">
+                <div class="col-md-10">
+                  <span class="restaurant-detail-field">Menu Name: </span
+                  >{{ menu.name }}
+                </div>
+                <div class="col-md-auto">
+                  <button
+                    mat-raised-button
+                    type="button"
+                    class="delete-btn btn btn-block"
+                    (click)="deleteMenu(menu, restaurant._id)"
+                  >
+                    Delete Menu
+                  </button>
+                </div>
+              </div>
+              <div class="row menu-row">
+                <div class="col-md-10">
+                  <span class="restaurant-detail-field">Last Updated: </span
+                  >{{ formatDate(menu.lastupdated) }}
+                </div>
+                <div class="col-md-auto">
+                  <button
+                    mat-raised-button
+                    type="button"
+                    class="btn btn-block"
+                    (click)="openModal('updatemenumodal' + menu._id, i)"
+                    [disabled]="!menuUpdateAllowed"
+                  >
+                    Update Menu
+                  </button>
+                </div>
+                <div class="col-md-auto" *ngIf="menuUpdating == i && success">
+                  <div class="menu-update-alert alert alert-success">
+                    Menu updated successfully!
+                  </div>
+                </div>
+                <app-update-menu
+                  [restaurantId]="restaurant._id"
+                  [menu]="menu"
+                  (success)="updateSuccess($event)"
+                ></app-update-menu>
+              </div>
+            </div>
           </div>
-          <div
-            class="menu-update-alert alert alert-info"
-            *ngIf="maxMenuCountReached"
-          >
-            The maximum number of allowed menus per restaurant has been reached.
-            You can upgrade your plan to add more!
+          <div class="d-flex flex-column">
+            <div class="add">
+              <button
+                mat-raised-button
+                type="button"
+                class="add-btn btn"
+                (click)="openModal('addmenumodal', -1)"
+                [disabled]="
+                  !menuUpdateAllowed || maxMenuCountReached || !hostedInternal
+                "
+              >
+                Add Menu
+              </button>
+              <div
+                class="menu-update-alert alert alert-info"
+                *ngIf="!menuUpdateAllowed"
+              >
+                The maximum menu updates has been reached for this month. You
+                can upgrade your plan for unlimited updates!
+              </div>
+              <div
+                class="menu-update-alert alert alert-info"
+                *ngIf="maxMenuCountReached"
+              >
+                The maximum number of allowed menus per restaurant has been
+                reached. You can upgrade your plan to add more!
+              </div>
+              <div *ngIf="maxMenuCountReached || !menuUpdateAllowed">
+                <a routerLink="/pricing-plans">
+                  <button mat-raised-button class="btn">Upgrade Now</button>
+                </a>
+              </div>
+              <app-add-menu
+                [restaurant]="restaurant"
+                (closed)="onClosedModal($event)"
+              ></app-add-menu>
+            </div>
+            <div class="delete">
+              <button
+                mat-raised-button
+                type="button"
+                class="delete-btn btn"
+                (click)="deleteRestaurant(restaurant._id)"
+              >
+                Delete Restaurant
+              </button>
+            </div>
           </div>
-          <div *ngIf="maxMenuCountReached || !menuUpdateAllowed">
-            <a routerLink="/pricing-plans">
-              <button mat-raised-button class="btn">Upgrade Now</button>
-            </a>
-          </div>
-          <app-add-menu
-            [restaurant]="restaurant"
-            (closed)="onClosedModal($event)"
-          ></app-add-menu>
-        </div>
-        <div class="delete">
-          <button
-            mat-raised-button
-            type="button"
-            class="delete-btn btn"
-            (click)="deleteRestaurant(restaurant._id)"
-          >
-            Delete Restaurant
-          </button>
         </div>
       </div>
     </div>

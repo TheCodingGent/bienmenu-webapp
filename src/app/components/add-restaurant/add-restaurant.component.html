@@ -19,7 +19,7 @@
             mdbValidate
             required
           />
-          <label for="name">Restaurant Name</label>
+          <label for="name">Business Name</label>
           <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)">
             Restaurant name is required
           </mdb-error>
@@ -33,182 +33,194 @@
         adressType="establishment"
       >
       </app-address-autocomplete>
-      <div class="md-form">
-        <div class="d-flex">
-          <span class="field-name">Select an Option </span>
-          <div class="menu-option-select flex-fill">
-            <select
-              class="browser-default custom-select"
-              [(ngModel)]="selectedMenuOption"
-              [ngModelOptions]="{ standalone: true }"
-              (ngModelChange)="onMenuOptionChange($event)"
-            >
-              <option value="internal">
-                Host my menus on BienMenu (Recommended)
-              </option>
-              <option value="external">My menus are hosted elsewhere</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="selectedMenuOption === 'external'">
+      <div *ngIf="currentPlan !== 'contact-tracing'">
         <div class="md-form">
           <div class="d-flex">
-            <mdb-icon
-              fas
-              icon="external-link-alt"
-              class="prefix grey-text"
-            ></mdb-icon>
-            <input
-              type="text"
-              id="externalMenuLink"
-              formControlName="externalMenuLink"
-              placeholder="Enter the url where your menus are hosted"
-              class="form-control"
-              mdbInput
-              mdbValidate
-            />
-            <label for="externalMenuLink">Menus URL</label>
-            <mdb-error
-              *ngIf="
-                externalMenuLink.invalid &&
-                (externalMenuLink.dirty || externalMenuLink.touched)
-              "
-            >
-              <span *ngIf="externalMenuLink.errors.required"
-                >Menus URL is required</span
+            <span class="field-name">Select an Option </span>
+            <div class="menu-option-select flex-fill">
+              <select
+                class="browser-default custom-select"
+                [(ngModel)]="selectedMenuOption"
+                [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onMenuOptionChange($event)"
               >
-              <span *ngIf="externalMenuLink.errors.pattern"
-                >Please enter a valid URL</span
-              >
-            </mdb-error>
-            <mdb-success
-              *ngIf="
-                externalMenuLink.valid &&
-                (externalMenuLink.dirty || externalMenuLink.touched)
-              "
-              >Valid
-            </mdb-success>
+                <option value="internal">
+                  Host my menus on BienMenu (Recommended)
+                </option>
+                <option value="external">My menus are hosted elsewhere</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="selectedMenuOption === 'internal'">
-        <div class="md-form">
-          <span class="field-name">Add Your Menus </span>
-        </div>
-        <div
-          formArrayName="menus"
-          *ngFor="
-            let menu of restaurantForm.get('menus')['controls'];
-            let i = index
-          "
-        >
+        <div *ngIf="selectedMenuOption === 'external'">
           <div class="md-form">
-            <div [formGroupName]="i">
-              <div class="md-form">
-                <div class="d-flex">
-                  <div class="flex-fill">
-                    <mdb-icon
-                      fas
-                      icon="bars"
-                      class="prefix grey-text"
-                    ></mdb-icon>
-                    <input
-                      type="text"
-                      id="name"
-                      formControlName="name"
-                      placeholder="Example: Main Menu"
-                      required
-                      class="form-control"
-                      mdbInput
-                      mdbValidate
-                    />
-                    <label for="name">Menu Name</label>
-                    <mdb-error
-                      *ngIf="
-                        menu.controls.name.invalid &&
-                        (menu.controls.name.dirty || menu.controls.name.touched)
-                      "
-                    >
-                      <span *ngIf="menu.controls.name.errors.required"
-                        >Menu name is required</span
+            <div class="d-flex">
+              <mdb-icon
+                fas
+                icon="external-link-alt"
+                class="prefix grey-text"
+              ></mdb-icon>
+              <input
+                type="text"
+                id="externalMenuLink"
+                formControlName="externalMenuLink"
+                placeholder="Enter the url where your menus are hosted"
+                class="form-control"
+                mdbInput
+                mdbValidate
+              />
+              <label for="externalMenuLink">Menus URL</label>
+              <mdb-error
+                *ngIf="
+                  externalMenuLink.invalid &&
+                  (externalMenuLink.dirty || externalMenuLink.touched)
+                "
+              >
+                <span *ngIf="externalMenuLink.errors.required"
+                  >Menus URL is required</span
+                >
+                <span *ngIf="externalMenuLink.errors.pattern"
+                  >Please enter a valid URL</span
+                >
+              </mdb-error>
+              <mdb-success
+                *ngIf="
+                  externalMenuLink.valid &&
+                  (externalMenuLink.dirty || externalMenuLink.touched)
+                "
+                >Valid
+              </mdb-success>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="selectedMenuOption === 'internal'">
+          <div class="md-form">
+            <span class="field-name">Add Your Menus </span>
+          </div>
+          <div
+            formArrayName="menus"
+            *ngFor="
+              let menu of restaurantForm.get('menus')['controls'];
+              let i = index
+            "
+          >
+            <div class="md-form">
+              <div [formGroupName]="i">
+                <div class="md-form">
+                  <div class="d-flex">
+                    <div class="flex-fill">
+                      <mdb-icon
+                        fas
+                        icon="bars"
+                        class="prefix grey-text"
+                      ></mdb-icon>
+                      <input
+                        type="text"
+                        id="name"
+                        formControlName="name"
+                        placeholder="Example: Main Menu"
+                        required
+                        class="form-control"
+                        mdbInput
+                        mdbValidate
+                      />
+                      <label for="name">Menu Name</label>
+                      <mdb-error
+                        *ngIf="
+                          menu.controls.name.invalid &&
+                          (menu.controls.name.dirty ||
+                            menu.controls.name.touched)
+                        "
                       >
-                      <span *ngIf="menu.controls.name.errors.unique"
-                        >Menu name is already in use, menu names must be
-                        unique</span
-                      >
-                    </mdb-error>
+                        <span *ngIf="menu.controls.name.errors.required"
+                          >Menu name is required</span
+                        >
+                        <span *ngIf="menu.controls.name.errors.unique"
+                          >Menu name is already in use, menu names must be
+                          unique</span
+                        >
+                      </mdb-error>
 
-                    <mdb-success
-                      *ngIf="
-                        menu.controls.name.valid &&
-                        (menu.controls.name.dirty || menu.controls.name.touched)
-                      "
-                    >
-                      Valid
-                    </mdb-success>
-                  </div>
-                  <div>
-                    <button
-                      type="button"
-                      mat-raised-button
-                      (click)="deleteMenu(i)"
-                      class="delete-btn btn"
-                    >
-                      Remove Menu
-                    </button>
+                      <mdb-success
+                        *ngIf="
+                          menu.controls.name.valid &&
+                          (menu.controls.name.dirty ||
+                            menu.controls.name.touched)
+                        "
+                      >
+                        Valid
+                      </mdb-success>
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        mat-raised-button
+                        (click)="deleteMenu(i)"
+                        class="delete-btn btn"
+                      >
+                        Remove Menu
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div class="md-form">
-                <mdb-icon
-                  fas
-                  icon="file-pdf"
-                  class="prefix grey-text"
-                ></mdb-icon>
-                <input
-                  type="file"
-                  id="menufile"
-                  (change)="
-                    handleInputFiles(
-                      $event.target.files,
-                      menu.controls.name.value
-                    )
-                  "
-                  [disabled]="
-                    menu.controls.name.value === '' ||
-                    menu.controls.name.invalid
-                  "
-                  required
-                />
-                <div class="divider"></div>
-                <div
-                  class="alert alert-danger"
-                  *ngIf="
-                    menuFilesValid.has(menu.controls.name.value) &&
-                    !menuFilesValid.get(menu.controls.name.value)
-                  "
-                >
-                  File must be in PDF format and no larger than 5 MB
+                <div class="md-form">
+                  <mdb-icon
+                    fas
+                    icon="file-pdf"
+                    class="prefix grey-text"
+                  ></mdb-icon>
+                  <input
+                    type="file"
+                    id="menufile"
+                    (change)="
+                      handleInputFiles(
+                        $event.target.files,
+                        menu.controls.name.value
+                      )
+                    "
+                    [disabled]="
+                      menu.controls.name.value === '' ||
+                      menu.controls.name.invalid
+                    "
+                    required
+                  />
+                  <div class="divider"></div>
+                  <div
+                    class="alert alert-danger"
+                    *ngIf="
+                      menuFilesValid.has(menu.controls.name.value) &&
+                      !menuFilesValid.get(menu.controls.name.value)
+                    "
+                  >
+                    File must be in PDF format and no larger than 5 MB
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <button
+            type="button"
+            mat-raised-button
+            [disabled]="maxMenuCountReached"
+            (click)="addMenu()"
+            style="margin-bottom: 20px"
+          >
+            Add Menu
+          </button>
+          <div class="alert alert-danger" *ngIf="maxMenuCountReached">
+            The maximum number of allowed menus per restaurant has been reached:
+            {{ maxMenuCount }}.
+          </div>
         </div>
-        <button
-          type="button"
-          mat-raised-button
-          [disabled]="maxMenuCountReached"
-          (click)="addMenu()"
-          style="margin-bottom: 20px"
-        >
-          Add Menu
-        </button>
-        <div class="alert alert-danger" *ngIf="maxMenuCountReached">
-          The maximum number of allowed menus per restaurant has been reached:
-          {{ maxMenuCount }}.
-        </div>
+      </div>
+      <div class="md-form">
+        <mdb-icon fas icon="image" class="prefix grey-text"></mdb-icon>
+        <input
+          type="file"
+          #coverPhotoImage
+          (change)="handleImageFile($event.target.files)"
+        />
       </div>
       <div class="md-form">
         <div class="d-flex">
@@ -249,7 +261,8 @@
         [disabled]="
           !restaurantForm.valid ||
           menus.length !== menuFiles.size ||
-          !isAddressSet
+          !isAddressSet ||
+          (isSubmitted && !isOperationFailed)
         "
       >
         Submit
@@ -258,6 +271,14 @@
     <div class="alert alert-danger" *ngIf="isOperationFailed">
       Failed to add restaurant...please try again or contact the system
       administrator.
+    </div>
+    <div class="alert alert-info" *ngIf="isSubmitted && !isOperationFailed">
+      <div class="row">
+        <div class="col-md-2">
+          <mat-spinner diameter="20"></mat-spinner>
+        </div>
+        <div class="col-md-auto">Setting up your business...please wait.</div>
+      </div>
     </div>
   </div>
 </div>

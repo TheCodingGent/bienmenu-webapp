@@ -44,4 +44,11 @@ export class AppConfigService {
     }
     return this.appConfig.stripeKey;
   }
+
+  get mainS3BucketUrl() {
+    if (!this.appConfig) {
+      throw Error('Config file not loaded!');
+    }
+    return this.appConfig.mainS3BucketUrl;
+  }
 }

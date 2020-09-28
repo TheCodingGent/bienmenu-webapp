@@ -1,6 +1,5 @@
 <div
   class="menus-container container-fluid"
-  *ngIf="!showSplashScreen"
   [ngClass]="{ 'top-padding': isLoggedIn }"
   [@fadeInOut]
 >
@@ -20,7 +19,7 @@
             <div class="d-flex flex-column">
               <h5 class="mb-1">{{ menu.name }}</h5>
               <div class="d-flex w-100">
-                <mat-icon matListIcon>touch_app</mat-icon>
+                <mat-icon matListIcon [@rubberBand]>touch_app</mat-icon>
                 <p class="mb-1">Tap to view menu</p>
               </div>
             </div>
@@ -39,23 +38,3 @@
     </div>
   </div>
 </div>
-<div
-  class="splash-screen container-fluid"
-  *ngIf="showSplashScreen && currentRestaurant"
-  [@fadeInOut]
->
-  <div class="container">
-    <div class="d-flex flex-column">
-      <h4>Powered by</h4>
-
-      <img
-        class="bienmenu-long-logo"
-        src="./assets/img/bienmenu-long-logo.png"
-      />
-    </div>
-  </div>
-</div>
-<app-contact-tracing
-  (closed)="onClosedModal($event)"
-  [province]="currentRestaurant.province"
-></app-contact-tracing>

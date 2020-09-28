@@ -23,6 +23,8 @@ import { QrCodeViewerComponent } from './components/qr-code-viewer/qr-code-viewe
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
 import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.component';
+import { ContactTracingHomeComponent } from './components/contact-tracing-home/contact-tracing-home.component';
+import { BusinessPortalHomeComponent } from './components/business-portal-home/business-portal-home.component';
 
 const externalUrlProvider = new InjectionToken('externalUrlRedirectResolver');
 
@@ -32,6 +34,10 @@ const routes: Routes = [
   {
     path: 'pricing-plans',
     component: PricingPlansComponent,
+  },
+  {
+    path: 'contact-tracing-home',
+    component: ContactTracingHomeComponent,
   },
   { path: 'register', component: RegisterComponent },
   { path: 'success/:session_id', component: SuccessComponent },
@@ -53,7 +59,8 @@ const routes: Routes = [
   { path: 'add', component: AddRestaurantComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserBoardComponent, canActivate: [AuthGuard] },
-  { path: 'menus/:id', component: MenuListComponent },
+  { path: 'menu-list', component: MenuListComponent },
+  { path: 'menus/:id', component: BusinessPortalHomeComponent },
   {
     matcher: (url) => {
       if (
@@ -69,7 +76,7 @@ const routes: Routes = [
       }
       return null;
     },
-    component: MenuListComponent,
+    component: BusinessPortalHomeComponent,
   },
   {
     path: 'externalRedirect',
