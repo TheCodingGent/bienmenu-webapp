@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Restaurant } from 'src/app/models/restaurant';
@@ -15,6 +15,10 @@ import {
   animate,
 } from '@angular/animations';
 import { LightOrDark } from 'src/app/helpers/color.helper';
+import { ValidateFile } from 'src/app/helpers/file.validator';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { FormatFilename } from 'src/app/helpers/utilities';
+import { AppConfigService } from 'src/app/services/app-config.service';
 
 @Component({
   selector: 'app-restaurant-detail',
@@ -34,6 +38,9 @@ import { LightOrDark } from 'src/app/helpers/color.helper';
   ],
 })
 export class RestaurantDetailComponent implements OnInit {
+  @ViewChild('coverPhotoImage')
+  coverPhotoImageInput: ElementRef;
+
   restaurant: Restaurant;
   success = false;
   menuUpdating = -1;
@@ -43,10 +50,18 @@ export class RestaurantDetailComponent implements OnInit {
   userHasContactTracing = false;
   hostedInternal = true;
 
+  currentUser: any;
+  currentPlan: string;
+
   selectedCTSetting = false;
   isCTSettingSubmitted = false;
 
+  isValidImage = false;
+  coverPhotoToUpload: File;
+
   isHostingSettingSubmitted = false;
+  isOperationFailed = false;
+  isSubmitted = false;
 
   mainColor = '#009688';
 
@@ -57,7 +72,10 @@ export class RestaurantDetailComponent implements OnInit {
     private modalService: ModalService,
     private tokenStorageService: TokenStorageService,
     private router: Router,
-    private elRef: ElementRef
+    private elRef: ElementRef,
+    private token: TokenStorageService,
+    private fileUploadService: FileUploadService,
+    private appConfigService: AppConfigService
   ) {}
 
   setColorThemeProperty() {
@@ -84,6 +102,9 @@ export class RestaurantDetailComponent implements OnInit {
         ) ||
       this.tokenStorageService.getUser().roles.includes('ROLE_ADMIN')
     ) {
+      this.currentUser = this.token.getUser();
+      this.currentPlan = this.currentUser.plan;
+
       this.userAllowedOnPage = true;
       this.getMenuUpdateAllowed();
       this.getUserHasContactTracing();
@@ -208,6 +229,50 @@ export class RestaurantDetailComponent implements OnInit {
           this.isCTSettingSubmitted = false;
         };
     }
+  }
+
+  handleImageFile(files: FileList) {
+    this.isValidImage = ValidateFile(files.item(0), 5242880, [
+      'png',
+      'jpeg',
+      'jpg',
+    ]);
+
+    if (this.isValidImage) {
+      this.coverPhotoToUpload = files.item(0);
+    }
+  }
+
+  uploadCoverPhoto() {
+    this.isSubmitted = true;
+    const coverPhotoUrl = `${this.appConfigService.mainS3BucketUrl}businesses/${
+      this.restaurant._id
+    }/${FormatFilename(
+      this.restaurant.name
+    )}.${this.coverPhotoToUpload.name.split('.').pop()}`;
+
+    this.restaurantService
+      .updateCoverPhotoUrl(coverPhotoUrl, this.restaurant._id)
+      .subscribe(
+        (data) => {
+          this.fileUploadService
+            .uploadImage(
+              'businesses',
+              this.restaurant._id,
+              this.coverPhotoToUpload,
+              FormatFilename(this.restaurant.name)
+            )
+            .subscribe((data) => {
+              this.isSubmitted = false;
+              this.coverPhotoImageInput.nativeElement.value = '';
+              window.location.reload();
+            });
+        },
+        (error) => {
+          this.isSubmitted = false;
+          this.isOperationFailed = true;
+        }
+      );
   }
 
   saveMenuHostingSetting() {

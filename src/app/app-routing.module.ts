@@ -26,6 +26,8 @@ import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.
 import { CreateMenuComponent } from './components/create-menu/create-menu.component';
 import { FoodItemManagerComponent } from './components/food-item-manager/food-item-manager.component';
 import { DisplayMenuComponent } from './components/display-menu/display-menu.component';
+import { ContactTracingHomeComponent } from './components/contact-tracing-home/contact-tracing-home.component';
+import { BusinessPortalHomeComponent } from './components/business-portal-home/business-portal-home.component';
 
 const externalUrlProvider = new InjectionToken('externalUrlRedirectResolver');
 
@@ -35,6 +37,10 @@ const routes: Routes = [
   {
     path: 'pricing-plans',
     component: PricingPlansComponent,
+  },
+  {
+    path: 'contact-tracing-home',
+    component: ContactTracingHomeComponent,
   },
   { path: 'register', component: RegisterComponent },
   { path: 'success/:session_id', component: SuccessComponent },
@@ -63,7 +69,8 @@ const routes: Routes = [
   },
   { path: 'food-items', component: FoodItemManagerComponent },
   { path: 'display-menu/:id/:color', component: DisplayMenuComponent },
-  { path: 'menus/:id', component: MenuListComponent },
+  { path: 'menu-list', component: MenuListComponent },
+  { path: 'menus/:id', component: BusinessPortalHomeComponent },
   {
     matcher: (url) => {
       if (
@@ -79,7 +86,7 @@ const routes: Routes = [
       }
       return null;
     },
-    component: MenuListComponent,
+    component: BusinessPortalHomeComponent,
   },
   {
     path: 'externalRedirect',

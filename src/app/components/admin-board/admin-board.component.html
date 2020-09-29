@@ -1,7 +1,7 @@
 <div class="admin-board container-fluid">
   <div class="admin-board-content container">
     <div class="d-flex flex-column" *ngIf="accessAllowed">
-      <h2>All Restaurants</h2>
+      <h2>All Businesses</h2>
       <ul class="restaurants list-group">
         <li *ngFor="let restaurant of restaurants" class="list-group-item">
           <div class="container">
@@ -11,11 +11,15 @@
               </div>
               <div class="col-md-10">
                 <div class="row justify-content-end">
-                  <div class="col-sm-2">
+                  <div class="col-sm-auto">
                     <button
                       mat-raised-button
                       class="btn btn-block"
-                      (click)="goToRoute('/create-menu')"
+                      (click)="
+                        goToRoute(
+                          '/create-menu/' + restaurant._id + '/' + 'new-menu'
+                        )
+                      "
                     >
                       Create Menu
                     </button>
@@ -24,27 +28,28 @@
                     <button
                       mat-raised-button
                       class="btn btn-block"
-                      (click)="goToRoute('/detail/' + restaurant._id)"
+                      (click)="goToRoute('/' + restaurant._id)"
                     >
-                      Manage Menus
+                      Preview
                     </button>
                   </div>
                   <div class="col-sm-auto">
                     <button
                       mat-raised-button
                       class="btn btn-block"
-                      (click)="goToRoute('/menus/' + restaurant._id)"
+                      (click)="goToRoute('/qrcode/' + restaurant._id)"
                     >
-                      View Menus
+                      QR Code
                     </button>
                   </div>
                   <div class="col-sm-2">
                     <button
-                      mat-raised-button
-                      class="btn btn-block"
-                      (click)="goToRoute('/qrcode/' + restaurant._id)"
+                      mat-mini-fab
+                      color="primary"
+                      aria-label="Edit and manage business"
+                      (click)="goToRoute('/detail/' + restaurant._id)"
                     >
-                      Get QR Code
+                      <mat-icon>edit</mat-icon>
                     </button>
                   </div>
                 </div>

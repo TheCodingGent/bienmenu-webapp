@@ -44,6 +44,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MenuSectionComponent } from './components/menu-section/menu-section.component';
 import { AddFoodItemComponent } from './components/add-food-item/add-food-item.component';
 import { DisplayMenuComponent } from './components/display-menu/display-menu.component';
+import { ContactTracingHomeComponent } from './components/contact-tracing-home/contact-tracing-home.component';
+import { BusinessPortalHomeComponent } from './components/business-portal-home/business-portal-home.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,8 @@ import { DisplayMenuComponent } from './components/display-menu/display-menu.com
     MenuSectionComponent,
     AddFoodItemComponent,
     DisplayMenuComponent,
+    ContactTracingHomeComponent,
+    BusinessPortalHomeComponent,
   ],
   imports: [
     BrowserModule,

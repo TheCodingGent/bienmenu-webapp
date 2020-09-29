@@ -1,5 +1,6 @@
 {
   "apiBaseUrl": "https://cryptic-dawn-36054.herokuapp.com/",
   "menusBaseUrl": "https://www.bienmenuapp.com/menus/",
-  "stripeKey": "pk_live_51H9gmxBd2ZddnxHe9V9XUppP6IxdqqFhjh5nFoSGl730RxAUjzT3U48RbAt15KentuIWDVJfojNDozZdZf366yyg00gsmi04pK"
+  "stripeKey": "pk_live_51H9gmxBd2ZddnxHe9V9XUppP6IxdqqFhjh5nFoSGl730RxAUjzT3U48RbAt15KentuIWDVJfojNDozZdZf366yyg00gsmi04pK",
+  "mainS3BucketUrl": "https://bienmenu.s3.amazonaws.com/"
 }

@@ -26,8 +26,14 @@ export class FileUploadService {
     );
   }
 
-  uploadImage(foodItemId: String, image: File, name?: string): Observable<any> {
-    const url = `${this.fileServerUrl}food-item/image/upload/${foodItemId}`;
+  uploadImage(
+    path: string,
+    id: string,
+    image: File,
+    name?: string
+  ): Observable<any> {
+    const url = `${this.fileServerUrl}image/upload/${path}/${id}`;
+    console.log(name);
     const filename = name
       ? name + '.' + image.name.split('.').pop()
       : image.name;

@@ -67,9 +67,18 @@ export class RestaurantService {
 
   updateContactTracing(tracingEnabled: boolean, id: string): Observable<any> {
     const url = `${this.restaurantsUrl}/set-contact-tracing/${id}`;
-    return this.http.post<Menu>(
+    return this.http.post(
       url,
       { tracingEnabled: tracingEnabled },
+      this.httpOptions
+    );
+  }
+
+  updateCoverPhotoUrl(coverPhotoUrl: string, id: string): Observable<any> {
+    const url = `${this.restaurantsUrl}/update-cover-photo/${id}`;
+    return this.http.post(
+      url,
+      { coverPhotoUrl: coverPhotoUrl },
       this.httpOptions
     );
   }

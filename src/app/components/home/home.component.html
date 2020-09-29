@@ -1,19 +1,27 @@
 <div class="home container-fluid">
   <div class="home-overlay"></div>
   <div class="home-content container">
+    <div class="contact-tracing-alert alert" [@fadeInDown]>
+      To use our free contact tracing solution only, sign up
+      <a
+        [routerLink]="['/register', { plan: 'contact-tracing' }]"
+        mdbWavesEffect
+        >here</a
+      >
+    </div>
     <div class="row">
       <div
         class="home-left col-md-6 d-none d-sm-block"
         style="display: block"
-        [@fadeInOut]
+        [@fadeIn]
       >
         <img src="./assets/img/burger-girl-2.png" />
       </div>
       <div class="home-right col-md-6">
         <div class="home-right-column d-flex flex-column">
           <img src="./assets/img/bienmenu-long-logo.png" />
-          <h1>QR Code Menu Platform</h1>
-          <p>The easy way to manage your contactless Menu</p>
+          <h2>Online Menu Management</h2>
+          <h4>The easy way to manage your contactless menu</h4>
 
           <div *ngIf="!isLoggedIn">
             <div class="join-login-container d-flex flex-column">
@@ -24,7 +32,7 @@
               >
                 Join Now
               </button>
-              <div class="d-flex">
+              <div>
                 Already a member?&nbsp;
                 <a routerLink="/login" mdbWavesEffect> Log In </a>
               </div>

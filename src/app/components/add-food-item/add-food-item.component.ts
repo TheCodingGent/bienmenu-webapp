@@ -181,6 +181,7 @@ export class AddFoodItemComponent implements OnInit {
         if (this.fileToUpload) {
           this.fileUploadService
             .uploadImage(
+              'foodItems',
               this.currentFoodItem._id,
               this.fileToUpload,
               FormatFilename(this.currentFoodItem.name)
