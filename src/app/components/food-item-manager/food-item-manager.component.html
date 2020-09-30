@@ -18,16 +18,16 @@
               ><div style="padding-right: 10px">
                 <img class="small-img" src="{{ foodItem.imageUrl }}" />
               </div>
-              <h5 style="font-weight: 400; padding-top: 8px">
+              <h6 style="font-weight: 400; padding-top: 8px">
                 {{ foodItem.name }}
                 <mat-icon *ngIf="foodItem.promotionPrice > 0"
                   >verified</mat-icon
                 >
-              </h5>
+              </h6>
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description class="price">
               ${{ foodItem.price }}
-              <mat-icon color="primary">fastfood</mat-icon>
+              <mat-icon class="myelement" color="primary">fastfood</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div>

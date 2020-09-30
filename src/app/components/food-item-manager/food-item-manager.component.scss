@@ -1,3 +1,14 @@
+@media (max-width: 700px) {
+  .myelement {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .price {
+    position: fixed;
+    padding-left: 65%;
+  }
+}
 .mat-icon {
   vertical-align: middle;
 }
