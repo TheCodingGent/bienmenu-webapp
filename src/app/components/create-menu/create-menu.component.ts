@@ -86,6 +86,7 @@ export class CreateMenuComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (!this.menuForm.valid) return;
     this.createMenuObject();
   }
 
