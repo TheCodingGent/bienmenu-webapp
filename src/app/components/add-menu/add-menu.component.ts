@@ -22,6 +22,9 @@ import { UserService } from 'src/app/services/user.service';
 import { MustNotBeDuplicateInRestaurant } from 'src/app/helpers/file.validator';
 import { Restaurant } from 'src/app/models/restaurant';
 import { FormatFilename } from 'src/app/helpers/utilities';
+import { Menu, MenuType } from 'src/app/models/menu';
+import { MenuService } from 'src/app/services/menu.service';
+import { ObjectId } from 'bson';
 
 @Component({
   selector: 'app-add-menu',
@@ -35,6 +38,8 @@ export class AddMenuComponent implements OnInit {
 
   id = 'addMenuModal'; // modal id used by modal service
 
+  private menu: Menu;
+
   isOperationFailed = false;
   isValidFile = false;
   isSubmitted = false;
@@ -47,7 +52,8 @@ export class AddMenuComponent implements OnInit {
     private restaurantService: RestaurantService,
     private fileUploadService: FileUploadService,
     private userService: UserService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private menuService: MenuService
   ) {}
 
   ngOnInit() {
@@ -59,7 +65,6 @@ export class AddMenuComponent implements OnInit {
       {
         name: this.name,
         filename: [''],
-        lastupdated: [new Date().toISOString()],
       },
       {
         validator: MustNotBeDuplicateInRestaurant(
@@ -94,6 +99,14 @@ export class AddMenuComponent implements OnInit {
     }
   }
 
+  createMenuObject(): void {
+    (this.menu = this.menuForm.value), // sets the name and the filename
+      (this.menu._id = new ObjectId().toHexString());
+    this.menu.isActive = true;
+    this.menu.type = MenuType.FileBasedMenu;
+    this.menu.lastupdated = new Date().toLocaleString();
+  }
+
   saveMenu() {
     this.isSubmitted = true;
 
@@ -102,8 +115,10 @@ export class AddMenuComponent implements OnInit {
       filename: FormatFilename(this.name.value),
     });
 
-    this.restaurantService
-      .addMenu(this.menuForm.value, this.restaurant._id)
+    this.createMenuObject();
+
+    this.menuService
+      .addMenuForRestaurant(this.restaurant._id, this.menu)
       .subscribe(
         (data) => {
           // if menu was added successfully to the db then upload the file
@@ -120,21 +135,61 @@ export class AddMenuComponent implements OnInit {
                   (_) => {
                     this.close();
                     window.location.reload();
+                    this.isSubmitted = false;
                   },
                   (err) => {
                     console.log(JSON.parse(err.error).message);
                     this.isOperationFailed = true;
+                    this.isSubmitted = false;
                   }
                 );
               },
               (error) => {
+                this.isSubmitted = false;
                 this.isOperationFailed = true;
               }
             );
         },
         (error) => {
           this.isOperationFailed = true;
+          this.isSubmitted = false;
+          console.log(error);
         }
       );
+
+    // this.restaurantService
+    //   .addMenu(this.menuForm.value, this.restaurant._id)
+    //   .subscribe(
+    //     (data) => {
+    //       // if menu was added successfully to the db then upload the file
+    //       this.fileUploadService
+    //         .postFile(
+    //           this.fileToUpload,
+    //           this.restaurant._id,
+    //           this.menuForm.get('filename').value
+    //         )
+    //         .subscribe(
+    //           (data) => {
+    //             // do something, if upload success
+    //             this.userService.updateMenuUpdateCount().subscribe(
+    //               (_) => {
+    //                 this.close();
+    //                 window.location.reload();
+    //               },
+    //               (err) => {
+    //                 console.log(JSON.parse(err.error).message);
+    //                 this.isOperationFailed = true;
+    //               }
+    //             );
+    //           },
+    //           (error) => {
+    //             this.isOperationFailed = true;
+    //           }
+    //         );
+    //     },
+    //     (error) => {
+    //       this.isOperationFailed = true;
+    //     }
+    //   );
   }
 }

@@ -97,7 +97,7 @@ export class CreateMenuComponent implements OnInit {
     }
     this.menu.name = this.ctrlMenuName.value;
     this.menu.isActive = true;
-    this.menu.type = MenuType.BieMenuMenu;
+    this.menu.type = MenuType.BienMenuMenu;
     this.menu.lastupdated = new Date().toLocaleString();
     this.menu.sections = this.convertFoodItemToMenuSectionItem();
     this.menu.schedule = this.ctrlScheduleDays.value;

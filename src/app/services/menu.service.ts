@@ -26,7 +26,7 @@ export class MenuService {
   }
 
   getMenusForRestaurant(restaurantId: string): Observable<any> {
-    return this.http.get(`${this.menusUrl}/restaurnt/${restaurantId}`);
+    return this.http.get(`${this.menusUrl}/restaurant/${restaurantId}`);
   }
 
   addMenu(menu: Menu): Observable<Menu> {

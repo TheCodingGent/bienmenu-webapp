@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Restaurant } from 'src/app/models/restaurant';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { ModalService } from 'src/app/services/modal.service';
-import { Menu } from 'src/app/models/menu';
+import { Menu, MenuType } from 'src/app/models/menu';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import {
@@ -19,6 +19,7 @@ import { ValidateFile } from 'src/app/helpers/file.validator';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { FormatFilename } from 'src/app/helpers/utilities';
 import { AppConfigService } from 'src/app/services/app-config.service';
+import { MenuService } from 'src/app/services/menu.service';
 
 @Component({
   selector: 'app-restaurant-detail',
@@ -42,6 +43,7 @@ export class RestaurantDetailComponent implements OnInit {
   coverPhotoImageInput: ElementRef;
 
   restaurant: Restaurant;
+  menus: [Menu];
   success = false;
   menuUpdating = -1;
   userAllowedOnPage = false;
@@ -75,7 +77,8 @@ export class RestaurantDetailComponent implements OnInit {
     private elRef: ElementRef,
     private token: TokenStorageService,
     private fileUploadService: FileUploadService,
-    private appConfigService: AppConfigService
+    private appConfigService: AppConfigService,
+    private menuService: MenuService
   ) {}
 
   setColorThemeProperty() {
@@ -139,6 +142,11 @@ export class RestaurantDetailComponent implements OnInit {
       this.selectedCTSetting = restaurant.tracingEnabled;
       this.hostedInternal = restaurant.hostedInternal;
 
+      this.menuService
+        .getMenusForRestaurant(restaurant._id)
+        .subscribe((data) => {
+          this.menus = data.menus;
+        });
       //this.mainColor = restaurant.color;
       //this.setColorThemeProperty();
     });
@@ -294,7 +302,25 @@ export class RestaurantDetailComponent implements OnInit {
     }
   }
 
+  updateMenu(menuId: string, menuIndex: number) {
+    switch (+this.menus[menuIndex].type) {
+      case MenuType.FileBasedMenu: {
+        this.openModal('updateMenuModal' + menuId, menuIndex);
+        break;
+      }
+
+      case MenuType.BienMenuMenu: {
+        this.goToRoute('/create-menu/' + this.restaurant._id + '/' + menuId);
+        break;
+      }
+    }
+  }
+
   onChangeCT(value: string) {
     this.selectedCTSetting = value === 'true';
+  }
+
+  goToRoute(url: string): void {
+    this.router.navigateByUrl(url);
   }
 }

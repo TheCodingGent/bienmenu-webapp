@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatSlideToggleModule,
     MatExpansionModule,
     MatChipsModule,
+    MatMenuModule,
   ],
   exports: [
     MatToolbarModule,
@@ -46,6 +48,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatSlideToggleModule,
     MatExpansionModule,
     MatChipsModule,
+    MatMenuModule,
   ],
   providers: [],
 })

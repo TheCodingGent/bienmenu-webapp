@@ -1,15 +1,15 @@
 import { MenuSection } from './menu-section';
 
 export enum MenuType {
-  BieMenuFileMenu,
-  BieMenuMenu,
-  ExternalFileMenu,
+  FileBasedMenu,
+  BienMenuMenu,
+  ExternalLinkMenu,
 }
 
 export class Menu {
   _id: string;
   name: string;
-  type: number;
+  type: MenuType;
   filename: string;
   lastupdated: string;
   sections: MenuSection[];
