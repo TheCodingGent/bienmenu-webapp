@@ -3,7 +3,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -14,7 +14,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { ObjectID } from 'bson';
 import { FoodItem } from 'src/app/models/food-item';
-import { Menu } from 'src/app/models/menu';
+import { Menu, MenuType } from 'src/app/models/menu';
 import { MenuSection } from 'src/app/models/menu-section';
 import { MenuSectionItem } from 'src/app/models/menu-section-item';
 import { FoodItemService } from 'src/app/services/food-item.service';
@@ -86,6 +86,7 @@ export class CreateMenuComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (!this.menuForm.valid) return;
     this.createMenuObject();
   }
 
@@ -96,7 +97,7 @@ export class CreateMenuComponent implements OnInit {
     }
     this.menu.name = this.ctrlMenuName.value;
     this.menu.isActive = true;
-    this.menu.type = 'normal';
+    this.menu.type = MenuType.BieMenuMenu;
     this.menu.lastupdated = new Date().toLocaleString();
     this.menu.sections = this.convertFoodItemToMenuSectionItem();
     this.menu.schedule = this.ctrlScheduleDays.value;
@@ -196,7 +197,7 @@ export class CreateMenuComponent implements OnInit {
           (item: FoodItem, index: number) => {
             const menuSectionItem: MenuSectionItem = new MenuSectionItem();
             menuSectionItem._id = [new ObjectID()].toString();
-            menuSectionItem.foodItemId = item._id;
+            menuSectionItem.foodItem = item;
             menuSectionItem.order = index + 1;
             menuSectionItemList.push(menuSectionItem);
           }
@@ -212,7 +213,9 @@ export class CreateMenuComponent implements OnInit {
       const foodItemList: FoodItem[] = [];
       element.menuSectionItems.forEach((item) => {
         foodItemList.push(
-          this.foodItems.filter((element) => element._id == item.foodItemId)[0]
+          this.foodItems.filter(
+            (element) => element._id == item.foodItem._id
+          )[0]
         );
       });
       element.foodItems = foodItemList;

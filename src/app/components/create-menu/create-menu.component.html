@@ -7,86 +7,143 @@
           <div class="md-form md-outline">
             <div class="d-flex">
               <mdb-icon fas icon="tag" class="prefix grey-text"></mdb-icon>
-              <input type="text" id="ctrlMenuName" formControlName="ctrlMenuName" class="form-control" mdbInput
-                mdbValidate required />
+              <input
+                type="text"
+                id="ctrlMenuName"
+                formControlName="ctrlMenuName"
+                class="form-control"
+                mdbInput
+                mdbValidate
+                required
+              />
               <label for="ctrlMenuName">Menu Name</label>
-              <mdb-error *ngIf="
+              <mdb-error
+                *ngIf="
                   ctrlMenuName.invalid &&
                   (ctrlMenuName.dirty || ctrlMenuName.touched)
-                ">
+                "
+              >
                 Menu name is required
               </mdb-error>
-              <mdb-success *ngIf="
+              <mdb-success
+                *ngIf="
                   ctrlMenuName.valid &&
                   (ctrlMenuName.dirty || ctrlMenuName.touched)
-                ">Valid
+                "
+                >Valid
               </mdb-success>
             </div>
           </div>
 
-
           <div class="fragment-container col-md-3">
             <div class="section-heading">Food Bank</div>
-            <div cdkDropList id="foodItemsList" #foodItemList="cdkDropList" [cdkDropListData]="foodItems"
-              [cdkDropListConnectedTo]="allSectionsList" class="item-list" (cdkDropListDropped)="drop($event)">
+            <div
+              cdkDropList
+              id="foodItemsList"
+              #foodItemList="cdkDropList"
+              [cdkDropListData]="foodItems"
+              [cdkDropListConnectedTo]="allSectionsList"
+              class="item-list"
+              (cdkDropListDropped)="drop($event)"
+            >
               <div class="item-box" *ngFor="let item of foodItems" cdkDrag>
                 {{ item.name }}
               </div>
             </div>
             <div class="addSectionContainer">
-              <button (click)="openFoodItemModal('addFoodItemModal')"
-                class="btn btn-primary btn-circle btn-circle-sm m-1">
+              <button
+                (click)="openFoodItemModal('addFoodItemModal')"
+                type="button
+                "
+                class="btn btn-primary btn-circle btn-circle-sm m-1"
+              >
                 <i class="fa fa-plus"></i>
               </button>
             </div>
-            <app-add-food-item #addFoodItem (closed)="onClosedModal($event)"></app-add-food-item>
+            <app-add-food-item
+              #addFoodItem
+              (closed)="onClosedModal($event)"
+            ></app-add-food-item>
           </div>
           <div class="fragment-container col-md-5">
             <div class="section-heading">Menu Creator</div>
             <div formArrayName="ctrlMenuSections">
-              <div cdkDropList #sectionItemList="cdkDropList" [cdkDropListData]="getSectionControls()"
-                (cdkDropListDropped)="drop($event)" style="cursor: move">
-                <div *ngFor="
-                      let menuSection of getSectionControls();
-                      let i = index
-                    ">
-                  <app-menu-section cdkDrag [index]="i" [allSectionsList]="allSectionsList"
-                    (sectionRemoved)="onSectionRemoved($event)" [sectionForm]="getSectionControlsIndex(i)">
+              <div
+                cdkDropList
+                #sectionItemList="cdkDropList"
+                [cdkDropListData]="getSectionControls()"
+                (cdkDropListDropped)="drop($event)"
+                style="cursor: move"
+              >
+                <div
+                  *ngFor="
+                    let menuSection of getSectionControls();
+                    let i = index
+                  "
+                >
+                  <app-menu-section
+                    cdkDrag
+                    [index]="i"
+                    [allSectionsList]="allSectionsList"
+                    (sectionRemoved)="onSectionRemoved($event)"
+                    [sectionForm]="getSectionControlsIndex(i)"
+                  >
                   </app-menu-section>
                 </div>
               </div>
             </div>
             <div class="addSectionContainer">
-              <button (click)="addSection()" type="button" class="btn btn-primary btn-circle btn-circle-sm m-1">
+              <button
+                (click)="addSection()"
+                type="button"
+                class="btn btn-primary btn-circle btn-circle-sm m-1"
+              >
                 <i class="fa fa-plus"></i>
               </button>
             </div>
           </div>
           <div class="fragment-container col-md-3">
             <div class="section-heading">
-              <label style="margin-left: 5px;">
-                <input type="checkbox" [checked]="isSelectAllScheduleDays" (change)="selectAllScheduleDays()">
+              <label style="margin-left: 5px">
+                <input
+                  type="checkbox"
+                  [checked]="isSelectAllScheduleDays"
+                  (change)="selectAllScheduleDays()"
+                />
                 Schedule
-                <span class="p-1 badge badge-info" *ngIf="!checkShcedulDaysSelected()">select at least one
-                  day</span>
+                <span
+                  class="p-1 badge badge-info"
+                  *ngIf="!checkShcedulDaysSelected()"
+                  >select at least one day</span
+                >
               </label>
-
-
             </div>
-            <div class="day-box" formArrayName="ctrlScheduleDays"
-              *ngFor="let schedule of scheduleDaysControl; let i = index">
-              <input type="checkbox" [formControlName]="i" (change)="checkIfAllSelected()">
-              <label style="margin-left: 5px;">{{scheduleDays[i]}}</label>
-
+            <div
+              class="day-box"
+              formArrayName="ctrlScheduleDays"
+              *ngFor="let schedule of scheduleDaysControl; let i = index"
+            >
+              <input
+                type="checkbox"
+                [formControlName]="i"
+                (change)="checkIfAllSelected()"
+              />
+              <label style="margin-left: 5px">{{ scheduleDays[i] }}</label>
             </div>
-
           </div>
 
-
-          <button type="submit" class="submit-button" mat-raised-button [disabled]="!menuForm.valid 
-            || allSectionsList.length === 1 || isAnySectionEmpty()||
-            !checkShcedulDaysSelected()">
-            {{isEditMode?'Update':'Submit'}}
+          <button
+            type="submit"
+            class="submit-button"
+            mat-raised-button
+            [disabled]="
+              !menuForm.valid ||
+              allSectionsList.length === 1 ||
+              isAnySectionEmpty() ||
+              !checkShcedulDaysSelected()
+            "
+          >
+            {{ isEditMode ? "Update" : "Submit" }}
           </button>
         </div>
       </form>
