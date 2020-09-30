@@ -17,26 +17,33 @@
 
         <mat-accordion class="food-items-accordion" multi>
           <div
-            *ngFor="let foodItem of section.foodItems"
+            *ngFor="let menuSectionItem of section.menuSectionItems"
             style="padding-bottom: 10px"
           >
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <div style="padding-right: 10px">
-                    <img class="small-img" src="{{ foodItem.imageUrl }}" />
+                  <div style="padding-right: 10px; margin: auto">
+                    <img
+                      class="small-img"
+                      [src]="menuSectionItem.foodItem.imageUrl"
+                    />
+                  </div>
+                  <div class="food-name-div">
+                    <h6
+                      class="food-name"
+                      style="font-weight: 400; padding-top: 8px"
+                    >
+                      {{ menuSectionItem.foodItem.name }}
+                    </h6>
                   </div>
 
-                  <h5 style="font-weight: 400; padding-top: 8px">
-                    {{ foodItem.name }}
-                  </h5>
-
-                  <mat-icon *ngIf="foodItem.promotionPrice > 0"
+                  <mat-icon *ngIf="menuSectionItem.foodItem.promotionPrice > 0"
                     >verified</mat-icon
                   >
                 </mat-panel-title>
                 <mat-panel-description>
-                  <div *ngIf="foodItem.promotionPrice > 0">
+                  <div *ngIf="menuSectionItem.foodItem.promotionPrice > 0">
                     <div
                       style="
                         -webkit-text-decoration-line: line-through; /* Safari */
@@ -44,36 +51,43 @@
                         color: rgb(165, 164, 164);
                       "
                     >
-                      ${{ foodItem.price }}
+                      ${{ menuSectionItem.foodItem.price }}
                     </div>
                     <div style="color: black">
-                      ${{ foodItem.promotionPrice }}
+                      ${{ menuSectionItem.foodItem.promotionPrice }}
                     </div>
                   </div>
                   <div
-                    *ngIf="foodItem.promotionPrice <= 0"
+                    *ngIf="
+                      menuSectionItem.foodItem.promotionPrice <= 0 ||
+                      menuSectionItem.foodItem.promotionPrice === undefined
+                    "
                     style="color: black"
                   >
-                    ${{ foodItem.price }}
+                    ${{ menuSectionItem.foodItem.price }}
                   </div>
 
                   <mat-icon
+                    class="mobileDisplay"
                     *ngIf="section.name.toLocaleLowerCase() === 'drinks'"
                     style="padding-right: 5px"
                     >wine_bar</mat-icon
                   >
                   <mat-icon
+                    class="mobileDisplay"
                     *ngIf="section.name.toLocaleLowerCase() === 'plates'"
                     style="padding-right: 5px"
                     >restaurant</mat-icon
                   >
 
                   <mat-icon
+                    class="mobileDisplay"
                     *ngIf="section.name.toLocaleLowerCase() === 'desserts'"
                     style="padding-right: 5px"
                     >cake</mat-icon
                   >
                   <mat-icon
+                    class="mobileDisplay"
                     *ngIf="
                       section.name.toLocaleLowerCase() !== 'drinks' &&
                       section.name.toLocaleLowerCase() !== 'plates' &&
@@ -88,18 +102,23 @@
                 <div>
                   <div class="row">
                     <div class="col-md-6 food-description">
-                      {{ foodItem.description }}
+                      {{ menuSectionItem.foodItem.description }}
                       <div class="vertical-divider"></div>
                       <div>
                         <mat-icon>room_service</mat-icon>
-                        <span> Calories: </span>{{ foodItem.calories }} kcal
+                        <span> Calories: </span
+                        >{{ menuSectionItem.foodItem.calories }} kcal
                       </div>
                       <div class="vertical-divider"></div>
                       <div style="padding-bottom: 20px">
                         <mat-chip-list aria-label="Fish selection">
-                          <div *ngFor="let tag of foodItem.tags">
+                          <div
+                            *ngFor="let tag of menuSectionItem.foodItem.tags"
+                          >
                             <mat-chip
-                              style="background-color: var(--accent-color)"
+                              style="
+                                background-color: var(--main-color) !important;
+                              "
                               selected
                               ><img
                                 style="padding-right: 5px"
@@ -117,7 +136,10 @@
                       </div>
                     </div>
                     <div class="col-md-auto">
-                      <img width="300px" [src]="foodItem.imageUrl" />
+                      <img
+                        width="300px"
+                        [src]="menuSectionItem.foodItem.imageUrl"
+                      />
                     </div>
                   </div>
                 </div>

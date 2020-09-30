@@ -11,21 +11,32 @@
     </div>
 
     <mat-accordion class="food-items-accordion" multi>
-      <div *ngFor="let foodItem of foodItems">
+      <div style="padding-bottom: 10px" *ngFor="let foodItem of foodItems">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title
-              ><div style="padding-right: 10px">
+              ><div
+                style="
+                  padding-right: 10px;
+                  margin-top: auto;
+                  margin-bottom: auto;
+                "
+              >
                 <img class="small-img" src="{{ foodItem.imageUrl }}" />
               </div>
-              <h6 style="font-weight: 400; padding-top: 8px">
-                {{ foodItem.name }}
-                <mat-icon *ngIf="foodItem.promotionPrice > 0"
-                  >verified</mat-icon
+              <div class="food-name-div">
+                <h6
+                  class="food-name"
+                  style="font-weight: 400; padding-top: 8px"
                 >
-              </h6>
+                  {{ foodItem.name }}
+                  <mat-icon *ngIf="foodItem.promotionPrice > 0"
+                    >verified</mat-icon
+                  >
+                </h6>
+              </div>
             </mat-panel-title>
-            <mat-panel-description class="price">
+            <mat-panel-description>
               ${{ foodItem.price }}
               <mat-icon class="myelement" color="primary">fastfood</mat-icon>
             </mat-panel-description>
