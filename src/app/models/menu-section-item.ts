@@ -1,7 +1,9 @@
+import { FoodItem } from './food-item';
+
 export class MenuSectionItem {
   _id: string;
   order: number;
-  foodItemId: string;
+  foodItem: FoodItem;
   menuSectionId: string;
   isActive: boolean;
 }

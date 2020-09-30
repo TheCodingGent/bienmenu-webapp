@@ -1,10 +1,15 @@
 import { MenuSection } from './menu-section';
-import { WeekDay } from '@angular/common';
+
+export enum MenuType {
+  BieMenuFileMenu,
+  BieMenuMenu,
+  ExternalFileMenu,
+}
 
 export class Menu {
   _id: string;
   name: string;
-  type: string;
+  type: number;
   filename: string;
   lastupdated: string;
   sections: MenuSection[];
