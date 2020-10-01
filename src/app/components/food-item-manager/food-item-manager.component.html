@@ -42,61 +42,57 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div>
-            <div>
-              <div class="row">
-                <div class="col-md-6 food-description">
-                  {{ foodItem.description }}
-                  <div class="vertical-divider"></div>
-                  <div>
-                    <mat-icon color="primary">room_service</mat-icon>
-                    <span> Calories: </span>{{ foodItem.calories }} kcal
-                  </div>
-                  <div class="vertical-divider"></div>
-                  <div style="padding-bottom: 20px">
-                    <mat-chip-list aria-label="Fish selection">
-                      <div *ngFor="let tag of foodItem.tags">
-                        <mat-chip color="primary" selected
-                          ><img
-                            style="padding-right: 5px"
-                            *ngIf="tag.toLocaleLowerCase() === 'spicy'"
-                            src="/assets/img/tag-images/spicy.png"
-                          />
-                          <img
-                            style="padding-right: 5px"
-                            *ngIf="tag.toLocaleLowerCase() === 'vegetarian'"
-                            src="/assets/img/tag-images/vegetarian.png"
-                          />{{ tag }}</mat-chip
-                        >
-                      </div>
-                    </mat-chip-list>
-                  </div>
+            <div class="row">
+              <div class="col-md-8 food-description">
+                {{ foodItem.description }}
+                <div class="vertical-divider"></div>
+                <div>
+                  <mat-icon color="primary">room_service</mat-icon>
+                  <span> Calories: </span>{{ foodItem.calories }} kcal
                 </div>
-                <div class="col-md-auto">
-                  <img width="300px" [src]="foodItem.imageUrl" />
+                <div class="vertical-divider"></div>
+                <div style="padding-bottom: 20px">
+                  <mat-chip-list aria-label="Fish selection">
+                    <div *ngFor="let tag of foodItem.tags">
+                      <mat-chip color="primary" selected
+                        ><img
+                          style="padding-right: 5px"
+                          *ngIf="tag.toLocaleLowerCase() === 'spicy'"
+                          src="/assets/img/tag-images/spicy.png"
+                        />
+                        <img
+                          style="padding-right: 5px"
+                          *ngIf="tag.toLocaleLowerCase() === 'vegetarian'"
+                          src="/assets/img/tag-images/vegetarian.png"
+                        />{{ tag }}</mat-chip
+                      >
+                    </div>
+                  </mat-chip-list>
                 </div>
+              </div>
+              <div class="col-md-auto">
+                <img width="300px" [src]="foodItem.imageUrl" />
               </div>
             </div>
-
-            <div>
-              <div class="action-buttons">
-                <button
-                  mat-raised-button
-                  type="button"
-                  class="edit-btn btn float-right"
-                  (click)="openModal('addFoodItemModal', foodItem)"
-                >
-                  Edit
-                </button>
-                <div class="divider"></div>
-                <button
-                  mat-raised-button
-                  type="button"
-                  class="delete-btn btn float-right"
-                  (click)="deleteFoodItem(foodItem)"
-                >
-                  Delete
-                </button>
-              </div>
+            <div class="vertical-divider"></div>
+            <div class="action-buttons">
+              <button
+                mat-raised-button
+                type="button"
+                class="edit-btn btn"
+                (click)="openModal('addFoodItemModal', foodItem)"
+              >
+                Edit
+              </button>
+              <div class="divider"></div>
+              <button
+                mat-raised-button
+                type="button"
+                class="delete-btn btn float-right"
+                (click)="deleteFoodItem(foodItem)"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </mat-expansion-panel>

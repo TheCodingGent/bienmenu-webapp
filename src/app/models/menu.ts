@@ -3,7 +3,7 @@ import { MenuSection } from './menu-section';
 export enum MenuType {
   FileBasedMenu,
   BienMenuMenu,
-  ExternalMenuLink,
+  ExternalLinkMenu,
 }
 
 export class Menu {

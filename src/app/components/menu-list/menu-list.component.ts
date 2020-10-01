@@ -141,7 +141,7 @@ export class MenuListComponent implements OnInit {
         );
         this.isOpeningMenu = false;
         break;
-      case MenuType.FileBasedMenu:
+      case MenuType.ExternalLinkMenu:
         window.location.href = this.formatMenuUrl(menu.externalMenuLink);
         break;
     }
