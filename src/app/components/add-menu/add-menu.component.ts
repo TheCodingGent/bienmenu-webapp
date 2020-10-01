@@ -69,7 +69,7 @@ export class AddMenuComponent implements OnInit {
       {
         validator: MustNotBeDuplicateInRestaurant(
           'name',
-          this.restaurant.menus
+          this.restaurant.menuBank.menus
         ),
       }
     );

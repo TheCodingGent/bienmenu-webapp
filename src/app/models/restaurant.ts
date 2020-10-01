@@ -1,4 +1,4 @@
-import { Menu } from './menu';
+import { MenuBank } from './menu-bank';
 
 export interface Restaurant {
   _id: string;
@@ -9,11 +9,12 @@ export interface Restaurant {
   postalCode: string;
   address: string;
   phone: string;
-  menus: [Menu];
+  // menus: [Menu];
+  menuBank: MenuBank;
   rating: Number;
   color: string;
   tracingEnabled: boolean;
-  externalMenuLink: string;
-  hostedInternal: boolean;
+  // externalMenuLink: string;
+  // hostedInternal: boolean;
   coverPhotoUrl: string;
 }

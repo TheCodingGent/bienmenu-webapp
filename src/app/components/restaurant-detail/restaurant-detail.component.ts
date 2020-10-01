@@ -140,7 +140,7 @@ export class RestaurantDetailComponent implements OnInit {
       this.restaurant = restaurant;
       this.getMenuMaxCountReached();
       this.selectedCTSetting = restaurant.tracingEnabled;
-      this.hostedInternal = restaurant.hostedInternal;
+      // this.hostedInternal = restaurant.hostedInternal;
 
       this.menuService
         .getMenusForRestaurant(restaurant._id)

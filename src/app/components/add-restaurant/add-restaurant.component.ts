@@ -222,7 +222,7 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     this.restaurant.address = this.address;
     this.restaurant.phone = this.phone;
     this.restaurant.color = this.selectedColor;
-    this.restaurant.hostedInternal = this.selectedMenuOption === 'internal';
+    //this.restaurant.hostedInternal = this.selectedMenuOption === 'internal';
     if (this.currentPlan === 'contact-tracing') {
       this.restaurant.tracingEnabled = true;
     }

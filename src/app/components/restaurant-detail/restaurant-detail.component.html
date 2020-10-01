@@ -6,21 +6,17 @@
     <div *ngIf="restaurant">
       <h2>{{ restaurant.name }} Details</h2>
       <div class="basic-info list-group">
-        <div
-          class="list-group-item first-item restaurant-detail-section-header"
-        >
+        <div class="list-group-item first-item restaurant-detail-section-header">
           <h4>Basic Info</h4>
         </div>
         <div class="list-group-item">
           <span class="restaurant-detail-field">ID: </span>{{ restaurant._id }}
         </div>
         <div class="list-group-item">
-          <span class="restaurant-detail-field">Name: </span
-          >{{ restaurant.name }}
+          <span class="restaurant-detail-field">Name: </span>{{ restaurant.name }}
         </div>
         <div class="list-group-item">
-          <span class="restaurant-detail-field">Address: </span
-          >{{ restaurant.address }}
+          <span class="restaurant-detail-field">Address: </span>{{ restaurant.address }}
         </div>
         <div class="list-group-item" *ngIf="userHasContactTracing">
           <div class="row restaurant-setting">
@@ -28,28 +24,17 @@
               <span class="restaurant-detail-field">Contact Tracing: </span>
             </div>
             <div class="col-md-auto">
-              <div
-                class="enabled-disabled"
-                *ngIf="restaurant.tracingEnabled"
-                style="color: green"
-              >
+              <div class="enabled-disabled" *ngIf="restaurant.tracingEnabled" style="color: green">
                 Enabled
               </div>
-              <div
-                class="enabled-disabled"
-                *ngIf="!restaurant.tracingEnabled"
-                style="color: red"
-              >
+              <div class="enabled-disabled" *ngIf="!restaurant.tracingEnabled" style="color: red">
                 Disabled
               </div>
             </div>
             <div class="col-md-auto">
               <div class="contact-tracing-select">
-                <select
-                  class="browser-default custom-select"
-                  [(ngModel)]="selectedCTSetting"
-                  (ngModelChange)="onChangeCT($event)"
-                >
+                <select class="browser-default custom-select" [(ngModel)]="selectedCTSetting"
+                  (ngModelChange)="onChangeCT($event)">
                   <option value="true">Enable Contact Tracing</option>
                   <option value="false">Disable Contact Tracing</option>
                 </select>
@@ -57,16 +42,10 @@
             </div>
             <div class="col-md-3">
               <div class="tracing-btn">
-                <button
-                  mat-raised-button
-                  type="button"
-                  class="btn"
-                  (click)="saveContactTracing()"
-                  [disabled]="
+                <button mat-raised-button type="button" class="btn" (click)="saveContactTracing()" [disabled]="
                     selectedCTSetting == restaurant.tracingEnabled ||
                     isCTSettingSubmitted
-                  "
-                >
+                  ">
                   Save
                 </button>
               </div>
@@ -79,18 +58,13 @@
               </div>
               <div class="col-md-auto">
                 <div class="enabled-disabled">
-                  {{ restaurant.externalMenuLink }}
+                  <!-- {{ restaurant.externalMenuLink }} -->
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="setting-btn" *ngIf="!hostedInternal">
-                  <button
-                    mat-raised-button
-                    type="button"
-                    class="btn"
-                    (click)="saveMenuHostingSetting()"
-                    [disabled]="isHostingSettingSubmitted"
-                  >
+                  <button mat-raised-button type="button" class="btn" (click)="saveMenuHostingSetting()"
+                    [disabled]="isHostingSettingSubmitted">
                     Manage Menus on BienMenu
                   </button>
                 </div>
@@ -114,29 +88,17 @@
               <span class="restaurant-detail-field"> Update Cover Photo: </span>
             </div>
             <div class="col-md-auto">
-              <input
-                type="file"
-                #coverPhotoImage
-                (change)="handleImageFile($event.target.files)"
-              />
+              <input type="file" #coverPhotoImage (change)="handleImageFile($event.target.files)" />
             </div>
             <div class="col-md-3">
               <div class="tracing-btn">
-                <button
-                  mat-raised-button
-                  type="button"
-                  class="btn"
-                  (click)="uploadCoverPhoto()"
-                  [disabled]="!isValidImage || isSubmitted"
-                >
+                <button mat-raised-button type="button" class="btn" (click)="uploadCoverPhoto()"
+                  [disabled]="!isValidImage || isSubmitted">
                   Upload
                 </button>
               </div>
             </div>
-            <div
-              class="alert alert-info"
-              *ngIf="isSubmitted && !isOperationFailed"
-            >
+            <div class="alert alert-info" *ngIf="isSubmitted && !isOperationFailed">
               <div class="row">
                 <div class="col-md-2">
                   <mat-spinner diameter="20"></mat-spinner>
@@ -149,39 +111,25 @@
         <div class="vertical-divider"></div>
         <div *ngIf="currentPlan !== 'contact-tracing'">
           <div class="menus list-group" *ngIf="hostedInternal">
-            <div
-              class="list-group-item first-item restaurant-detail-section-header"
-            >
+            <div class="list-group-item first-item restaurant-detail-section-header">
               <div class="row">
                 <div class="col-md-11">
                   <h4>Restaurant Menus</h4>
                 </div>
                 <div class="col-md-auto">
-                  <button
-                    mat-icon-button
-                    [matMenuTriggerFor]="menu"
-                    aria-label="Example icon-button with a menu"
-                  >
-                    <mat-icon style="margin-bottom: 4px; margin-left: 1px"
-                      >note_add</mat-icon
-                    >
+                  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon style="margin-bottom: 4px; margin-left: 1px">note_add</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <button
-                      mat-menu-item
-                      (click)="
+                    <button mat-menu-item (click)="
                         goToRoute(
                           '/create-menu/' + restaurant._id + '/' + 'new-menu'
                         )
-                      "
-                    >
+                      ">
                       <mat-icon>menu_book</mat-icon>
                       <span>Create a BienMenu menu</span>
                     </button>
-                    <button
-                      mat-menu-item
-                      (click)="openModal('addMenuModal', -1)"
-                    >
+                    <button mat-menu-item (click)="openModal('addMenuModal', -1)">
                       <mat-icon>picture_as_pdf</mat-icon>
                       <span>Upload a PDF menu</span>
                     </button>
@@ -193,39 +141,25 @@
                 </div>
               </div>
             </div>
-            <div
-              *ngFor="let menu of menus; let i = index"
-              class="list-group-item"
-            >
+            <div *ngFor="let menu of menus; let i = index" class="list-group-item">
               <div class="row menu-row">
                 <div class="col-md-10">
-                  <span class="restaurant-detail-field">Menu Name: </span
-                  >{{ menu.name }}
+                  <span class="restaurant-detail-field">Menu Name: </span>{{ menu.name }}
                 </div>
                 <div class="col-md-auto">
-                  <button
-                    mat-raised-button
-                    type="button"
-                    class="delete-btn btn btn-block"
-                    (click)="deleteMenu(menu, restaurant._id)"
-                  >
+                  <button mat-raised-button type="button" class="delete-btn btn btn-block"
+                    (click)="deleteMenu(menu, restaurant._id)">
                     Delete Menu
                   </button>
                 </div>
               </div>
               <div class="row menu-row">
                 <div class="col-md-10">
-                  <span class="restaurant-detail-field">Last Updated: </span
-                  >{{ formatDate(menu.lastupdated) }}
+                  <span class="restaurant-detail-field">Last Updated: </span>{{ formatDate(menu.lastupdated) }}
                 </div>
                 <div class="col-md-auto">
-                  <button
-                    mat-raised-button
-                    type="button"
-                    class="btn btn-block"
-                    (click)="updateMenu(menu._id, i)"
-                    [disabled]="!menuUpdateAllowed"
-                  >
+                  <button mat-raised-button type="button" class="btn btn-block" (click)="updateMenu(menu._id, i)"
+                    [disabled]="!menuUpdateAllowed">
                     Update Menu
                   </button>
                 </div>
@@ -234,11 +168,8 @@
                     Menu updated successfully!
                   </div>
                 </div>
-                <app-update-menu
-                  [restaurantId]="restaurant._id"
-                  [menu]="menu"
-                  (success)="updateSuccess($event)"
-                ></app-update-menu>
+                <app-update-menu [restaurantId]="restaurant._id" [menu]="menu" (success)="updateSuccess($event)">
+                </app-update-menu>
               </div>
             </div>
           </div>
@@ -255,17 +186,11 @@
               >
                 Add Menu
               </button> -->
-              <div
-                class="menu-update-alert alert alert-info"
-                *ngIf="!menuUpdateAllowed"
-              >
+              <div class="menu-update-alert alert alert-info" *ngIf="!menuUpdateAllowed">
                 The maximum menu updates has been reached for this month. You
                 can upgrade your plan for unlimited updates!
               </div>
-              <div
-                class="menu-update-alert alert alert-info"
-                *ngIf="maxMenuCountReached"
-              >
+              <div class="menu-update-alert alert alert-info" *ngIf="maxMenuCountReached">
                 The maximum number of allowed menus per restaurant has been
                 reached. You can upgrade your plan to add more!
               </div>
@@ -274,18 +199,10 @@
                   <button mat-raised-button class="btn">Upgrade Now</button>
                 </a>
               </div>
-              <app-add-menu
-                [restaurant]="restaurant"
-                (closed)="onClosedModal($event)"
-              ></app-add-menu>
+              <app-add-menu [restaurant]="restaurant" (closed)="onClosedModal($event)"></app-add-menu>
             </div>
             <div class="delete">
-              <button
-                mat-raised-button
-                type="button"
-                class="delete-btn btn"
-                (click)="deleteRestaurant(restaurant._id)"
-              >
+              <button mat-raised-button type="button" class="delete-btn btn" (click)="deleteRestaurant(restaurant._id)">
                 Delete Restaurant
               </button>
             </div>
