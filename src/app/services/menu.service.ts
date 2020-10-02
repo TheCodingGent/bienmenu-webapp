@@ -25,9 +25,9 @@ export class MenuService {
     return this.http.get<Menu>(url);
   }
 
-  getMenusForRestaurant(restaurantId: string): Observable<any> {
-    return this.http.get(`${this.menusUrl}/restaurant/${restaurantId}`);
-  }
+  // getMenusForRestaurant(restaurantId: string): Observable<any> {
+  //   return this.http.get(`${this.menusUrl}/restaurant/${restaurantId}`);
+  // }
 
   addMenu(menu: Menu): Observable<Menu> {
     return this.http.post<Menu>(
@@ -45,10 +45,10 @@ export class MenuService {
     );
   }
 
-  deleteMenuById(restaurantId: string, menuId: string): Observable<Menu> {
+  deleteMenuById(restaurantId: string, menu: Menu): Observable<Menu> {
     return this.http.post<Menu>(
       `${this.menusUrl}/menu/delete/${restaurantId}`,
-      { menuId: menuId },
+      { menu: menu },
       this.httpOptions
     );
   }

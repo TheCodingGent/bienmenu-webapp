@@ -43,7 +43,7 @@ export class RestaurantDetailComponent implements OnInit {
   coverPhotoImageInput: ElementRef;
 
   restaurant: Restaurant;
-  menus: [Menu];
+  menus: Menu[];
   success = false;
   menuUpdating = -1;
   userAllowedOnPage = false;
@@ -140,13 +140,14 @@ export class RestaurantDetailComponent implements OnInit {
       this.restaurant = restaurant;
       this.getMenuMaxCountReached();
       this.selectedCTSetting = restaurant.tracingEnabled;
+      this.menus = restaurant.menuBank.menus;
       // this.hostedInternal = restaurant.hostedInternal;
 
-      this.menuService
-        .getMenusForRestaurant(restaurant._id)
-        .subscribe((data) => {
-          this.menus = data.menus;
-        });
+      // this.menuService
+      //   .getMenusForRestaurant(restaurant._id)
+      //   .subscribe((data) => {
+      //     this.menus = data.menus;
+      //   });
       //this.mainColor = restaurant.color;
       //this.setColorThemeProperty();
     });
@@ -194,7 +195,7 @@ export class RestaurantDetailComponent implements OnInit {
     if (
       confirm('Are you sure you want to delete this menu and all its data?')
     ) {
-      this.restaurantService.deleteMenu(menu, restaurantId).subscribe((_) => {
+      this.menuService.deleteMenuById(restaurantId,menu).subscribe((_) => {
         window.location.reload();
       }),
         (err) => {
@@ -287,18 +288,19 @@ export class RestaurantDetailComponent implements OnInit {
     if (
       confirm('Are you sure you want to switch your menu hosting to BienMenu?')
     ) {
-      this.isHostingSettingSubmitted = true;
-      this.restaurantService
-        .updateMenuHostingSetting(true, this.restaurant._id)
-        .subscribe((data) => {
-          console.log(data);
-          this.isHostingSettingSubmitted = false;
-          window.location.reload();
-        }),
-        (err) => {
-          console.log('An error occurred: ' + err);
-          this.isHostingSettingSubmitted = false;
-        };
+      // this.isHostingSettingSubmitted = true;
+      // this.restaurantService
+      //   .updateMenuHostingSetting(true, this.restaurant._id)
+      //   .subscribe((data) => {
+      //     console.log(data);
+      //     this.isHostingSettingSubmitted = false;
+      //     window.location.reload();
+      //   }),
+      //   (err) => {
+      //     console.log('An error occurred: ' + err);
+      //     this.isHostingSettingSubmitted = false;
+      //   };
+      confirm('this menthod is deactivated check the code :)');
     }
   }
 

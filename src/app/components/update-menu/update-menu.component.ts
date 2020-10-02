@@ -13,6 +13,7 @@ import { ModalService } from 'src/app/services/modal.service';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { ValidateFile } from 'src/app/helpers/file.validator';
 import { UserService } from 'src/app/services/user.service';
+import { MenuService } from 'src/app/services/menu.service';
 
 @Component({
   selector: 'app-update-menu',
@@ -37,6 +38,7 @@ export class UpdateMenuComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private modalService: ModalService,
     private restaurantService: RestaurantService,
+    private menuService: MenuService,
     private userService: UserService
   ) {}
 
@@ -78,8 +80,8 @@ export class UpdateMenuComponent implements OnInit {
         (data) => {
           // do something, if upload success
           //update menu timestamp
-          this.restaurantService
-            .updateMenu(this.menu, this.restaurantId)
+          this.menuService
+            .addMenuForRestaurant(this.restaurantId, this.menu)
             .subscribe(
               (data) => {
                 console.log(data);
