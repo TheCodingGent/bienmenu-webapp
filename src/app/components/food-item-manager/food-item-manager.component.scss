@@ -22,10 +22,12 @@
 }
 .small-img {
   width: 30px;
+  height: 30px;
   border-radius: 30px;
 
   @media (max-width: 700px) {
     width: 20px;
+    height: 20px;
     margin: auto;
     padding-top: 5px;
     padding-bottom: 5px;

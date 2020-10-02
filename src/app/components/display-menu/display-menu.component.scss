@@ -39,6 +39,14 @@
   font-family: "Lobster Two";
   padding: 10px;
 }
+.big-food-image {
+  width: 250px;
+
+  @media (max-width: 700px) {
+    width: 150px;
+    height: 150px;
+  }
+}
 .food-name-div {
   width: 250px;
 
@@ -61,10 +69,12 @@
 }
 .small-img {
   width: 30px;
+  height: 30px;
   border-radius: 30px;
 
   @media (max-width: 700px) {
     width: 20px;
+    height: 20px;
     margin: auto;
     padding-top: 5px;
     padding-bottom: 5px;
