@@ -19,7 +19,6 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { RestaurantDetailComponent } from './components/restaurant-detail/restaurant-detail.component';
 import { AddRestaurantComponent } from './components/add-restaurant/add-restaurant.component';
 import { AddMenuComponent } from './components/add-menu/add-menu.component';
-import { UpdateMenuComponent } from './components/update-menu/update-menu.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -55,7 +54,6 @@ import { BusinessPortalHomeComponent } from './components/business-portal-home/b
     RestaurantDetailComponent,
     AddRestaurantComponent,
     AddMenuComponent,
-    UpdateMenuComponent,
     LoginComponent,
     RegisterComponent,
     ProfileComponent,

@@ -41,11 +41,16 @@ import { MenuService } from 'src/app/services/menu.service';
 export class RestaurantDetailComponent implements OnInit {
   @ViewChild('coverPhotoImage')
   coverPhotoImageInput: ElementRef;
+  @ViewChild('addMenuComponent')
+  addMenuComponent;
 
   restaurant: Restaurant;
   menus: Menu[];
   success = false;
-  menuUpdating = -1;
+
+  menuToUpdateIndex = -1;
+  menuToUpdate: Menu;
+
   userAllowedOnPage = false;
   menuUpdateAllowed = false;
   maxMenuCountReached = true;
@@ -105,6 +110,7 @@ export class RestaurantDetailComponent implements OnInit {
         ) ||
       this.tokenStorageService.getUser().roles.includes('ROLE_ADMIN')
     ) {
+      this.menuToUpdate = undefined; // reset menu to update on init
       this.currentUser = this.token.getUser();
       this.currentPlan = this.currentUser.plan;
 
@@ -116,7 +122,7 @@ export class RestaurantDetailComponent implements OnInit {
   }
 
   openModal(id: string, index: number) {
-    this.menuUpdating = index;
+    this.menuToUpdateIndex = index;
     this.modalService.open(id);
   }
 
@@ -141,13 +147,6 @@ export class RestaurantDetailComponent implements OnInit {
       this.getMenuMaxCountReached();
       this.selectedCTSetting = restaurant.tracingEnabled;
       this.menus = restaurant.menuBank.menus;
-      // this.hostedInternal = restaurant.hostedInternal;
-
-      // this.menuService
-      //   .getMenusForRestaurant(restaurant._id)
-      //   .subscribe((data) => {
-      //     this.menus = data.menus;
-      //   });
       //this.mainColor = restaurant.color;
       //this.setColorThemeProperty();
     });
@@ -195,7 +194,7 @@ export class RestaurantDetailComponent implements OnInit {
     if (
       confirm('Are you sure you want to delete this menu and all its data?')
     ) {
-      this.menuService.deleteMenuById(restaurantId,menu).subscribe((_) => {
+      this.menuService.deleteMenuById(restaurantId, menu).subscribe((_) => {
         window.location.reload();
       }),
         (err) => {
@@ -284,36 +283,66 @@ export class RestaurantDetailComponent implements OnInit {
       );
   }
 
-  saveMenuHostingSetting() {
-    if (
-      confirm('Are you sure you want to switch your menu hosting to BienMenu?')
-    ) {
-      // this.isHostingSettingSubmitted = true;
-      // this.restaurantService
-      //   .updateMenuHostingSetting(true, this.restaurant._id)
-      //   .subscribe((data) => {
-      //     console.log(data);
-      //     this.isHostingSettingSubmitted = false;
-      //     window.location.reload();
-      //   }),
-      //   (err) => {
-      //     console.log('An error occurred: ' + err);
-      //     this.isHostingSettingSubmitted = false;
-      //   };
-      confirm('this menthod is deactivated check the code :)');
+  openAddMenu(menuType: MenuType) {
+    switch (menuType) {
+      case MenuType.FileBasedMenu: {
+        this.addMenuComponent.isExternalMenu = false;
+        this.openModal('addMenuModal', -1);
+        break;
+      }
+
+      case MenuType.ExternalLinkMenu: {
+        this.addMenuComponent.isExternalMenu = true;
+        this.openModal('addMenuModal', -1);
+        break;
+      }
     }
   }
 
   updateMenu(menuId: string, menuIndex: number) {
     switch (+this.menus[menuIndex].type) {
       case MenuType.FileBasedMenu: {
-        this.openModal('updateMenuModal' + menuId, menuIndex);
+        this.addMenuComponent.menuToUpdate = this.menus[menuIndex];
+        this.addMenuComponent.isUpdating = true;
+        this.addMenuComponent.isExternalMenu = false;
+        this.openModal('addMenuModal', menuIndex);
         break;
       }
 
       case MenuType.BienMenuMenu: {
         this.goToRoute('/create-menu/' + this.restaurant._id + '/' + menuId);
         break;
+      }
+
+      case MenuType.ExternalLinkMenu: {
+        this.addMenuComponent.menuToUpdate = this.menus[menuIndex];
+        this.addMenuComponent.isUpdating = true;
+        this.addMenuComponent.isExternalMenu = true;
+        this.openModal('addMenuModal', menuIndex);
+        break;
+      }
+    }
+  }
+
+  enumToMenuType(type: MenuType): string {
+    switch (+type) {
+      case MenuType.FileBasedMenu: {
+        let menuType = MenuType[MenuType.FileBasedMenu];
+        let i = menuType.lastIndexOf('Menu');
+
+        return menuType.slice(0, i) + ' ' + menuType.slice(i);
+      }
+      case MenuType.BienMenuMenu: {
+        let menuType = MenuType[MenuType.BienMenuMenu];
+        let i = menuType.lastIndexOf('Menu');
+
+        return menuType.slice(0, i) + ' ' + menuType.slice(i);
+      }
+      case MenuType.ExternalLinkMenu: {
+        let menuType = MenuType[MenuType.ExternalLinkMenu];
+        let i = menuType.lastIndexOf('Menu');
+
+        return menuType.slice(0, i) + ' ' + menuType.slice(i);
       }
     }
   }

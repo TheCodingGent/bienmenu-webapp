@@ -38,13 +38,19 @@ export class AddMenuComponent implements OnInit {
 
   id = 'addMenuModal'; // modal id used by modal service
 
-  private menu: Menu;
+  menu: Menu;
+  menuToUpdate: Menu;
+  isUpdating: boolean = false;
+  isExternalMenu: boolean = false;
+
+  menus: Menu[];
 
   isOperationFailed = false;
   isValidFile = false;
   isSubmitted = false;
   menuForm: FormGroup;
   name: FormControl;
+  externalMenuLink: FormControl;
   fileToUpload: File;
 
   constructor(
@@ -58,21 +64,14 @@ export class AddMenuComponent implements OnInit {
 
   ngOnInit() {
     this.modalService.add(this);
+    this.menus = this.restaurant.menuBank.menus;
 
     this.name = this.formBuilder.control('', Validators.required);
 
-    this.menuForm = this.formBuilder.group(
-      {
-        name: this.name,
-        filename: [''],
-      },
-      {
-        validator: MustNotBeDuplicateInRestaurant(
-          'name',
-          this.restaurant.menuBank.menus
-        ),
-      }
-    );
+    this.menuForm = this.formBuilder.group({
+      name: this.name,
+      filename: [''],
+    });
   }
 
   ngOnDestroy(): void {
@@ -82,12 +81,36 @@ export class AddMenuComponent implements OnInit {
   // open modal
   open(): void {
     this.addMenuModal.show();
+    if (this.isUpdating) {
+      // set the name control value
+      this.menuForm.patchValue({
+        name: this.menuToUpdate.name,
+      });
+    }
+
+    if (this.isExternalMenu) {
+      this.externalMenuLink = this.formBuilder.control('', Validators.required);
+      this.menuForm.addControl('externalMenuLink', this.externalMenuLink);
+
+      if (this.isUpdating) {
+        this.menuForm.patchValue({
+          externalMenuLink: this.menuToUpdate.externalMenuLink,
+        });
+      }
+    } else {
+      this.menuForm.removeControl('externalMenuLink');
+    }
   }
 
   // close modal
   close(): void {
     this.menuForm.reset();
     this.addMenuModal.hide();
+
+    // clear foodItem in addFoodItem modal
+    this.menuToUpdate = undefined;
+    this.isUpdating = false;
+
     this.closed.emit(true);
   }
 
@@ -100,10 +123,16 @@ export class AddMenuComponent implements OnInit {
   }
 
   createMenuObject(): void {
-    (this.menu = this.menuForm.value), // sets the name and the filename
-      (this.menu._id = new ObjectId().toHexString());
+    this.menu = this.menuForm.value; // sets the name and the filename
+    if (this.isUpdating) {
+      this.menu._id = this.menuToUpdate._id;
+    } else {
+      this.menu._id = new ObjectId().toHexString();
+    }
     this.menu.isActive = true;
-    this.menu.type = MenuType.FileBasedMenu;
+    this.menu.type = this.isExternalMenu
+      ? MenuType.ExternalLinkMenu
+      : MenuType.FileBasedMenu;
     this.menu.lastupdated = new Date().toLocaleString();
   }
 
@@ -120,40 +149,46 @@ export class AddMenuComponent implements OnInit {
     this.menuService
       .addMenuForRestaurant(this.restaurant._id, this.menu)
       .subscribe(
-        (data) => {
-          // if menu was added successfully to the db then upload the file
-          this.fileUploadService
-            .postFile(
-              this.fileToUpload,
-              this.restaurant._id,
-              this.menuForm.get('filename').value
-            )
-            .subscribe(
-              (data) => {
-                // do something, if upload success
-                this.userService.updateMenuUpdateCount().subscribe(
-                  (_) => {
-                    this.close();
-                    window.location.reload();
-                    this.isSubmitted = false;
-                  },
-                  (err) => {
-                    console.log(JSON.parse(err.error).message);
-                    this.isOperationFailed = true;
-                    this.isSubmitted = false;
-                  }
-                );
-              },
-              (error) => {
+        (_) => {
+          this.userService.updateMenuUpdateCount().subscribe(
+            (_) => {
+              // if file based menu and menu added successfully upload menu file
+              if (!this.isExternalMenu) {
+                this.fileUploadService
+                  .postFile(
+                    this.fileToUpload,
+                    this.restaurant._id,
+                    this.menuForm.get('filename').value
+                  )
+                  .subscribe(
+                    (_) => {
+                      this.close();
+                      window.location.reload();
+                      this.isSubmitted = false;
+                    },
+                    (error) => {
+                      console.log(error);
+                      this.isSubmitted = false;
+                      this.isOperationFailed = true;
+                    }
+                  );
+              } else {
+                this.close();
+                window.location.reload();
                 this.isSubmitted = false;
-                this.isOperationFailed = true;
               }
-            );
+            },
+            (err) => {
+              console.log(JSON.parse(err.error).message);
+              this.isSubmitted = false;
+              this.isOperationFailed = true;
+            }
+          );
         },
         (error) => {
-          this.isOperationFailed = true;
-          this.isSubmitted = false;
           console.log(error);
+          this.isSubmitted = false;
+          this.isOperationFailed = true;
         }
       );
 

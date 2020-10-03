@@ -5,6 +5,12 @@
   tabindex="-1"
   role="dialog"
   aria-hidden="true"
+  [config]="{
+    backdrop: false,
+    ignoreBackdropClick: true,
+    keyboard: false,
+    animated: true
+  }"
 >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -46,7 +52,37 @@
               >Valid
             </mdb-success>
           </div>
-          <div class="md-form mb-3">
+          <div class="md-form mb-5" *ngIf="isExternalMenu">
+            <mdb-icon fas icon="link" class="prefix grey-text"></mdb-icon>
+            <input
+              type="text"
+              id="externalMenuLink"
+              formControlName="externalMenuLink"
+              class="form-control"
+              mdbInput
+              mdbValidate
+              required
+            />
+            <label for="externalMenuLink">External Link</label>
+            <mdb-error
+              *ngIf="
+                externalMenuLink.invalid &&
+                (externalMenuLink.dirty || externalMenuLink.touched)
+              "
+            >
+              <span *ngIf="externalMenuLink.errors.required"
+                >External link is required</span
+              >
+            </mdb-error>
+            <mdb-success
+              *ngIf="
+                externalMenuLink.valid &&
+                (externalMenuLink.dirty || externalMenuLink.touched)
+              "
+              >Valid
+            </mdb-success>
+          </div>
+          <div class="md-form mb-3" *ngIf="!isExternalMenu">
             <mdb-icon fas icon="file" class="prefix grey-text"></mdb-icon>
             <input
               type="file"
@@ -68,7 +104,7 @@
           mat-raised-button
           (click)="saveMenu()"
           [disabled]="
-            !fileToUpload ||
+            (!fileToUpload && !isExternalMenu) ||
             menuForm.invalid ||
             (isSubmitted && !isOperationFailed)
           "
