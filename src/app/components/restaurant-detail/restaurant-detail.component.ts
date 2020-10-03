@@ -20,6 +20,8 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 import { FormatFilename } from 'src/app/helpers/utilities';
 import { AppConfigService } from 'src/app/services/app-config.service';
 import { MenuService } from 'src/app/services/menu.service';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-restaurant-detail',
@@ -43,6 +45,7 @@ export class RestaurantDetailComponent implements OnInit {
   coverPhotoImageInput: ElementRef;
   @ViewChild('addMenuComponent')
   addMenuComponent;
+  color: ThemePalette = 'primary';
 
   restaurant: Restaurant;
   menus: Menu[];
@@ -349,6 +352,16 @@ export class RestaurantDetailComponent implements OnInit {
 
   onChangeCT(value: string) {
     this.selectedCTSetting = value === 'true';
+  }
+
+  onMenuToggle(event: MatSlideToggleChange, menuIndex: number) {
+    let menu = this.menus[menuIndex];
+
+    this.menuService
+      .updateMenuStatus(menu._id, event.checked)
+      .subscribe((_) => {
+        menu.isActive = event.checked;
+      });
   }
 
   goToRoute(url: string): void {

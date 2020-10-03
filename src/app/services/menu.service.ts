@@ -45,6 +45,14 @@ export class MenuService {
     );
   }
 
+  updateMenuStatus(menuId: string, status: boolean): Observable<any> {
+    return this.http.post(
+      `${this.menusUrl}/menu/update-status/${menuId}`,
+      { isActive: status },
+      this.httpOptions
+    );
+  }
+
   deleteMenuById(restaurantId: string, menu: Menu): Observable<Menu> {
     return this.http.post<Menu>(
       `${this.menusUrl}/menu/delete/${restaurantId}`,

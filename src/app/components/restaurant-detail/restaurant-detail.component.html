@@ -173,6 +173,13 @@
                 <div class="col-md-10">
                   <span class="restaurant-detail-field">Menu Name: </span
                   >{{ menu.name }}
+                  <mat-slide-toggle
+                    class="menu-toggle"
+                    [color]="color"
+                    [checked]="menu.isActive"
+                    (change)="onMenuToggle($event, i)"
+                  >
+                  </mat-slide-toggle>
                 </div>
                 <div class="col-md-auto">
                   <button
