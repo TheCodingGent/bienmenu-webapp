@@ -22,7 +22,7 @@ import { AppConfigService } from 'src/app/services/app-config.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ThemePalette } from '@angular/material/core';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-restaurant-detail',
   templateUrl: './restaurant-detail.component.html',
@@ -194,52 +194,115 @@ export class RestaurantDetailComponent implements OnInit {
   }
 
   deleteMenu(menu: Menu, restaurantId: string) {
-    if (
-      confirm('Are you sure you want to delete this menu and all its data?')
-    ) {
-      this.menuService.deleteMenuById(restaurantId, menu).subscribe((_) => {
-        window.location.reload();
-      }),
-        (err) => {
-          console.log('An error occurred: ' + err);
-        };
-    }
+    // if (
+    //   confirm('Are you sure you want to delete this menu and all its data?')
+    // ) {
+    //   this.menuService.deleteMenuById(restaurantId, menu).subscribe((_) => {
+    //     window.location.reload();
+    //   }),
+    //     (err) => {
+    //       console.log('An error occurred: ' + err);
+    //     };
+    // }
+
+    Swal.fire({
+      title: 'Are you sure you want to delete this menu and all its data?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#009688',
+      cancelButtonColor: '#FF0000',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.menuService.deleteMenuById(restaurantId, menu).subscribe((_) => {
+          window.location.reload();
+        }),
+          (err) => {
+            console.log('An error occurred: ' + err);
+          };
+      }
+    });
   }
 
   deleteRestaurant(restaurantId: string) {
-    if (
-      confirm(
-        'Are you sure you want to delete this restaurant? This action cannot be undone.'
-      )
-    ) {
-      this.restaurantService.deleteRestaurant(restaurantId).subscribe((_) => {
-        this.tokenStorageService.deleteRestaurant(restaurantId);
-        this.router.navigate(['/user']).then(() => {
-          window.location.reload();
-        });
-      }),
-        (err) => {
-          console.log('An error occurred: ' + err);
-        };
-    }
+    // if (
+    //   confirm(
+    //     'Are you sure you want to delete this restaurant? This action cannot be undone.'
+    //   )
+    // ) {
+    //   this.restaurantService.deleteRestaurant(restaurantId).subscribe((_) => {
+    //     this.tokenStorageService.deleteRestaurant(restaurantId);
+    //     this.router.navigate(['/user']).then(() => {
+    //       window.location.reload();
+    //     });
+    //   }),
+    //     (err) => {
+    //       console.log('An error occurred: ' + err);
+    //     };
+    // }
+
+    Swal.fire({
+      title:
+        'Are you sure you want to delete this restaurant? This action cannot be undone.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#009688',
+      cancelButtonColor: '#FF0000',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.restaurantService.deleteRestaurant(restaurantId).subscribe((_) => {
+          this.tokenStorageService.deleteRestaurant(restaurantId);
+          this.router.navigate(['/user']).then(() => {
+            window.location.reload();
+          });
+        }),
+          (err) => {
+            console.log('An error occurred: ' + err);
+          };
+      }
+    });
   }
 
   saveContactTracing() {
-    if (
-      confirm('Are you sure you want to modify the contact tracing setting?')
-    ) {
-      this.isCTSettingSubmitted = true;
-      this.restaurantService
-        .updateContactTracing(this.selectedCTSetting, this.restaurant._id)
-        .subscribe((data) => {
-          this.isCTSettingSubmitted = false;
-          window.location.reload();
-        }),
-        (err) => {
-          console.log('An error occurred: ' + err);
-          this.isCTSettingSubmitted = false;
-        };
-    }
+    // if (
+    //   confirm('Are you sure you want to modify the contact tracing setting?')
+    // ) {
+    //   this.isCTSettingSubmitted = true;
+    //   this.restaurantService
+    //     .updateContactTracing(this.selectedCTSetting, this.restaurant._id)
+    //     .subscribe((data) => {
+    //       this.isCTSettingSubmitted = false;
+    //       window.location.reload();
+    //     }),
+    //     (err) => {
+    //       console.log('An error occurred: ' + err);
+    //       this.isCTSettingSubmitted = false;
+    //     };
+    // }
+
+    Swal.fire({
+      title: 'Are you sure you want to modify the contact tracing setting?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#009688',
+      cancelButtonColor: '#FF0000',
+      confirmButtonText: 'Yes, modify it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.isCTSettingSubmitted = true;
+        this.restaurantService
+          .updateContactTracing(this.selectedCTSetting, this.restaurant._id)
+          .subscribe((data) => {
+            this.isCTSettingSubmitted = false;
+            window.location.reload();
+          }),
+          (err) => {
+            console.log('An error occurred: ' + err);
+            this.isCTSettingSubmitted = false;
+          };
+      }
+    });
   }
 
   handleImageFile(files: FileList) {
