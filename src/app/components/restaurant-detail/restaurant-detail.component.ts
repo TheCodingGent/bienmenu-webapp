@@ -20,7 +20,9 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 import { FormatFilename } from 'src/app/helpers/utilities';
 import { AppConfigService } from 'src/app/services/app-config.service';
 import { MenuService } from 'src/app/services/menu.service';
-
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { ThemePalette } from '@angular/material/core';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-restaurant-detail',
   templateUrl: './restaurant-detail.component.html',
@@ -41,11 +43,17 @@ import { MenuService } from 'src/app/services/menu.service';
 export class RestaurantDetailComponent implements OnInit {
   @ViewChild('coverPhotoImage')
   coverPhotoImageInput: ElementRef;
+  @ViewChild('addMenuComponent')
+  addMenuComponent;
+  color: ThemePalette = 'primary';
 
   restaurant: Restaurant;
-  menus: [Menu];
+  menus: Menu[];
   success = false;
-  menuUpdating = -1;
+
+  menuToUpdateIndex = -1;
+  menuToUpdate: Menu;
+
   userAllowedOnPage = false;
   menuUpdateAllowed = false;
   maxMenuCountReached = true;
@@ -105,6 +113,7 @@ export class RestaurantDetailComponent implements OnInit {
         ) ||
       this.tokenStorageService.getUser().roles.includes('ROLE_ADMIN')
     ) {
+      this.menuToUpdate = undefined; // reset menu to update on init
       this.currentUser = this.token.getUser();
       this.currentPlan = this.currentUser.plan;
 
@@ -116,7 +125,7 @@ export class RestaurantDetailComponent implements OnInit {
   }
 
   openModal(id: string, index: number) {
-    this.menuUpdating = index;
+    this.menuToUpdateIndex = index;
     this.modalService.open(id);
   }
 
@@ -140,13 +149,7 @@ export class RestaurantDetailComponent implements OnInit {
       this.restaurant = restaurant;
       this.getMenuMaxCountReached();
       this.selectedCTSetting = restaurant.tracingEnabled;
-      // this.hostedInternal = restaurant.hostedInternal;
-
-      this.menuService
-        .getMenusForRestaurant(restaurant._id)
-        .subscribe((data) => {
-          this.menus = data.menus;
-        });
+      this.menus = restaurant.menuBank.menus;
       //this.mainColor = restaurant.color;
       //this.setColorThemeProperty();
     });
@@ -191,52 +194,115 @@ export class RestaurantDetailComponent implements OnInit {
   }
 
   deleteMenu(menu: Menu, restaurantId: string) {
-    if (
-      confirm('Are you sure you want to delete this menu and all its data?')
-    ) {
-      this.restaurantService.deleteMenu(menu, restaurantId).subscribe((_) => {
-        window.location.reload();
-      }),
-        (err) => {
-          console.log('An error occurred: ' + err);
-        };
-    }
+    // if (
+    //   confirm('Are you sure you want to delete this menu and all its data?')
+    // ) {
+    //   this.menuService.deleteMenuById(restaurantId, menu).subscribe((_) => {
+    //     window.location.reload();
+    //   }),
+    //     (err) => {
+    //       console.log('An error occurred: ' + err);
+    //     };
+    // }
+
+    Swal.fire({
+      title: 'Are you sure you want to delete this menu and all its data?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#009688',
+      cancelButtonColor: '#FF0000',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.menuService.deleteMenuById(restaurantId, menu).subscribe((_) => {
+          window.location.reload();
+        }),
+          (err) => {
+            console.log('An error occurred: ' + err);
+          };
+      }
+    });
   }
 
   deleteRestaurant(restaurantId: string) {
-    if (
-      confirm(
-        'Are you sure you want to delete this restaurant? This action cannot be undone.'
-      )
-    ) {
-      this.restaurantService.deleteRestaurant(restaurantId).subscribe((_) => {
-        this.tokenStorageService.deleteRestaurant(restaurantId);
-        this.router.navigate(['/user']).then(() => {
-          window.location.reload();
-        });
-      }),
-        (err) => {
-          console.log('An error occurred: ' + err);
-        };
-    }
+    // if (
+    //   confirm(
+    //     'Are you sure you want to delete this restaurant? This action cannot be undone.'
+    //   )
+    // ) {
+    //   this.restaurantService.deleteRestaurant(restaurantId).subscribe((_) => {
+    //     this.tokenStorageService.deleteRestaurant(restaurantId);
+    //     this.router.navigate(['/user']).then(() => {
+    //       window.location.reload();
+    //     });
+    //   }),
+    //     (err) => {
+    //       console.log('An error occurred: ' + err);
+    //     };
+    // }
+
+    Swal.fire({
+      title:
+        'Are you sure you want to delete this restaurant? This action cannot be undone.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#009688',
+      cancelButtonColor: '#FF0000',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.restaurantService.deleteRestaurant(restaurantId).subscribe((_) => {
+          this.tokenStorageService.deleteRestaurant(restaurantId);
+          this.router.navigate(['/user']).then(() => {
+            window.location.reload();
+          });
+        }),
+          (err) => {
+            console.log('An error occurred: ' + err);
+          };
+      }
+    });
   }
 
   saveContactTracing() {
-    if (
-      confirm('Are you sure you want to modify the contact tracing setting?')
-    ) {
-      this.isCTSettingSubmitted = true;
-      this.restaurantService
-        .updateContactTracing(this.selectedCTSetting, this.restaurant._id)
-        .subscribe((data) => {
-          this.isCTSettingSubmitted = false;
-          window.location.reload();
-        }),
-        (err) => {
-          console.log('An error occurred: ' + err);
-          this.isCTSettingSubmitted = false;
-        };
-    }
+    // if (
+    //   confirm('Are you sure you want to modify the contact tracing setting?')
+    // ) {
+    //   this.isCTSettingSubmitted = true;
+    //   this.restaurantService
+    //     .updateContactTracing(this.selectedCTSetting, this.restaurant._id)
+    //     .subscribe((data) => {
+    //       this.isCTSettingSubmitted = false;
+    //       window.location.reload();
+    //     }),
+    //     (err) => {
+    //       console.log('An error occurred: ' + err);
+    //       this.isCTSettingSubmitted = false;
+    //     };
+    // }
+
+    Swal.fire({
+      title: 'Are you sure you want to modify the contact tracing setting?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#009688',
+      cancelButtonColor: '#FF0000',
+      confirmButtonText: 'Yes, modify it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.isCTSettingSubmitted = true;
+        this.restaurantService
+          .updateContactTracing(this.selectedCTSetting, this.restaurant._id)
+          .subscribe((data) => {
+            this.isCTSettingSubmitted = false;
+            window.location.reload();
+          }),
+          (err) => {
+            console.log('An error occurred: ' + err);
+            this.isCTSettingSubmitted = false;
+          };
+      }
+    });
   }
 
   handleImageFile(files: FileList) {
@@ -283,29 +349,29 @@ export class RestaurantDetailComponent implements OnInit {
       );
   }
 
-  saveMenuHostingSetting() {
-    if (
-      confirm('Are you sure you want to switch your menu hosting to BienMenu?')
-    ) {
-      this.isHostingSettingSubmitted = true;
-      this.restaurantService
-        .updateMenuHostingSetting(true, this.restaurant._id)
-        .subscribe((data) => {
-          console.log(data);
-          this.isHostingSettingSubmitted = false;
-          window.location.reload();
-        }),
-        (err) => {
-          console.log('An error occurred: ' + err);
-          this.isHostingSettingSubmitted = false;
-        };
+  openAddMenu(menuType: MenuType) {
+    switch (menuType) {
+      case MenuType.FileBasedMenu: {
+        this.addMenuComponent.isExternalMenu = false;
+        this.openModal('addMenuModal', -1);
+        break;
+      }
+
+      case MenuType.ExternalLinkMenu: {
+        this.addMenuComponent.isExternalMenu = true;
+        this.openModal('addMenuModal', -1);
+        break;
+      }
     }
   }
 
   updateMenu(menuId: string, menuIndex: number) {
     switch (+this.menus[menuIndex].type) {
       case MenuType.FileBasedMenu: {
-        this.openModal('updateMenuModal' + menuId, menuIndex);
+        this.addMenuComponent.menuToUpdate = this.menus[menuIndex];
+        this.addMenuComponent.isUpdating = true;
+        this.addMenuComponent.isExternalMenu = false;
+        this.openModal('addMenuModal', menuIndex);
         break;
       }
 
@@ -313,11 +379,52 @@ export class RestaurantDetailComponent implements OnInit {
         this.goToRoute('/create-menu/' + this.restaurant._id + '/' + menuId);
         break;
       }
+
+      case MenuType.ExternalLinkMenu: {
+        this.addMenuComponent.menuToUpdate = this.menus[menuIndex];
+        this.addMenuComponent.isUpdating = true;
+        this.addMenuComponent.isExternalMenu = true;
+        this.openModal('addMenuModal', menuIndex);
+        break;
+      }
+    }
+  }
+
+  enumToMenuType(type: MenuType): string {
+    switch (+type) {
+      case MenuType.FileBasedMenu: {
+        let menuType = MenuType[MenuType.FileBasedMenu];
+        let i = menuType.lastIndexOf('Menu');
+
+        return menuType.slice(0, i) + ' ' + menuType.slice(i);
+      }
+      case MenuType.BienMenuMenu: {
+        let menuType = MenuType[MenuType.BienMenuMenu];
+        let i = menuType.lastIndexOf('Menu');
+
+        return menuType.slice(0, i) + ' ' + menuType.slice(i);
+      }
+      case MenuType.ExternalLinkMenu: {
+        let menuType = MenuType[MenuType.ExternalLinkMenu];
+        let i = menuType.lastIndexOf('Menu');
+
+        return menuType.slice(0, i) + ' ' + menuType.slice(i);
+      }
     }
   }
 
   onChangeCT(value: string) {
     this.selectedCTSetting = value === 'true';
+  }
+
+  onMenuToggle(event: MatSlideToggleChange, menuIndex: number) {
+    let menu = this.menus[menuIndex];
+
+    this.menuService
+      .updateMenuStatus(menu._id, event.checked)
+      .subscribe((_) => {
+        menu.isActive = event.checked;
+      });
   }
 
   goToRoute(url: string): void {

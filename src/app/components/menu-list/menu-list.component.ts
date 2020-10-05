@@ -99,7 +99,7 @@ export class MenuListComponent implements OnInit {
       .getRestaurant(this.currentRestaurantId)
       .subscribe((restaurant) => {
         this.currentRestaurant = restaurant;
-        this.menus = restaurant.menuBank.menus;
+        this.menus = restaurant.menuBank.menus.filter((menu) => menu.isActive); // only add menus that are active
         // this.isHostedInternal = restaurant.hostedInternal;
         this.mainColor = this.currentRestaurant.color;
         this.setColorThemeProperty();
