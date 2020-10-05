@@ -1,0 +1,73 @@
+{
+  "nav": {
+    "MANAGEMENT-MENU": "management menu",
+    "CONTACT-TRACING": "Contact Tracing",
+    "HOME": "Home",
+    "ADMIN": "Admin Board",
+    "FOOD-ITEMS": "Food Items",
+    "CONTACT": "Contact",
+    "LEARN-MORE": "Learn More",
+    "LOGIN": "Login",
+    "LOGOUT": "Logout"
+  },
+  "home": {
+    "MESSAGE": "To use our free contact tracing solution only, sign up",
+    "LINK-IN-MESSAGE": "here",
+    "SUBTITLE": "Online Menu Management",
+    "SLOGAN": "The easy way to manage your contactless menu",
+    "JOIN-NOW": "Join Now",
+    "ALREADY-A-MEMBER": "Already a member?"
+  },
+  "login": {
+    "USERNAME": "Username/Email",
+    "REQUIRED-MSG1": "Username or email is required",
+    "MESSAGE1": "Not a member? Sign up now!",
+    "PASSWORD": "Password",
+    "REQUIRED-MSG2": "Password is required",
+    "MESSAGE2": "Forgot Password",
+    "LOGIN-BTN": "Login",
+    "LOGIN-SUCCESS": "Logged in Successfully.",
+    "LOGIN=FALIED": "Login failed."
+  },
+  "user": {
+    "TITLE": "Your Businesses",
+    "CREATE-MENU": "Create Menu",
+    "PREVIEW": "Preview",
+    "QR-CODE": "QR Code",
+    "ADD-BUSINESS-BTN": "Add Business"
+  },
+  "create-menu": {
+    "TITLE": "Customize Menu",
+    "MENU-NAME": "Menu Name",
+    "MSG-REQ-NAME": "Menu name is required",
+    "SECTION-NAME": "Section Name",
+    "DRAG": "Drag Food Items Here",
+    "SECTION-REQ": "section name is required",
+    "VALID": "Valid",
+    "FOOD-BANK": "Food Bank",
+    "MENU-CREATOR": "Menu Creator",
+    "SCHEDULE": "Schedule",
+    "SCHEDULE-MSG": "Select At Least One Day",
+    "UPDATE": "Update",
+    "SUBMIT": "Submit"
+  },
+
+  "contact-tracing": {
+    "TITLE": "Contact Tracing",
+    "MESSAGE": " For your safety and the safety of our employees please take the time to fill in our form for contact tracing due to COVID-19. Your information will be kept strictly confidential and used only for contact tracing. Thank you in helping us all stay safe.",
+    "STRONG-MSG": "If you do not choose to subscribe to further news or updates, your information will be automatically deleted after 30 days.",
+    "NAME": "Name",
+    "REQ-MSG-NAME": "Name is required",
+    "VALID": "Valid",
+    "EMAIL": "Email",
+    "REQ-MSG-EMAIL": "Email is required",
+    "VALID-EMAIL": "Please enter a valid Email",
+    "PHONE": "Telephone",
+    "VALID-PHONE": "Please enter a valid phone number",
+    "AGREE": " By clicking this box I agree to the",
+    "AGREE-LINK": "terms & conditions",
+    "SUBSCRIBE": " Subscribe to receive news, updates and promotions from BienMenu or any of BienMenu's partners.",
+    "SUBMIT-BTN": "Submit",
+    "OPER-FAILED-MSG": " Failed to register contact information at this given time...we apologize for the inconvenience."
+  }
+}

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Restaurant } from 'src/app/models/restaurant';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { Location } from '@angular/common';
+
 import { UserService } from 'src/app/services/user.service';
-import { CollapseComponent } from 'angular-bootstrap-md';
+
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-board',
@@ -17,20 +18,33 @@ export class UserBoardComponent implements OnInit {
   currentUser: any;
   restaurants: Restaurant[];
   enableAdd = false;
+  lang;
+  language = '';
 
   constructor(
     private restaurantService: RestaurantService,
     private tokenStorageService: TokenStorageService,
     private userService: UserService,
-    private location: Location,
+    private translate: TranslateService,
     private router: Router
-  ) {}
+  ) {
+    this.lang = JSON.parse(localStorage.getItem('languages'));
+    if (this.lang !== null) this.language = this.lang[0].language;
+    console.log(this.language);
+  }
 
   ngOnInit(): void {
     this.restaurants = [];
     this.currentUser = this.tokenStorageService.getUser();
     this.getUserRestaurants();
     this.getAddAllowed();
+    if (this.language === 'en') {
+      this.translate.use('fr');
+    } else if (this.language === 'fr') {
+      this.translate.use('en');
+    }
+    this.lang = JSON.parse(localStorage.getItem('languages'));
+    this.language = this.lang[0].language;
   }
 
   getUserRestaurants(): void {

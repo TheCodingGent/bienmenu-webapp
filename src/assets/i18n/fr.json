@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "MANAGEMENT-MENU": "menu de gestion",
+    "CONTACT-TRACING": "Suivi Des Contacts",
+    "HOME": "Accueil",
+    "ADMIN": "Conseil d'administration",
+    "FOOD-ITEMS": "Articles Alimentaires",
+    "CONTACT": "Contact",
+    "LEARN-MORE": "Apprendre Encore Plus",
+    "LOGIN": "Connectez-vous",
+    "LOGOUT": "Se Désconnecter"
+  },
+  "home": {
+    "MESSAGE": "Pour utiliser uniquement notre solution gratuite de recherche des contacts, inscrivez-vous",
+    "LINK-IN-MESSAGE": "ici",
+    "SUBTITLE": "Gestion des menus en ligne",
+    "SLOGAN": "La façon simple de gérer votre menu sans contact",
+    "JOIN-NOW": "Adhérer maintenant",
+    "ALREADY-A-MEMBER": "Déjà membre?"
+  },
+  "login": {
+    "USERNAME": "Nom d'utilisateur / Email",
+    "REQUIRED-MSG1": "nom d'utilisateur ou e-mail est requis",
+    "MESSAGE1": "Pas un membre? S'inscrire maintenant!",
+    "PASSWORD": "Mot de Passe",
+    "REQUIRED-MSG2": "Mot de Passe est requis",
+    "MESSAGE2": "Mot de passe oublié?",
+    "LOGIN-BTN": "Connectez-Vous",
+    "LOGIN-SUCCESS": "Connecté avec succès.",
+    "LOGIN=FALIED": "Échec de la connexion."
+  },
+  "user": {
+    "TITLE": "Vos Entreprises",
+    "CREATE-MENU": "Créer un menu",
+    "PREVIEW": "Aperçu",
+    "QR-CODE": "QR Code",
+    "ADD-BUSINESS-BTN": "Ajouter une Entreprise"
+  },
+  "create-menu": {
+    "TITLE": "Personnalisez votre menu",
+    "MENU-NAME": "Nom de Menu",
+    "MSG-REQ-NAME": "nom de menu est requis",
+    "SECTION-NAME": "Nom de la Section",
+    "SECTION-REQ": "nom de la section est requis",
+    "DRAG": "Faites glisser les aliments ici",
+    "VALID": "Valide",
+    "FOOD-BANK": "Banque alimentaire",
+    "MENU-CREATOR": "Créateur de Menu",
+    "SCHEDULE": "Programme",
+    "SCHEDULE-MSG": "Sélectionnez Au moins un jour",
+    "UPDATE": "Mise à jour",
+    "SUBMIT": "Soumettre"
+  },
+  "contact-tracing": {
+    "TITLE": "Recherche Des Contacts",
+    "MESSAGE": " Pour votre sécurité et celle de nos employés, veuillez prendre le temps de remplir notre formulaire pour la recherche des contacts en raison du COVID-19. Vos informations resteront strictement confidentielles et ne seront utilisées que pour la recherche des contacts. Nous vous remercions de nous aider à assurer notre sécurité à tous.",
+    "STRONG-MSG": "Si vous ne choisissez pas de vous abonner à d'autres actualités ou mises à jour, vos informations seront automatiquement supprimées après 30 jours.",
+    "NAME": "Nom",
+    "REQ-MSG-NAME": "Nom est requis",
+    "VALID": "Valide",
+    "EMAIL": "Email",
+    "REQ-MSG-EMAIL": "Email est requis",
+    "VALID-EMAIL": "S'il vous plaît, mettez une adresse email valide",
+    "PHONE": "Téléphone",
+    "VALID-PHONE": "s'il vous plait entrez un numéro de téléphone valide",
+    "AGREE": "En cliquant sur cette case, j'accepte les",
+    "AGREE-LINK": "termes et conditions",
+    "SUBSCRIBE": "Abonnez-vous pour recevoir les actualités, mises à jour et promotions de BienMenu ou de l'un des partenaires de BienMenu.",
+    "SUBMIT-BTN": "Soumettre",
+    "OPER-FAILED-MSG": "Échec de l'enregistrement des informations de contact à ce moment donné ... nous vous prions de nous excuser pour la gêne occasionnée."
+  }
+}

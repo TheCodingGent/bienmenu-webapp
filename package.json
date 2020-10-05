@@ -23,6 +23,8 @@
     "@angular/platform-browser-dynamic": "^10.0.11",
     "@angular/router": "^10.0.11",
     "@fortawesome/fontawesome-free": "^5.14.0",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "@rxweb/reactive-form-validators": "^2.0.0",
     "@types/chart.js": "^2.9.24",
     "@types/googlemaps": "^3.39.13",
@@ -44,7 +46,7 @@
     "ng-animate": "^0.3.4",
     "ng2-pdf-viewer": "^6.3.2",
     "ngx-color-picker": "^10.0.1",
-    "rxjs": "^6.6.2",
+    "rxjs": "^6.6.3",
     "tslib": "^2.0.1",
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.10.2"

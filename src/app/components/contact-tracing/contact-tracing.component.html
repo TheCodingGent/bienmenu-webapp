@@ -15,7 +15,9 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Contact Tracing</h4>
+        <h4 class="modal-title w-100 font-weight-bold">
+          {{ "contact-tracing.TITLE" | translate }}
+        </h4>
         <button
           type="button"
           class="close"
@@ -29,23 +31,9 @@
         </button>
       </div>
       <div class="modal-body mx-3">
-        <div *ngIf="province === 'QC'">
-          Pour votre sécurité et celle de nos employés, veuillez prendre le
-          temps de remplir notre formulaire pour la recherche des contacts en
-          raison du COVID-19. Vos informations resteront strictement
-          confidentielles et ne seront utilisées que pour la recherche des
-          contacts. Nous vous remercions de nous aider à assurer notre sécurité
-          à tous. <br /><br />
-        </div>
         <div>
-          For your safety and the safety of our employees please take the time
-          to fill in our form for contact tracing due to COVID-19. Your
-          information will be kept strictly confidential and used only for
-          contact tracing. Thank you in helping us all stay safe.<br /><br />
-          <strong
-            >If you do not choose to subscribe to further news or updates, your
-            information will be automatically deleted after 30 days.</strong
-          >
+          {{ "contact-tracing.MESSAGE" | translate }}<br /><br />
+          <strong>{{ "contact-tracing.STRONG-MSG" | translate }}</strong>
         </div>
         <form [formGroup]="customerForm">
           <div class="md-form mb-5">
@@ -59,17 +47,19 @@
               mdbValidate
               required
             />
-            <label for="fullname">Name</label>
+            <label for="fullname">{{
+              "contact-tracing.NAME" | translate
+            }}</label>
             <mdb-error
               *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)"
             >
-              <span *ngIf="fullname.errors.required"
-                >Full name is required</span
-              >
+              <span *ngIf="fullname.errors.required">{{
+                "contact-tracing.REQ-MSG-NAME" | translate
+              }}</span>
             </mdb-error>
             <mdb-success
               *ngIf="fullname.valid && (fullname.dirty || fullname.touched)"
-              >Valid
+              >{{ "contact-tracing.VALID" | translate }}
             </mdb-success>
           </div>
           <div class="md-form mb-5">
@@ -83,13 +73,17 @@
               mdbValidate
               required
             />
-            <label for="email">Email</label>
+            <label for="email">{{ "contact-tracing.EMAIL" | translate }}</label>
             <mdb-error *ngIf="email.invalid && (email.dirty || email.touched)">
-              <span *ngIf="email.errors.required">Email is required</span>
-              <span *ngIf="email.errors.email">Please enter a valid email</span>
+              <span *ngIf="email.errors.required">{{
+                "contact-tracing.REQ-MSG-EMAIL" | translate
+              }}</span>
+              <span *ngIf="email.errors.email">{{
+                "contact-tracing.VALID-EMAIL" | translate
+              }}</span>
             </mdb-error>
             <mdb-success *ngIf="email.valid && (email.dirty || email.touched)"
-              >Valid
+              >{{ "contact-tracing.VALID" | translate }}
             </mdb-success>
           </div>
           <div class="md-form mb-5">
@@ -102,25 +96,24 @@
               mdbInput
               mdbValidate
             />
-            <label for="phone">Telephone</label>
+            <label for="phone">{{ "contact-tracing.PHONE" | translate }}</label>
             <mdb-error *ngIf="phone.invalid && (phone.dirty || phone.touched)">
-              <span *ngIf="phone.errors.pattern"
-                >Please enter a valid phone number</span
-              >
+              <span *ngIf="phone.errors.pattern">{{
+                "contact-tracing.VALID-PHONE" | translate
+              }}</span>
             </mdb-error>
             <mdb-success *ngIf="phone.valid && (phone.dirty || phone.touched)"
-              >Valid
+              >{{ "contact-tracing.VALID" | translate }}
             </mdb-success>
           </div>
           <div class="agreement-checkbox">
             <mdb-checkbox formControlName="terms">
               <div>
-                By clicking this box I agree to the
-                <span *ngIf="province === 'QC'">
-                  / En cochant cette boîte, j'accepte les
-                </span>
-                <a href="https://www.bien-menu.com/terms" target="_blank"
-                  >terms & conditions</a
+                {{ "contact-tracing.AGREE" | translate }}
+
+                <a href="https://www.bien-menu.com/terms" target="_blank">{{
+                  "contact-tracing.AGREE-LINK" | translate
+                }}</a
                 >.
               </div>
             </mdb-checkbox>
@@ -129,8 +122,7 @@
           <div class="agreement-checkbox">
             <mdb-checkbox formControlName="subscribed">
               <div>
-                Subscribe to recieve news, updates and promotions from BienMenu
-                or any of BienMenu's partners.
+                {{ "contact-tracing.SUBSCRIBE" | translate }}
               </div>
             </mdb-checkbox>
           </div>
@@ -150,11 +142,10 @@
             customerForm.invalid || (isSubmitted && !isOperationFailed)
           "
         >
-          Submit
+          {{ "contact-tracing.SUBMIT-BTN" | translate }}
         </button>
         <div class="alert alert-danger" *ngIf="isOperationFailed">
-          Failed to register contact information at this given time...we
-          apologize for the inconvenience.
+          {{ "contact-tracing.OPER-FAILED-MSG" | translate }}
         </div>
       </div>
     </div>

@@ -19,8 +19,8 @@
           mdbValidate
           required
         />
-        <label class="ml-3" for="name-{{ sectionForm.controls._id.value }}"
-          >Section Name</label
+        <label class="ml-3" for="name-{{ sectionForm.controls._id.value }}">
+          {{ "create-menu.SECTION-NAME" | translate }}</label
         >
         <mdb-error
           class="ml-3"
@@ -30,7 +30,7 @@
               sectionForm.controls.name.touched)
           "
         >
-          Section name is required
+          {{ "create-menu.SECTION-REQ" | translate }}
         </mdb-error>
         <mdb-success
           class="ml-3"
@@ -61,7 +61,8 @@
     <span
       class="ml-3 p-1 badge empty-section-badge"
       *ngIf="sectionForm.controls.foodItems.value.length === 0"
-      >Drag Food Items Here</span
+    >
+      {{ "create-menu.DRAG" | translate }}</span
     >
   </div>
 </div>

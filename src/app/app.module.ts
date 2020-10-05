@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { QRCodeModule } from 'angularx-qrcode';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
@@ -46,6 +46,8 @@ import { AddFoodItemComponent } from './components/add-food-item/add-food-item.c
 import { DisplayMenuComponent } from './components/display-menu/display-menu.component';
 import { ContactTracingHomeComponent } from './components/contact-tracing-home/contact-tracing-home.component';
 import { BusinessPortalHomeComponent } from './components/business-portal-home/business-portal-home.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -98,6 +100,14 @@ import { BusinessPortalHomeComponent } from './components/business-portal-home/b
       apiKey: 'AIzaSyC5OKLO-8r7Jy-SJszBQww_g7ci6n_jMGc',
       libraries: ['places'],
     }),
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     authInterceptorProviders,
@@ -115,3 +125,6 @@ import { BusinessPortalHomeComponent } from './components/business-portal-home/b
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

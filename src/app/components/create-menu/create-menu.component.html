@@ -1,7 +1,7 @@
 <div class="create-menu container-fluid">
   <div class="container">
     <div class="d-flex flex-column">
-      <h2>Customize your Menu</h2>
+      <h2>{{ "create-menu.TITLE" | translate }}</h2>
       <form [formGroup]="menuForm" (ngSubmit)="onSubmit()">
         <div class="col-md-11">
           <div class="md-form md-outline">
@@ -16,27 +16,31 @@
                 mdbValidate
                 required
               />
-              <label for="ctrlMenuName">Menu Name</label>
+              <label for="ctrlMenuName">{{
+                "create-menu.MENU-NAME" | translate
+              }}</label>
               <mdb-error
                 *ngIf="
                   ctrlMenuName.invalid &&
                   (ctrlMenuName.dirty || ctrlMenuName.touched)
                 "
               >
-                Menu name is required
+                {{ "create-menu.MSG-REQ-NAME" | translate }}
               </mdb-error>
               <mdb-success
                 *ngIf="
                   ctrlMenuName.valid &&
                   (ctrlMenuName.dirty || ctrlMenuName.touched)
                 "
-                >Valid
+                >{{ "create-menu.VALID" | translate }}
               </mdb-success>
             </div>
           </div>
 
           <div class="fragment-container col-md-3">
-            <div class="section-heading">Food Bank</div>
+            <div class="section-heading">
+              {{ "create-menu.FOOD-BANK" | translate }}
+            </div>
             <div
               cdkDropList
               id="foodItemsList"
@@ -66,7 +70,9 @@
             ></app-add-food-item>
           </div>
           <div class="fragment-container col-md-5">
-            <div class="section-heading">Menu Creator</div>
+            <div class="section-heading">
+              {{ "create-menu.MENU-CREATOR" | translate }}
+            </div>
             <div formArrayName="ctrlMenuSections">
               <div
                 cdkDropList
@@ -110,11 +116,11 @@
                   [checked]="isSelectAllScheduleDays"
                   (change)="selectAllScheduleDays()"
                 />
-                Schedule
+                {{ "create-menu.SCHEDULE" | translate }}
                 <span
                   class="p-1 badge empty-selection-badge"
                   *ngIf="!checkShcedulDaysSelected()"
-                  >Select At Least One Day</span
+                  >{{ "create-menu.SCHEDULE-MSG" | translate }}</span
                 >
               </label>
             </div>
@@ -143,7 +149,11 @@
               !checkShcedulDaysSelected()
             "
           >
-            {{ isEditMode ? "Update" : "Submit" }}
+            {{
+              isEditMode
+                ? "create-menu.UPADTE"
+                : ("create-menu.SUBMIT" | translate)
+            }}
           </button>
         </div>
       </form>

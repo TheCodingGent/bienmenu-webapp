@@ -19,7 +19,7 @@
           class="nav-link waves-light"
           routerLink="admin"
           mdbWavesEffect
-          >Admin Board</a
+          >{{ "nav.ADMIN" | translate }}</a
         >
       </li>
       <li class="nav-item">
@@ -29,7 +29,7 @@
           *ngIf="isLoggedIn"
           routerLink="user"
           mdbWavesEffect
-          >Home</a
+          >{{ "nav.HOME" | translate }}</a
         >
       </li>
 
@@ -81,7 +81,7 @@
           *ngIf="isLoggedIn"
           routerLink="food-items"
           mdbWavesEffect
-          >Food Items</a
+          >{{ "nav.FOOD-ITEMS" | translate }}</a
         >
       </li>
       <li class="nav-item">
@@ -91,7 +91,7 @@
           class="nav-link waves-light"
           *ngIf="!isLoggedIn"
           mdbWavesEffect
-          >Menu Management</a
+          >{{ "nav.MANAGEMENT-MENU" | translate }}</a
         >
       </li>
       <li class="nav-item">
@@ -101,7 +101,7 @@
           class="nav-link waves-light"
           *ngIf="!isLoggedIn"
           mdbWavesEffect
-          >Contact Tracing</a
+          >{{ "nav.CONTACT-TRACING" | translate }}</a
         >
       </li>
     </ul>
@@ -121,7 +121,7 @@
           class="nav-link waves-light"
           *ngIf="!isLoggedIn"
           mdbWavesEffect
-          >Contact</a
+          >{{ "nav.CONTACT" | translate }}</a
         >
       </li>
       <li class="nav-item">
@@ -131,7 +131,7 @@
           *ngIf="!isLoggedIn"
           mdbWavesEffect
         >
-          Learn More
+          {{ "nav.LEARN-MORE" | translate }}
         </a>
       </li>
       <li class="nav-item">
@@ -142,9 +142,10 @@
           routerLink="login"
           mdbWavesEffect
         >
-          Login
+          {{ "nav.LOGIN" | translate }}
         </a>
       </li>
+
       <li class="nav-item">
         <a
           href
@@ -152,8 +153,24 @@
           *ngIf="isLoggedIn"
           (click)="logout()"
           mdbWavesEffect
-          >Logout</a
+          >{{ "nav.LOGOUT" | translate }}</a
         >
+      </li>
+      <li style="padding-top: 5px">
+        <a class="translate-btn" slot="end" (click)="useLanguageButton()">
+          <span
+            class="txt"
+            *ngIf="language === 'fr'"
+            (click)="useLanguage('en')"
+            >EN</span
+          >
+          <span
+            class="txt"
+            *ngIf="language === 'en'"
+            (click)="useLanguage('fr')"
+            >FR</span
+          >
+        </a>
       </li>
     </ul>
   </links>
