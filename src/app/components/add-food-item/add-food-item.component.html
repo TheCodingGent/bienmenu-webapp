@@ -15,7 +15,9 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Add Food Item</h4>
+        <h4 class="modal-title w-100 font-weight-bold">
+          {{ "add-food-item.ADD" | translate }}
+        </h4>
         <button
           type="button"
           class="close"
@@ -40,21 +42,20 @@
               mdbValidate
               required
             />
-            <label for="name">Name</label>
+            <label for="name">{{ "add-food-item.NAME" | translate }}</label>
             <mdb-error
               *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)"
             >
-              <span *ngIf="f.name.errors.required"
-                >Food item name is required</span
-              >
-              <span *ngIf="f.name.errors.duplicate"
-                >Food item name is already in use, food item names must be
-                unique</span
-              >
+              <span *ngIf="f.name.errors.required">{{
+                "add-food-item.REQ-MSG-NAME" | translate
+              }}</span>
+              <span *ngIf="f.name.errors.duplicate">{{
+                "add-food-item.NAME-ALREADY-EXSITS" | translate
+              }}</span>
             </mdb-error>
             <mdb-success
               *ngIf="f.name.valid && (f.name.dirty || f.name.touched)"
-              >Valid
+              >{{ "add-food-item.VALID" | translate }}
             </mdb-success>
           </div>
           <div class="md-form">
@@ -77,20 +78,22 @@
               mdbValidate
               required
             />
-            <label for="price">Price ($)</label>
+            <label for="price"
+              >{{ "add-food-item.PRICE" | translate }} ($)</label
+            >
             <mdb-error
               *ngIf="f.price.invalid && (f.price.dirty || f.price.touched)"
             >
-              <span *ngIf="f.price.errors.required"
-                >Food item price is required</span
-              >
-              <span *ngIf="f.price.errors.pattern"
-                >Please enter a valid price</span
-              >
+              <span *ngIf="f.price.errors.required">{{
+                "add-food-item.REQ-MSG-PRICE" | translate
+              }}</span>
+              <span *ngIf="f.price.errors.pattern">{{
+                "add-food-item.VALID-PRICE" | translate
+              }}</span>
             </mdb-error>
             <mdb-success
               *ngIf="f.price.valid && (f.price.dirty || f.price.touched)"
-              >Valid
+              >{{ "add-food-item.VALID" | translate }}
             </mdb-success>
           </div>
           <div class="md-form">
@@ -107,7 +110,7 @@
               *ngIf="
                 f.calories.valid && (f.calories.dirty || f.calories.touched)
               "
-              >Valid
+              >{{ "add-food-item.VALID" | translate }}
             </mdb-success>
           </div>
           <div class="md-form">
@@ -157,22 +160,22 @@
             foodItemForm.invalid || (isSubmitted && !isOperationFailed)
           "
         >
-          Save
+          {{ "add-food-item.SAVE" | translate }}
         </button>
         <div class="alert alert-danger" *ngIf="isOperationFailed">
-          Failed to add menu...either you have exceeded the limit of allowed
-          menus or there's an issue with the server.
+          {{ "add-food-item.FAILED-ALERT" | translate }}
         </div>
         <div class="alert alert-danger" *ngIf="!isValidFile && fileToUpload">
-          Image file must not exceed 5 MB and must be in one of the following
-          formats: jpeg or png.
+          {{ "add-food-item.IMAGE-SIZE-ALERT" | translate }}
         </div>
         <div class="alert alert-info" *ngIf="isSubmitted && !isOperationFailed">
           <div class="row">
             <div class="col-md-2">
               <mat-spinner diameter="20"></mat-spinner>
             </div>
-            <div class="col-md-auto">Saving food item...</div>
+            <div class="col-md-auto">
+              {{ "add-food-item.SAVING" | translate }}
+            </div>
           </div>
         </div>
       </div>

@@ -9,11 +9,12 @@ import { TokenStorageService } from './services/token-storage.service';
 })
 export class AppComponent implements OnInit {
   languages = [];
-  constructor(private translate: TranslateService) {}
-
-  ngOnInit(): void {
-    this.translate.use(this.translate.getBrowserLang());
+  constructor(private translate: TranslateService) {
+    translate.use(this.translate.getBrowserLang());
     this.languages = [{ language: this.translate.getBrowserLang() }];
-    localStorage.setItem('languages', JSON.stringify(this.languages));
+    if (localStorage.getItem('languages') === null)
+      localStorage.setItem('languages', JSON.stringify(this.languages));
   }
+
+  ngOnInit(): void {}
 }

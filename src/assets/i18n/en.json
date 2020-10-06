@@ -18,6 +18,66 @@
     "JOIN-NOW": "Join Now",
     "ALREADY-A-MEMBER": "Already a member?"
   },
+  "register": {
+    "SUCCESS-MSG": " Your sign up was successful!",
+    "FAILED-MSG": "Signup failed!",
+    "FIRST-NAME": "First name",
+    "FIRST-NAME-REQ": "First name is required",
+    "VALID": "Valid",
+    "LAST-NAME": "Last Name",
+    "LAST-NAME-REQ": "Last name is required",
+    "USERNAME": "Username",
+    "USERNAME-REQ": "Username is required",
+    "USERNAME-VALIDATION-MSG1": "Username must be at least 3 characters",
+    "USERNAME-VALIDATION-MSG2": "Username cannot be more than 20 characters",
+    "REQ-EMAIL": "Email is required",
+    "VALID-EMAIL": "Please enter a valid Email",
+    "PASSWORD": "Password",
+    "PASSWORD-REQ": "Password is required",
+    "VALID-PASSWORD": "Password must be at least 6 characters",
+    "CONFIRM-PASS": "Confirm Password",
+    "REQ-CONFIRM-PASS": "Confirm password is required",
+    "PASS-MATCH": "Passwords must match",
+    "PLAN": "Select a plan:",
+    "PLAN1": "Basic - free",
+    "PLAN2": "Plus - $5.99/month",
+    "PLAN3": "Plus Yearly - $59.99/year",
+    "AGREE": "I agree to use this app under the following",
+    "TERMS-LINK": "terms & conditions",
+    "REGISTER-BTN": "Register"
+  },
+  "pricing": {
+    "ALERT": "There was a problem while processing your request to purchase this plan, please try again or contact us at: info@bienmenuapp.com if problem persists.",
+    "REQUEST-MSG": "Request for plan purchase is being processed, you will be redirected to the payment page momentarily!",
+    "CHOOSE-PLAN": "Choose a plan that works for you!",
+    "PLAN1": "Basic Menu Management",
+    "PRICE1": "Free Plan",
+    "SELECT-BTN": "Select",
+    "DESCRIPTION11": "Ideal for restaurants, bars and cafés",
+    "DESCRIPTION12": "Add up to 4 menus",
+    "DESCRIPTION13": "Unlimited scans",
+    "DESCRIPTION14": "Update up to one menu per month",
+    "DESCRIPTION15": "Optional customer checkin form integrated with your menus",
+    "DESCRIPTION16": "A single QR code for all your business needs",
+    "PLAN2": "Plus Menu Management",
+    "EVERY-MONTH": "Every month",
+    "FREE-TRIAL": "14 days free trial",
+    "START-FREE-TRIAL-BTN": "Start Free Trial",
+    "DESCRIPTION21": "Ideal for restaurants, bars and cafés",
+    "DESCRIPTION22": "Great for managing your menus frequently",
+    "DESCRIPTION23": "Add up to 8 menus",
+    "DESCRIPTION24": " Manage your daily food and drink specials with unlimited menu updates",
+    "DESCRIPTION25": "Optional customer checkin form integrated with your menus",
+    "DESCRIPTION26": "A single QR code for all your business needs",
+    "PLAN3": "Plus Yearly",
+    "EVERY-YEAR": "Every Year",
+    "DESCRIPTION31": "Ideal for restaurants, bars and cafés",
+    "DESCRIPTION32": "Great for managing your menus frequently",
+    "DESCRIPTION33": "Add up to 8 menus",
+    "DESCRIPTION34": " Manage your daily food and drink specials with unlimited menu updates",
+    "DESCRIPTION35": "Optional customer checkin form integrated with your menus",
+    "DESCRIPTION36": "A single QR code for all your business needs"
+  },
   "login": {
     "USERNAME": "Username/Email",
     "REQUIRED-MSG1": "Username or email is required",
@@ -27,7 +87,14 @@
     "MESSAGE2": "Forgot Password",
     "LOGIN-BTN": "Login",
     "LOGIN-SUCCESS": "Logged in Successfully.",
-    "LOGIN=FALIED": "Login failed."
+    "LOGIN-FAILED": "Login failed."
+  },
+  "admin": {
+    "All-busnisses": "All Businesses",
+    "CREATE-MENU": "Create Menu",
+    "PREVIEW": "Preview",
+    "EDIT": "Edit",
+    "Add-Restaurant": "Add Restaurant"
   },
   "user": {
     "TITLE": "Your Businesses",
@@ -35,6 +102,16 @@
     "PREVIEW": "Preview",
     "QR-CODE": "QR Code",
     "ADD-BUSINESS-BTN": "Add Business"
+  },
+  "cancel": {
+    "MSG1": " Your payment has been cancelled and not processed!",
+    "MSG2": " You will be redirected to the home page momentarily or click below to go there now!",
+    "HOME": "Take Me Home"
+  },
+  "success": {
+    "MSG1": " Your registration and payment were processed successfully!",
+    "MSG2": "You will be redirected to the login page momentarily or click below to login now!",
+    "LOGIN-BTN": "Login Now"
   },
   "create-menu": {
     "TITLE": "Customize Menu",
@@ -69,5 +146,139 @@
     "SUBSCRIBE": " Subscribe to receive news, updates and promotions from BienMenu or any of BienMenu's partners.",
     "SUBMIT-BTN": "Submit",
     "OPER-FAILED-MSG": " Failed to register contact information at this given time...we apologize for the inconvenience."
+  },
+  "menu-list": {
+    "TAP": "Tap To View Menu"
+  },
+  "profile": {
+    "TITLE": "Welcome",
+    "SUBTITLE": "Here you can see your basic profile info.",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "PLAN": "Current Plan",
+    "ACTIVE-BUSINESSES": "Active Businesses:",
+    "UPGRADE": "Upgrade your Plan",
+    "CONTACT": "Contact-Us",
+    "ALERT": "Please login to view your profile."
+  },
+  "qr-code-viewer": {
+    "MSG": "If you would like a custom QR code tailored specifically for your restaurant and brand or if you would like us to print and deliver your QR code cards to your restaurant, please contact our sales team at:",
+    "GIVE-CALL": "or give us a call at:",
+    "USA": "US",
+    "CARD-INST1": "Card Instruction Line 1",
+    "CARD-INST2": "Card Instruction Line 2",
+    "DOWNLOAD": "Download"
+  },
+  "add-restaurant": {
+    "BUSINESS-NAME": "Business Name",
+    "REQ-MSG-NAME": "Business Name is Required",
+    "VALID": "Valid",
+    "PLACEHOLDER-ADDRESS": "Search For Your Address",
+    "BUSINESS-ADDRESS": "Business Address",
+    "USA": "US",
+    "CUSTOM-COLOR": "Custom Color",
+    "PLACEHOLDER-COLOR": "Theme color (optional)",
+    "SUBMIT-BTN": "Submit",
+    "ALERT": "Failed to add restaurant...please try again or contact the system administrator.",
+    "SETTING-RESTAURANT-MSG": "Setting up your business...please wait."
+  },
+  "restaurant-details": {
+    "USER-ALERT": "Current user not authorized to view this restaurant...",
+    "DETAILS": "Details",
+    "INFO": "Basic Info",
+    "NAME": "Name",
+    "CONTACT-TRACING": "Contact Tracing",
+    "ENABLED": "Enabled",
+    "DISABLED": "Disabled",
+    "E-CONTACT-TRACING": "Enable Contact Tracing",
+    "D-CONTACT-TRACING": "Disable Contact Tracing",
+    "SAVE": "Save",
+    "COVER-PHOTO": "Current Cover Photo",
+    "UPDATE-COVER-PHOTO": "Update Cover Photo",
+    "UPLOAD": "Upload",
+    "UPLOAD-MSG": "Uploading image...",
+    "REST-MENUS": "Restaurant Menus",
+    "CREATE-MENU": "Create a BienMenu menu",
+    "UPLOAD-PDF": "Upload a PDF menu",
+    "LINK": "Link to an existing menu",
+    "MENU-NAME": "Menu Name",
+    "DELETE-MENU": "Delete Menu",
+    "LAST-UPDATED": "Last Updated",
+    "UPDATE-MENU": "Update Menu",
+    "UPDATE-MSG": "Menu Updated!",
+    "ALERT-MSG-MONTH": "The maximum menu updates has been reached for this month. You can upgrade your plan for unlimited updates!",
+    "ALERT-MSG-RESTO": "The maximum number of allowed menus per restaurant has been reached. You can upgrade your plan to add more!",
+    "UPGRADE": "Upgrade Now",
+    "DELETE-RESTO": "Delete Restaurant"
+  },
+  "business-portal": {
+    "CHECK-IN": "Check In",
+    "MENU": "Menus",
+    "THANK-YOU-ALERT": "You're information has been securely and successfully saved. Thank you and stay safe!",
+    "POWERED-BY": "Powered by"
+  },
+  "contact-tracing-home": {
+    "WELCOME": "Welcome to BienMenu's Customer Checkin Solution",
+    "SUBTITLE": "It's safe, secure and free to use",
+    "SIGNUP": "Sign up for an account",
+    "ADD-INFO": "Add your business information",
+    "PRINT-MSG": "Print your QR code",
+    "COVID-19-MSG": "Contact us in case of a positive COVID-19 case at your business and we will contact your customers on your behalf",
+    "SIGNUP-BTN": "Sign Up"
+  },
+  "food-item-manager": {
+    "EXPAND": "Expand All",
+    "COLLAPSE": "Collapse All",
+    "DELETE-BTN": "Delete",
+    "EDIT-BTN": "Edit",
+    "ADD-BTN": "Add Food Item"
+  },
+  "add-food-item": {
+    "ADD": "Add Food Item",
+    "NAME": "Name",
+    "REQ-MSG-NAME": "Food item name is required",
+    "NAME-ALREADY-EXSITS": "Food item name is already in use, food item names must be unique",
+    "VALID": "Valid",
+    "PRICE": "Price",
+    "REQ-MSG-PRICE": "Food item price is required",
+    "VALID-PRICE": "Please enter a valid price",
+    "SAVE": "Save",
+    "FAILED-ALERT": "Failed to add menu...either you have exceeded the limit of allowed menus or there's an issue with the server.",
+    "IMAGE-SIZE-ALERT": " Image file must not exceed 5 MB and must be in one of the following formats: jpeg or png.",
+    "SAVING": "Saving food item..."
+  },
+  "add-menu": {
+    "ADD-MENU": "Add Menu",
+    "NAME": "Menu Name",
+    "REQ-MSG-NAME": "Menu Name is required",
+    "MENU-NAME-ALREADY-EXISTS": "Menu name is already in use, menu names must be unique",
+    "VALID": "Valid",
+    "EXTERNAL-LINK": "External Link",
+    "REQ-MSG-LINK": "External link is required",
+    "SAVE": "Save",
+    "FAILED-ALERT": " Failed to add menu...either you have exceeded the limit of allowed menus or there's an issue with the server.",
+    "SIZE-ALERT": "File must not exceed 5 MB and must be in PDF format...",
+    "SAVING": "Saving Menu..."
+  },
+  "reset-password": {
+    "ENTER-EMAIL": "Please enter your email below",
+    "FAILED-REQUEST": "Failed to process request:",
+    "CHECK-EMAIL": "Check your email (and spam) folder for instructions.",
+    "REQ-EMAIL": "Email is required before submitting this form",
+    "VALID-EMAIL": "Please enter a valid email",
+    "RESET-PASS": "Reset Password",
+    "TITLE": "Set New Password",
+    "NEW-PASS": "New Password",
+    "REQ-MSG-PASSWORD": "New password is required before submitting this form",
+    "REQ-PASS-LENGTH": "Password must be at least 6 characters",
+    "ALERT": "Must confirm password before submitting this form",
+    "ALERT-MATCH-PASS": "Passwords must match",
+    "UPDATE-PASS": "Update Password"
+  },
+  "404": {
+    "OOPS": "Oops!",
+    "NOT-FOUND": "404 Not Found",
+    "MSG": " Sorry, an error has occurred, the requested page cannot be found!",
+    "HOME": "Take Me Home"
   }
 }

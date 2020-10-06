@@ -2,11 +2,11 @@
   <div class="food-item-manager-content">
     <div class="action-buttons">
       <button mat-raised-button (click)="accordion.openAll()">
-        Expand All
+        {{ "food-item-manager.EXPAND" | translate }}
       </button>
       <div class="divider"></div>
       <button mat-raised-button (click)="accordion.closeAll()">
-        Collapse All
+        {{ "food-item-manager.COLLAPSE" | translate }}
       </button>
     </div>
 
@@ -82,7 +82,7 @@
                 class="edit-btn btn"
                 (click)="openModal('addFoodItemModal', foodItem)"
               >
-                Edit
+                {{ "food-item-manager.EDIT-BTN" | translate }}
               </button>
               <div class="divider"></div>
               <button
@@ -91,7 +91,7 @@
                 class="delete-btn btn float-right"
                 (click)="deleteFoodItem(foodItem)"
               >
-                Delete
+                {{ "food-item-manager.DELETE-BTN" | translate }}
               </button>
             </div>
           </div>
@@ -105,7 +105,7 @@
         class="add-btn btn"
         (click)="openModal('addFoodItemModal')"
       >
-        Add Food Item
+        {{ "food-item-manager.ADD-BTN" | translate }}
       </button>
       <app-add-food-item
         #addFoodItem

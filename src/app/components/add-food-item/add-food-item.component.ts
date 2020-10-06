@@ -39,12 +39,15 @@ export class AddFoodItemComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   tags: string[] = ['vegetarian', 'spicy'];
+  tagsFr: string[] = ['végétarien', 'épicé'];
   //tag handling end
 
   isOperationFailed = false;
   isSubmitted = false;
   isEditing = false;
   isValidFile = false;
+  lang;
+  language;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,7 +55,10 @@ export class AddFoodItemComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private foodItemService: FoodItemService,
     private appCofigService: AppConfigService
-  ) {}
+  ) {
+    this.lang = JSON.parse(localStorage.getItem('languages'));
+    this.language = this.lang[0].language;
+  }
 
   ngOnInit() {
     this.modalService.add(this);

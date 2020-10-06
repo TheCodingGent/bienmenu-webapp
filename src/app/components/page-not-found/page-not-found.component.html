@@ -3,13 +3,11 @@
     <div class="col-md-12">
       <div class="error-template">
         <h1>
-          Oops!
+          {{ "404.OOPS" | translate }}
         </h1>
-        <h2>
-          404 Not Found
-        </h2>
+        <h2>{{ "404.NOT-FOUND" | translate }}</h2>
         <div class="error-details">
-          Sorry, an error has occured, the requested page cannot be found!
+          {{ "404.MSG" | translate }}
         </div>
         <div class="divider"></div>
         <div class="error-actions">
@@ -20,7 +18,7 @@
               type="button"
               class="btn"
             >
-              Take Me Home
+              {{ "404.HOME" | translate }}
             </button></a
           >
         </div>

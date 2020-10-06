@@ -45,13 +45,13 @@ export class CreateMenuComponent implements OnInit {
   ctrlScheduleDays: FormArray;
 
   scheduleDays = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
+    'Monday/Lundi',
+    'Tuesday/Mardi',
+    'Wednesday/Mercredi',
+    'Thursday/Jeudi',
+    'Friday/Vendredi',
+    'Saturday/Samedi',
+    'Sunday/Dimanche',
   ];
 
   constructor(

@@ -1,13 +1,11 @@
 <div class="qr-code-viewer container-fluid">
   <div class="qr-code-viewer-content container">
     <div class="top-notice alert alert-info">
-      If you would like a custom QR code tailored specifically for your
-      restaurant and brand or if you would like us to print and deliver your QR
-      code cards to your restaurant, please contact our sales team at:
-      <a href="mailto:info@bienmenu.com">info@bienmenu.com</a> or give us a call
-      at:<br />
+      {{ "qr-code-viewer.MSG" | translate }}
+      <a href="mailto:info@bienmenu.com">info@bienmenu.com </a
+      >{{ "qr-code-viewer.GIVE-CALL" | translate }} <br />
       Canada: +1(514)755-9103<br />
-      US: +1(214)799-7058
+      {{ "qr-code-viewer.USA" | translate }}: +1(214)799-7058
     </div>
     <div class="row">
       <div class="col-md-auto">
@@ -39,10 +37,14 @@
       <div class="col-md-auto">
         <div class="d-flex flex-column options-container">
           <div class="vertical-divider"></div>
-          <label for="instructionTextL1">Card Instruction Line 1</label>
+          <label for="instructionTextL1">{{
+            "qr-code-viewer.CARD-INST1" | translate
+          }}</label>
           <input #instructionTextL1 type="text" [(ngModel)]="firstLineText" />
           <div class="vertical-divider"></div>
-          <label for="instructionTextL2">Card Instruction Line 2</label>
+          <label for="instructionTextL2">{{
+            "qr-code-viewer.CARD-INST2" | translate
+          }}</label>
           <input #instructionTextL2 type="text" [(ngModel)]="secondLineText" />
           <div class="vertical-divider"></div>
           <div class="replication-select">
@@ -63,7 +65,7 @@
               class="download-btn btn btn-block"
               (click)="downloadQrCode()"
             >
-              Download
+              {{ "qr-code-viewer.DOWNLOAD" | translate }}
             </button>
           </div>
         </div>

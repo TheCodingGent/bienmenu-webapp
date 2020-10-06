@@ -1,11 +1,10 @@
 <div class="cancel-container container-fluid">
   <div class="alert alert-info">
-    Your payment has been cancelled and not processed! <br />
-    You will be redirected to the home page momentarily or click below to go
-    there now!
+    {{ "cancel.MSG1" | translate }}<br />
+    {{ "cancel.MSG2" | translate }}
   </div>
 
   <button mat-raised-button class="btn" (click)="goToHome()">
-    Take me home
+    {{ "cancel.HOME" | translate }}
   </button>
 </div>

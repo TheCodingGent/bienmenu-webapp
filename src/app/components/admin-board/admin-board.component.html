@@ -1,7 +1,7 @@
 <div class="admin-board container-fluid">
   <div class="admin-board-content container">
     <div class="d-flex flex-column" *ngIf="accessAllowed">
-      <h2>All Businesses</h2>
+      <h2>{{ "admin.All-busnisses" | translate }}</h2>
       <ul class="restaurants list-group">
         <li *ngFor="let restaurant of restaurants" class="list-group-item">
           <div class="container">
@@ -21,7 +21,7 @@
                         )
                       "
                     >
-                      Create Menu
+                      {{ "admin.CREATE-MENU" | translate }}
                     </button>
                   </div>
                   <div class="col-sm-auto">
@@ -30,7 +30,7 @@
                       class="btn btn-block"
                       (click)="goToRoute('/' + restaurant._id)"
                     >
-                      Preview
+                      {{ "admin.PREVIEW" | translate }}
                     </button>
                   </div>
                   <div class="col-sm-auto">
@@ -49,7 +49,7 @@
                       aria-label="Edit and manage business"
                       (click)="goToRoute('/detail/' + restaurant._id)"
                     >
-                      <mat-icon>edit</mat-icon>
+                      <mat-icon>{{ "admin.All-EDIT" | translate }}</mat-icon>
                     </button>
                   </div>
                 </div>
@@ -60,7 +60,9 @@
       </ul>
       <div class="add-new">
         <a routerLink="/add">
-          <button mat-raised-button class="btn">Add Restaurant</button>
+          <button mat-raised-button class="btn">
+            {{ "admin.Add-Restaurant" | translate }}
+          </button>
         </a>
       </div>
     </div>

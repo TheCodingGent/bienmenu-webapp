@@ -42,6 +42,7 @@ export class MainNavbarComponent implements OnInit {
     this.translate.use(language);
   }
   ngOnInit(): void {
+    this.translate.use(this.language);
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {

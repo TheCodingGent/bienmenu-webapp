@@ -1,21 +1,20 @@
 <div class="plans-container container-fluid">
   <div class="plans-container-content card card-container">
     <div class="alert alert-danger" *ngIf="isPaymentRequestFailed">
-      There was a problem while processing your request to purchase this plan,
-      please try again or contact us at: info@bienmenuapp.com if problem
-      persists.
+      {{ "pricing.ALERT" | translate }}
     </div>
     <div class="alert alert-info" *ngIf="isPaymentRequestSubmitted">
-      Request for plan purchase is being processed, you will be redirected to
-      the payment page momentarily!
+      {{ "pricing.REQUEST-MSG" | translate }}
     </div>
-    <h2>Choose a plan that works for you!</h2>
+    <h2>{{ "pricing.CHOOSE-PLAN" | translate }}</h2>
     <div class="card-deck">
       <div class="card" *ngIf="!isLoggedIn">
-        <div class="card-header text-center">Basic Menu Management</div>
+        <div class="card-header text-center">
+          {{ "pricing.PLAN1" | translate }}
+        </div>
         <div class="card-body text-center">
           <h1>$0</h1>
-          <p>Free Plan</p>
+          <p>{{ "pricing.PRICE1" | translate }}</p>
           <button
             mat-raised-button
             class="btn"
@@ -25,66 +24,68 @@
             Select
           </button>
           <ul class="plan-feature-list">
-            <li>Ideal for restaurants, bars and cafés</li>
-            <li>Add up to 4 menus</li>
-            <li>Unlimited scans</li>
-            <li>Update up to one menu per month</li>
-            <li>Optional customer checkin form integrated with your menus</li>
-            <li>A single QR code for all your business needs</li>
+            <li>{{ "pricing.DESCRIPTION11" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION12" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION13" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION14" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION15" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION16" | translate }}</li>
           </ul>
         </div>
       </div>
       <div class="card">
-        <div class="card-header text-center">Plus Menu Management</div>
+        <div class="card-header text-center">
+          {{ "pricing.PLAN2" | translate }}
+        </div>
         <div class="card-body text-center">
           <h1>$5.99</h1>
-          <p>Every month</p>
-          <p>14 day free trial</p>
+          <p>{{ "pricing.EVERY-MONTH" | translate }}</p>
+          <p>{{ "pricing.FREE-TRIAL" | translate }}</p>
           <button
             mat-raised-button
             class="btn"
             (click)="handlePlanClicked('plus')"
             [disabled]="isPaymentRequestSubmitted"
           >
-            Start Free Trial
+            {{ "pricing.START-FREE-TRIAL-BTN" | translate }}
           </button>
           <ul class="plan-feature-list">
-            <li>Ideal for restaurants, bars and cafés</li>
-            <li>Great for managing your menus frequently</li>
-            <li>Add up to 8 menus</li>
+            <li>{{ "pricing.DESCRIPTION21" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION22" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION23" | translate }}</li>
             <li>
-              Manage your daily food and drink specials with unlimited menu
-              updates
+              {{ "pricing.DESCRIPTION24" | translate }}
             </li>
-            <li>Optional customer checkin form integrated with your menus</li>
-            <li>A single QR code for all your business needs</li>
+            <li>{{ "pricing.DESCRIPTION25" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION26" | translate }}</li>
           </ul>
         </div>
       </div>
       <div class="card">
-        <div class="card-header text-center">Plus Yearly</div>
+        <div class="card-header text-center">
+          {{ "pricing.PLAN3" | translate }}
+        </div>
         <div class="card-body text-center">
           <h1>$59.99</h1>
-          <p>Every year</p>
-          <p>14 day free trial</p>
+          <p>{{ "pricing.EVERY-YEAR" | translate }}</p>
+          <p>{{ "pricing.FREE-TRIAL" | translate }}</p>
           <button
             mat-raised-button
             class="btn"
             (click)="handlePlanClicked('plus-yearly')"
             [disabled]="isPaymentRequestSubmitted"
           >
-            Start Free Trial
+            {{ "pricing.START-FREE-TRIAL-BTN" | translate }}
           </button>
           <ul class="plan-feature-list">
-            <li>Ideal for restaurants, bars and cafés</li>
-            <li>Great for managing your menus frequently</li>
-            <li>Add up to 8 menus</li>
+            <li>{{ "pricing.DESCRIPTION31" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION32" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION33" | translate }}</li>
             <li>
-              Manage your daily food and drink specials with unlimited menu
-              updates
+              {{ "pricing.DESCRIPTION34" | translate }}
             </li>
-            <li>Optional customer checkin form integrated with your menus</li>
-            <li>A single QR code for all your business needs</li>
+            <li>{{ "pricing.DESCRIPTION35" | translate }}</li>
+            <li>{{ "pricing.DESCRIPTION36" | translate }}</li>
           </ul>
         </div>
       </div>

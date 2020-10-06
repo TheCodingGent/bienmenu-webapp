@@ -6,10 +6,10 @@
       class="card-img"
     />
     <div class="alert alert-success" *ngIf="isSubmitted && isSignupSuccessful">
-      Your sign up was successful!
+      {{ "register.SUCCESS-MSG" | translate }}
     </div>
     <div class="alert alert-danger" *ngIf="isSubmitted && isSignupFailed">
-      Signup failed!<br />{{ errorMessage }}
+      {{ "register.FAILED-MSG" | translate }}<br />{{ errorMessage }}
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
@@ -23,21 +23,21 @@
           mdbValidate
           required
         />
-        <label for="firstName">First name</label>
+        <label for="firstName">{{ "register.FIRST-NAME" | translate }}</label>
         <mdb-error
           *ngIf="
             f.firstName.invalid && (f.firstName.dirty || f.firstName.touched)
           "
         >
-          <span *ngIf="f.firstName.errors.required"
-            >First name is required</span
-          >
+          <span *ngIf="f.firstName.errors.required">{{
+            "register.FIRST-NAME-REQ" | translate
+          }}</span>
         </mdb-error>
         <mdb-success
           *ngIf="
             f.firstName.valid && (f.firstName.dirty || f.firstName.touched)
           "
-          >Valid
+          >{{ "register.VALID" | translate }}
         </mdb-success>
       </div>
       <div class="md-form mb-5">
@@ -50,15 +50,17 @@
           mdbValidate
           required
         />
-        <label for="lastName">Last name</label>
+        <label for="lastName">{{ "register.LAST-NAME" | translate }}</label>
         <mdb-error
           *ngIf="f.lastName.invalid && (f.lastName.dirty || f.lastName.touched)"
         >
-          <span *ngIf="f.lastName.errors.required">Last name is required</span>
+          <span *ngIf="f.lastName.errors.required">{{
+            "register.LAST-NAME-REQ" | translate
+          }}</span>
         </mdb-error>
         <mdb-success
           *ngIf="f.lastName.valid && (f.lastName.dirty || f.lastName.touched)"
-          >Valid
+          >{{ "register.VALID" | translate }}
         </mdb-success>
       </div>
       <div class="md-form mb-5">
@@ -71,21 +73,23 @@
           mdbValidate
           required
         />
-        <label for="username">Username</label>
+        <label for="username">{{ "register.USERNAME" | translate }}</label>
         <mdb-error
           *ngIf="f.username.invalid && (f.username.dirty || f.username.touched)"
         >
-          <span *ngIf="f.username.errors.required">Username is required</span>
-          <span *ngIf="f.username.errors.minlength"
-            >Username must be at least 3 characters</span
-          >
-          <span *ngIf="f.username.errors.maxlength"
-            >Username cannot be more than 20 characters</span
-          >
+          <span *ngIf="f.username.errors.required">{{
+            "register.USERNAME-REQ" | translate
+          }}</span>
+          <span *ngIf="f.username.errors.minlength">{{
+            "register.USERNAME-VALIDATION-MSG1" | translate
+          }}</span>
+          <span *ngIf="f.username.errors.maxlength">{{
+            "register.USERNAME-VALIDATION-MSG2" | translate
+          }}</span>
         </mdb-error>
         <mdb-success
           *ngIf="f.username.valid && (f.username.dirty || f.username.touched)"
-          >Valid
+          >{{ "register.VALID" | translate }}
         </mdb-success>
       </div>
       <div class="md-form mb-5">
@@ -102,11 +106,15 @@
         <mdb-error
           *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)"
         >
-          <span *ngIf="f.email.errors.required">Email is required</span>
-          <span *ngIf="f.email.errors.email">Please enter a valid email</span>
+          <span *ngIf="f.email.errors.required">{{
+            "register.REQ-EMAIL" | translate
+          }}</span>
+          <span *ngIf="f.email.errors.email">{{
+            "register.VALID-EMAIL" | translate
+          }}</span>
         </mdb-error>
         <mdb-success *ngIf="f.email.valid && (f.email.dirty || f.email.touched)"
-          >Valid
+          >{{ "register.VALID" | translate }}
         </mdb-success>
       </div>
       <div class="md-form">
@@ -119,18 +127,20 @@
           mdbValidate
           required
         />
-        <label for="password">Password</label>
+        <label for="password">{{ "register.PASSWORD" | translate }}</label>
         <mdb-error
           *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)"
         >
-          <span *ngIf="f.password.errors.required">Password is required</span>
-          <span *ngIf="f.password.errors.minlength"
-            >Password must be at least 6 characters</span
-          >
+          <span *ngIf="f.password.errors.required">{{
+            "register.PASSWORD-REQ" | translate
+          }}</span>
+          <span *ngIf="f.password.errors.minlength">{{
+            "register.VALID-PASSWORD" | translate
+          }}</span>
         </mdb-error>
         <mdb-success
           *ngIf="f.password.valid && (f.password.dirty || f.password.touched)"
-          >Valid
+          >{{ "register.VALID" | translate }}
         </mdb-success>
       </div>
       <div class="md-form">
@@ -143,49 +153,54 @@
           mdbValidate
           required
         />
-        <label for="confirmPassword">Confirm Password</label>
+        <label for="confirmPassword">{{
+          "register.CONFIRM-PASS" | translate
+        }}</label>
         <mdb-error
           *ngIf="
             f.confirmPassword.invalid &&
             (f.confirmPassword.dirty || f.confirmPassword.touched)
           "
         >
-          <span *ngIf="f.confirmPassword.errors.required"
-            >Confirm password is required</span
-          >
-          <span *ngIf="f.confirmPassword.errors.mustMatch"
-            >Passwords must match</span
-          >
+          <span *ngIf="f.confirmPassword.errors.required">{{
+            "register.REQ-CONFIRM-PASS" | translate
+          }}</span>
+          <span *ngIf="f.confirmPassword.errors.mustMatch">{{
+            "register.PASS-MATCH" | translate
+          }}</span>
         </mdb-error>
         <mdb-success
           *ngIf="
             f.confirmPassword.valid &&
             (f.confirmPassword.dirty || f.confirmPassword.touched)
           "
-          >Valid
+          >{{ "register.VALID" | translate }}
         </mdb-success>
       </div>
       <div class="md-form" *ngIf="selectedPlan !== 'contact-tracing'">
         <div class="d-flex">
-          <span class="field-name">Select a plan:</span>
+          <span class="field-name">{{ "register.PLAN" | translate }}</span>
           <div class="country-select flex-fill">
             <select
               class="browser-default custom-select"
               [(ngModel)]="selectedPlan"
               [ngModelOptions]="{ standalone: true }"
             >
-              <option value="basic">Basic - free</option>
-              <option value="plus">Plus - $5.99/month</option>
-              <option value="plus-yearly">Plus Yearly - $59.99/year</option>
+              <option value="basic">{{ "register.PLAN1" | translate }}</option>
+              <option value="plus">{{ "register.PLAN2" | translate }}</option>
+              <option value="plus-yearly">
+                {{ "register.PLAN3" | translate }}
+              </option>
             </select>
           </div>
         </div>
       </div>
       <div class="agreement-checkbox">
         <mdb-checkbox formControlName="terms">
-          I agree to use this app under the following
-          <a href="https://www.bien-menu.com/terms" target="_blank"
-            >terms & conditions</a
+          {{ "register.AGREE" | translate }}
+          <a href="https://www.bien-menu.com/terms" target="_blank">{{
+            "register.TERMS-LINK" | translate
+          }}</a
           >.
         </mdb-checkbox>
       </div>
@@ -197,7 +212,7 @@
       [disabled]="registerForm.invalid || f.submitted"
       (click)="onSubmit()"
     >
-      Register
+      {{ "register.REGISTER-BTN" | translate }}
     </button>
   </div>
 </div>

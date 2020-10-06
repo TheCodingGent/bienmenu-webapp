@@ -18,33 +18,20 @@ export class UserBoardComponent implements OnInit {
   currentUser: any;
   restaurants: Restaurant[];
   enableAdd = false;
-  lang;
-  language = '';
 
   constructor(
     private restaurantService: RestaurantService,
     private tokenStorageService: TokenStorageService,
     private userService: UserService,
-    private translate: TranslateService,
+
     private router: Router
-  ) {
-    this.lang = JSON.parse(localStorage.getItem('languages'));
-    if (this.lang !== null) this.language = this.lang[0].language;
-    console.log(this.language);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.restaurants = [];
     this.currentUser = this.tokenStorageService.getUser();
     this.getUserRestaurants();
     this.getAddAllowed();
-    if (this.language === 'en') {
-      this.translate.use('fr');
-    } else if (this.language === 'fr') {
-      this.translate.use('en');
-    }
-    this.lang = JSON.parse(localStorage.getItem('languages'));
-    this.language = this.lang[0].language;
   }
 
   getUserRestaurants(): void {

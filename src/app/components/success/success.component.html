@@ -1,11 +1,10 @@
 <div class="success-container container-fluid">
   <div class="alert alert-success">
-    Your registration and payment were processed successfully! <br />
-    You will be redirected to the login page momentarily or click below to login
-    now!
+    {{ "success.MSG1" | translate }} <br />
+    {{ "success.MSG2" | translate }}
   </div>
 
   <button mat-raised-button class="btn" (click)="goToLogin()">
-    Login now
+    {{ "success.LOGIN-BTN" | translate }}
   </button>
 </div>

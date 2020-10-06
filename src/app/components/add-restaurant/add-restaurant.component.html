@@ -19,12 +19,14 @@
             mdbValidate
             required
           />
-          <label for="name">Business Name</label>
+          <label for="name">{{
+            "add-restaurant.BUSINESS-NAME" | translate
+          }}</label>
           <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)">
-            Restaurant name is required
+            {{ "add-restaurant.MSG-REQ-NAME" | translate }}
           </mdb-error>
           <mdb-success *ngIf="name.valid && (name.dirty || name.touched)"
-            >Valid
+            >{{ "add-restaurant.VALID" | translate }}
           </mdb-success>
         </div>
       </div>
@@ -232,10 +234,12 @@
               formControlName="color"
               value="selectedColor"
               class="form-control"
-              placeholder="Theme color (optional)"
+              placeholder="{{ 'add-restaurant.PLACEHOLDER-COLOR' | translate }}"
               mdbInput
             />
-            <label for="color">Custom Color</label>
+            <label for="color">
+              {{ "add-restaurant.CUSTOM-COLOR" | translate }}</label
+            >
           </div>
           <div>
             <input
@@ -265,19 +269,20 @@
           (isSubmitted && !isOperationFailed)
         "
       >
-        Submit
+        {{ "add-restaurant.SUBMIT-BTN" | translate }}
       </button>
     </form>
     <div class="alert alert-danger" *ngIf="isOperationFailed">
-      Failed to add restaurant...please try again or contact the system
-      administrator.
+      {{ "add-restaurant.ALERT" | translate }}
     </div>
     <div class="alert alert-info" *ngIf="isSubmitted && !isOperationFailed">
       <div class="row">
         <div class="col-md-2">
           <mat-spinner diameter="20"></mat-spinner>
         </div>
-        <div class="col-md-auto">Setting up your business...please wait.</div>
+        <div class="col-md-auto">
+          {{ "add-restaurant.SETTING-RESTAURANT-MSG" | translate }}
+        </div>
       </div>
     </div>
   </div>

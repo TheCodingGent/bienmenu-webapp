@@ -18,6 +18,66 @@
     "JOIN-NOW": "Adhérer maintenant",
     "ALREADY-A-MEMBER": "Déjà membre?"
   },
+  "register": {
+    "SUCCESS-MSG": "Votre inscription a réussi!",
+    "FAILED-MSG": "L'inscription a échoué!",
+    "FIRST-NAME": "Prénom",
+    "FIRST-NAME-REQ": "Le prénom est requis",
+    "VALID": "Valide",
+    "LAST-NAME": "Nom",
+    "LAST-NAME-REQ": "Le nom est requis",
+    "USERNAME": "Nom d'utilisateur",
+    "USERNAME-REQ": "Nom d'utilisateur est requis",
+    "USERNAME-VALIDATION-MSG1": "Le nom d'utilisateur doit comporter au moins 3 caractères",
+    "USERNAME-VALIDATION-MSG2": "Le nom d'utilisateur ne peut pas contenir plus de 20 caractères",
+    "REQ-EMAIL": "Email est requis",
+    "VALID-EMAIL": "veuillez entrer un email valide",
+    "PASSWORD": "Mot de Passe",
+    "PASSWORD-REQ": "Mot de passe requis",
+    "VALID-PASSWORD": "Le mot de passe doit être au moins de 6 caractères ",
+    "CONFIRM-PASS": "Confirmez le mot de passe",
+    "REQ-CONFIRM-PASS": "Confirmer le mot de passe est requis",
+    "PASS-MATCH": "les mots de passe doivent correspondre",
+    "PLAN": "Sélectionnez un plan:",
+    "PLAN1": "Basique - gratuit",
+    "PLAN2": "Plus - $5.99/mois",
+    "PLAN3": "Plus Annuel - $59.99/mois",
+    "AGREE": "J'accepte d'utiliser cette application dans les conditions suivantes",
+    "TERMS-LINK": "termes et conditions",
+    "REGISTER-BTN": "S'inscrire"
+  },
+  "pricing": {
+    "ALERT": "Un problème est survenu lors du traitement de votre demande d'achat de ce plan, veuillez réessayer ou nous contacter à: info@bienmenuapp.com si le problème persiste.",
+    "REQUEST-MSG": "La demande d'achat de forfait est en cours de traitement, vous serez redirigé vers la page de paiement momentanément!",
+    "CHOOSE-PLAN": "Choisissez un plan qui vous convient!",
+    "PLAN1": "Gestion de base des menus",
+    "PRICE1": "Plan gratuit",
+    "SELECT-BTN": "Sélectionner",
+    "DESCRIPTION11": "Idéal pour les restaurants, bars et cafés",
+    "DESCRIPTION12": "Ajoutez jusqu'à 4 menus",
+    "DESCRIPTION13": "Scans illimités",
+    "DESCRIPTION14": "Mettre à jour jusqu'à un menu par mois",
+    "DESCRIPTION15": "Formulaire d'enregistrement client en option intégré à vos menus",
+    "DESCRIPTION16": "Un code QR unique pour tous les besoins de votre entreprise",
+    "PLAN2": "Gestion des menus Plus",
+    "EVERY-MONTH": "Chaque mois",
+    "FREE-TRIAL": "Essai gratuit de 14 jours",
+    "START-FREE-TRIAL-BTN": "Commencer l'essai gratuit",
+    "DESCRIPTION21": "Idéal pour les restaurants, bars et cafés",
+    "DESCRIPTION22": "Idéal pour gérer fréquemment vos menus",
+    "DESCRIPTION23": "Ajoutez jusqu'à 8 menus",
+    "DESCRIPTION24": "Gérez vos plats et boissons quotidiens avec des mises à jour illimitées du menu",
+    "DESCRIPTION25": "Formulaire d'enregistrement client en option intégré à vos menus",
+    "DESCRIPTION26": "Un code QR unique pour tous les besoins de votre entreprise",
+    "PLAN3": "Plus annuel",
+    "EVERY-YEAR": "Chaque année",
+    "DESCRIPTION31": "Idéal pour les restaurants, bars et cafés",
+    "DESCRIPTION32": "Idéal pour gérer fréquemment vos menus",
+    "DESCRIPTION33": "Ajoutez jusqu'à 8 menus",
+    "DESCRIPTION34": "Gérez vos plats et boissons quotidiens avec des mises à jour illimitées du menu",
+    "DESCRIPTION35": "Formulaire d'enregistrement client en option intégré à vos menus",
+    "DESCRIPTION36": "Un code QR unique pour tous les besoins de votre entreprise"
+  },
   "login": {
     "USERNAME": "Nom d'utilisateur / Email",
     "REQUIRED-MSG1": "nom d'utilisateur ou e-mail est requis",
@@ -27,7 +87,14 @@
     "MESSAGE2": "Mot de passe oublié?",
     "LOGIN-BTN": "Connectez-Vous",
     "LOGIN-SUCCESS": "Connecté avec succès.",
-    "LOGIN=FALIED": "Échec de la connexion."
+    "LOGIN-FAILED": "Échec de la connexion."
+  },
+  "admin": {
+    "All-busnisses": "Toutes les Entreprises",
+    "CREATE-MENU": "Créer un menu",
+    "PREVIEW": "Aperçu",
+    "EDIT": "Éditer",
+    "Add-Restaurant": "Ajouter un restaurant"
   },
   "user": {
     "TITLE": "Vos Entreprises",
@@ -35,6 +102,16 @@
     "PREVIEW": "Aperçu",
     "QR-CODE": "QR Code",
     "ADD-BUSINESS-BTN": "Ajouter une Entreprise"
+  },
+  "cancel": {
+    "MSG1": " Votre paiement a été annulé et non traité!",
+    "MSG2": " Vous serez redirigé vers la page d'accueil momentanément ou cliquez ci-dessous pour y aller maintenant!",
+    "HOME": "Accueil"
+  },
+  "success": {
+    "MSG1": " Votre inscription et votre paiement ont été traités avec succès!",
+    "MSG2": "Vous serez redirigé vers la page de connexion momentanément ou cliquez ci-dessous pour vous connecter maintenant!",
+    "LOGIN-BTN": "Connecter Maintenant"
   },
   "create-menu": {
     "TITLE": "Personnalisez votre menu",
@@ -68,5 +145,139 @@
     "SUBSCRIBE": "Abonnez-vous pour recevoir les actualités, mises à jour et promotions de BienMenu ou de l'un des partenaires de BienMenu.",
     "SUBMIT-BTN": "Soumettre",
     "OPER-FAILED-MSG": "Échec de l'enregistrement des informations de contact à ce moment donné ... nous vous prions de nous excuser pour la gêne occasionnée."
+  },
+  "profile": {
+    "TITLE": "Bienvenu/e",
+    "SUBTITLE": "Ici vous pouvez voir les informations de base de votre profil.",
+    "NAME": "Nom",
+    "EMAIL": "Email",
+    "PLAN": "Plan Actuel",
+    "ACTIVE-BUSINESSES": "Entreprises Actives:",
+    "UPGRADE": "Améliorez votre plan",
+    "CONTACT": "Contactez-Nous",
+    "ALERT": "Veuillez vous connecter pour voir votre profil."
+  },
+  "menu-list": {
+    "TAP": "Appuyez pour Afficher le Menu"
+  },
+  "qr-code-viewer": {
+    "MSG": "Si vous souhaitez un code QR personnalisé spécialement conçu pour votre restaurant et votre marque ou si vous souhaitez que nous imprimions et livrions vos cartes QR code à votre restaurant, veuillez contacter notre équipe commerciale à l'adresse suivante:",
+    "GIVE-CALL": "ou appelez-nous au:",
+    "USA": "États-Unis",
+    "CARD-INST1": "Carte Instruction Ligne 1",
+    "CARD-INST2": "Carte Instruction Ligne 2",
+    "DOWNLOAD": "Télécharger"
+  },
+  "add-restaurant": {
+    "BUSINESS-NAME": "Nom de l'Entreprise",
+    "REQ-MSG-NAME": "Nom de l'entreprise est requis",
+    "VALID": "Valide",
+    "PLACEHOLDER-ADDRESS": "Recherchez votre adresse",
+    "BUSINESS-ADDRESS": "Addresse de l'entreprise",
+    "USA": "États-Unis",
+    "CUSTOM-COLOR": "Couleur personnalisée",
+    "PLACEHOLDER-COLOR": "Couleur du thème (facultatif)",
+    "SUBMIT-BTN": "Soumettre",
+    "ALERT": "Échec de l'ajout du restaurant ... veuillez réessayer ou contacter l'administrateur système.",
+    "SETTING-RESTAURANT-MSG": "Création de votre entreprise ... Veuillez Patienter."
+  },
+  "restaurant-details": {
+    "USER-ALERT": " Utilisateur actuel non autorisé à voir ce restaurant ...",
+    "DETAILS": "Détails",
+    "INFO": "Informations de base",
+    "NAME": "Nom",
+    "CONTACT-TRACING": "Suivi Des Contacts",
+    "ENABLED": "Activé",
+    "DISABLED": "Désactivé",
+    "E-CONTACT-TRACING": "Activer le suivi des contacts",
+    "D-CONTACT-TRACING": "Disactiver le suivi des contacts",
+    "SAVE": "Sauvegarder",
+    "COVER-PHOTO": "Photo de couverture actuelle",
+    "UPDATE-COVER-PHOTO": "Mettre à jour la photo de couverture",
+    "UPLOAD": "Télécharger",
+    "UPLOAD-MSG": "Télécharger l'image...",
+    "REST-MENUS": "Menus du restaurant",
+    "CREATE-MENU": "Créer un menu BienMenu",
+    "UPLOAD-PDF": "Télécharger un menu PDF",
+    "LINK": "Lien vers un menu existant",
+    "MENU-NAME": "Nom du menu",
+    "DELETE-MENU": "Supprimer le menu",
+    "LAST-UPDATED": "Dernière mise à jour",
+    "UPDATE-MENU": "Mettre à jour le Menu",
+    "UPDATE-MSG": " Menu mis à jour!",
+    "ALERT-MSG-MONTH": "Le nombre maximal de mises à jour de menu a été atteint pour ce mois. Vous pouvez mettre à niveau votre plan pour des mises à jour illimitées!",
+    "ALERT-MSG-RESTO": "Le nombre maximum de menus autorisés par restaurant a été atteint. Vous pouvez mettre à niveau votre plan pour en ajouter plus!",
+    "UPGRADE": "Améliorez votre plan Maintenant",
+    "DELETE-RESTO": "Supprimer le restaurant"
+  },
+  "business-portal": {
+    "CHECK-IN": "Enregistrement",
+    "MENU": "Les Menus",
+    "THANK-YOU-ALERT": "Vos informations ont été enregistrées en toute sécurité et avec succès. Merci et restez en sécurité!",
+    "POWERED-BY": "Alimenté par"
+  },
+  "contact-tracing-home": {
+    "WELCOME": "Bienvenue dans la solution d'enregistrement client de BienMenu",
+    "SUBTITLE": "C'est sûr, sécurisé et gratuit à utiliser",
+    "SIGNUP": "Créer un compte",
+    "ADD-INFO": "Ajoutez les informations de votre entreprise",
+    "PRINT-MSG": "Imprimez votre code QR",
+    "COVID-19-MSG": "Contactez-nous en cas de cas positif de COVID-19 dans votre entreprise et nous contacterons vos clients en votre nom",
+    "SIGNUP-BTN": "S'inscrire"
+  },
+  "food-item-manager": {
+    "EXPAND": "Développer Tout",
+    "COLLAPSE": "Tout Réduire",
+    "DELETE-BTN": "Effacer",
+    "EDIT-BTN": "Éditer",
+    "ADD-BTN": "Ajouter un aliment"
+  },
+  "add-food-item": {
+    "ADD": "Ajouter Un Aliment",
+    "NAME": "Nom",
+    "REQ-MSG-NAME": "nom d'aliment est requis",
+    "NAME-ALREADY-EXSITS": "Le nom de l'aliment est déjà utilisé, les noms de l'aliment doivent être uniques",
+    "VALID": "Valide",
+    "PRICE": "Prix",
+    "REQ-MSG-PRICE": "Le prix de l'aliment est obligatoire",
+    "VALID-PRICE": "Veuillez saisir un prix valide",
+    "SAVE": "Sauvegarder",
+    "FAILED-ALERT": "Échec de l'ajout du menu ... soit vous avez dépassé la limite des menus autorisés, soit il y a un problème avec le serveur.",
+    "IMAGE-SIZE-ALERT": "Le fichier image ne doit pas dépasser 5 MB et doit être dans l'un des formats suivants: jpeg ou png.",
+    "SAVING": "Enregistrement de l'aliment ..."
+  },
+  "add-menu": {
+    "ADD-MENU": "Ajouter un Menu",
+    "NAME": "Nom du menu",
+    "REQ-MSG-NAME": "Nom de Menu est requis",
+    "MENU-NAME-ALREADY-EXISTS": "Le nom du menu est déjà utilisé, les noms des menus doivent être uniques",
+    "VALID": "Valide",
+    "EXTERNAL-LINK": "Lien externe",
+    "REQ-MSG-LINK": "Lien externe est requis",
+    "SAVE": "Sauvegarder",
+    "FAILED-ALERT": "Échec de l'ajout du menu ... soit vous avez dépassé la limite des menus autorisés, soit il y a un problème avec le serveur.",
+    "SIZE-ALERT": "Le fichier ne doit pas dépasser 5 Mo et doit être au format PDF ...",
+    "SAVING": "Sauvegarder le Menu..."
+  },
+  "reset-password": {
+    "ENTER-EMAIL": "Veuillez entrer votre email ci-dessous",
+    "FAILED-REQUEST": "Échec du traitement de la demande:",
+    "CHECK-EMAIL": "Consultez votre dossier de courrier électronique (et spam) pour obtenir des instructions.",
+    "REQ-EMAIL": "Email est requis avant soumettre ce formulaire",
+    "VALID-EMAIL": "veuillez entrer un email valide",
+    "RESET-PASS": "Réinitialiser le mot de passe",
+    "TITLE": "Definir un nouveau mot de passe",
+    "NEW-PASS": "Nouveau mot de passe",
+    "REQ-MSG-PASSWORD": "Un nouveau mot de passe est requis avant de soumettre ce formulaire",
+    "REQ-PASS-LENGTH": "Le mot de passe doit être au moins de 6 caractères",
+    "ALERT": "Doit confirmer le mot de passe avant de soumettre ce formulaire",
+    "ALERT-MATCH-PASS": "les mots de passe doivent correspondre",
+    "UPDATE-PASS": "Mettre à jour le mot de passe"
+  },
+  "404": {
+    "OOPS": "Oops!",
+    "NOT-FOUND": "404 Pas Trouvé",
+    "MSG": " Désolé, une erreur s'est produite, la page demandée est introuvable!",
+    "HOME": "Accueil"
   }
 }
