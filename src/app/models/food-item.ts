@@ -7,4 +7,5 @@ export class FoodItem {
   price: number;
   promotionPrice: number;
   calories: number;
+  isActive: boolean;
 }

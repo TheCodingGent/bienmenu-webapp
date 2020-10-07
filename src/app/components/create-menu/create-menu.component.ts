@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ObjectID } from 'bson';
+import { map } from 'rxjs/operators';
 import { FoodItem } from 'src/app/models/food-item';
 import { Menu, MenuType } from 'src/app/models/menu';
 import { MenuSection } from 'src/app/models/menu-section';
@@ -20,6 +21,7 @@ import { MenuSectionItem } from 'src/app/models/menu-section-item';
 import { FoodItemService } from 'src/app/services/food-item.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { ModalService } from 'src/app/services/modal.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-menu',
@@ -34,7 +36,7 @@ export class CreateMenuComponent implements OnInit {
   private menu: Menu;
 
   isEditMode = false;
-  isSelectAllScheduleDays = false;
+  isSelectAllScheduleDays = true;
 
   public foodItems: FoodItem[] = [];
   public allSectionsList = ['foodItemsList'];
@@ -67,7 +69,7 @@ export class CreateMenuComponent implements OnInit {
     this.ctrlMenuName = this.fb.control('', Validators.required);
     this.ctrlMenuSections = this.fb.array([]);
     this.ctrlScheduleDays = this.fb.array(
-      this.scheduleDays.map(() => this.fb.control(false))
+      this.scheduleDays.map(() => this.fb.control(true))
     );
     this.menuForm = this.fb.group({
       ctrlMenuName: this.ctrlMenuName,
@@ -87,7 +89,21 @@ export class CreateMenuComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.menuForm.valid) return;
-    this.createMenuObject();
+
+    if (this.isEditMode) {
+      Swal.fire({
+        title: 'Are you sure you want to Update this Menu?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, update!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.createMenuObject();
+        }
+      });
+    } else {
+      this.createMenuObject();
+    }
   }
 
   createMenuObject(): void {
@@ -156,7 +172,13 @@ export class CreateMenuComponent implements OnInit {
   }
 
   onSectionRemoved(section) {
-    this.foodItems.push(...section.currentform.controls.foodItems.value);
+    const removedFood: FoodItem[] = [];
+    section.currentform.controls.foodItems.value.map((element: FoodItem) => {
+      element.isActive = true;
+      removedFood.push(element);
+    });
+
+    this.foodItems.push(...removedFood);
     this.allSectionsList = this.allSectionsList.filter(
       (arrayItem) => arrayItem !== section.currentform.controls._id.value
     );
@@ -198,6 +220,7 @@ export class CreateMenuComponent implements OnInit {
             const menuSectionItem: MenuSectionItem = new MenuSectionItem();
             menuSectionItem._id = [new ObjectID()].toString();
             menuSectionItem.foodItem = item;
+            menuSectionItem.isActive = item.isActive;
             menuSectionItem.order = index + 1;
             menuSectionItemList.push(menuSectionItem);
           }
@@ -212,11 +235,11 @@ export class CreateMenuComponent implements OnInit {
     menuSections.forEach((element) => {
       const foodItemList: FoodItem[] = [];
       element.menuSectionItems.forEach((item) => {
-        foodItemList.push(
-          this.foodItems.filter(
-            (element) => element._id == item.foodItem._id
-          )[0]
-        );
+        const currentFood = this.foodItems.filter(
+          (element) => element._id == item.foodItem._id
+        )[0];
+        currentFood.isActive = item.isActive;
+        foodItemList.push(currentFood);
       });
       element.foodItems = foodItemList;
     });
@@ -263,14 +286,23 @@ export class CreateMenuComponent implements OnInit {
   }
 
   getFoodItems(): void {
-    this.foodItemService.getFoodItemsForUser().subscribe((data) => {
-      if (data) {
-        this.foodItems = data.foodItems;
-      }
-      if (this.isEditMode) {
-        this.getMenu(this.menuID);
-      }
-    });
+    this.foodItemService
+      .getFoodItemsForUser()
+      .pipe(
+        map((data) => {
+          data.foodItems.map((item) => (item.isActive = true));
+          return data;
+        })
+      )
+      .subscribe((data) => {
+        console.log(data.foodItems);
+        if (data) {
+          this.foodItems = data.foodItems;
+        }
+        if (this.isEditMode) {
+          this.getMenu(this.menuID);
+        }
+      });
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -288,6 +320,8 @@ export class CreateMenuComponent implements OnInit {
         event.currentIndex
       );
     }
+    if (this.foodItems[event.currentIndex])
+      this.foodItems[event.currentIndex].isActive = true;
   }
 
   isAnySectionEmpty(): boolean {
