@@ -1,68 +1,40 @@
 <div [formGroup]="sectionForm">
-  <div
-    cdkDropList
-    id="{{ sectionForm.controls._id.value }}"
-    [cdkDropListData]="sectionForm.controls.foodItems.value"
-    [cdkDropListConnectedTo]="allSectionsList"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)"
-  >
+  <div cdkDropList id="{{ sectionForm.controls._id.value }}" [cdkDropListData]="sectionForm.controls.foodItems.value"
+    [cdkDropListConnectedTo]="allSectionsList" class="example-list" (cdkDropListDropped)="drop($event)">
     <!-- <input id="section-name-{{menuSection._id}}" type="text" [(ngModel)]="menuSection.name" placeholder="Section Name"> -->
     <div class="md-form md-outline">
       <div class="d-flex col-md-12">
-        <input
-          type="text"
-          id="name-{{ sectionForm.controls._id.value }}"
-          formControlName="name"
-          class="form-control"
-          mdbInput
-          mdbValidate
-          required
-        />
+        <input type="text" id="name-{{ sectionForm.controls._id.value }}" formControlName="name" class="form-control"
+          mdbInput mdbValidate required />
         <label class="ml-3" for="name-{{ sectionForm.controls._id.value }}">
-          {{ "create-menu.SECTION-NAME" | translate }}</label
-        >
-        <mdb-error
-          class="ml-3"
-          *ngIf="
+          {{ "create-menu.SECTION-NAME" | translate }}</label>
+        <mdb-error class="ml-3" *ngIf="
             sectionForm.controls.name.invalid &&
             (sectionForm.controls.name.dirty ||
               sectionForm.controls.name.touched)
-          "
-        >
+          ">
           {{ "create-menu.SECTION-REQ" | translate }}
         </mdb-error>
-        <mdb-success
-          class="ml-3"
-          *ngIf="
+        <mdb-success class="ml-3" *ngIf="
             sectionForm.controls.name.valid &&
             (sectionForm.controls.name.dirty ||
               sectionForm.controls.name.touched)
-          "
-          >Valid
+          ">Valid
         </mdb-success>
-        <mdb-icon
-          fas
-          icon="trash-alt"
-          class="grey-text pl-2"
-          (click)="removeSection()"
-          style="cursor: pointer"
-        >
+        <mdb-icon fas icon="trash-alt" class="grey-text pl-2" (click)="removeSection()" style="cursor: pointer">
         </mdb-icon>
       </div>
     </div>
-    <div
-      class="item-box"
-      *ngFor="let item of sectionForm.controls.foodItems.value"
-      cdkDrag
-    >
+    <div class="item-box" *ngFor="let item of sectionForm.controls.foodItems.value" cdkDrag>
+
+      <mdb-icon *ngIf="item.isActive && isUpdate" fas icon="toggle-on" class="teal-text pr-2"
+        (click)="disableItem(item)" style="cursor: pointer"> </mdb-icon>
+      <mdb-icon *ngIf="!item.isActive && isUpdate" fas icon="toggle-off" class="grey-text pr-2"
+        (click)="enableItem(item)" style="cursor: pointer"> </mdb-icon>
+
       {{ item.name }}
     </div>
-    <span
-      class="ml-3 p-1 badge empty-section-badge"
-      *ngIf="sectionForm.controls.foodItems.value.length === 0"
-    >
-      {{ "create-menu.DRAG" | translate }}</span
-    >
+    <span class="ml-3 p-1 badge empty-section-badge" *ngIf="sectionForm.controls.foodItems.value.length === 0">
+      {{ "create-menu.DRAG" | translate }}</span>
   </div>
 </div>

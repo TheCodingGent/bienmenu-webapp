@@ -16,6 +16,7 @@ export class MenuSectionComponent implements OnInit {
   @Input() index;
   @Input() allSectionsList;
   @Input() sectionForm: FormGroup;
+  @Input() isUpdate;
   @Output() sectionRemoved = new EventEmitter<{
     currentform: FormGroup;
     index: number;
@@ -46,5 +47,16 @@ export class MenuSectionComponent implements OnInit {
       currentform: this.sectionForm,
       index: this.index,
     });
+  }
+  disableItem(item) {
+    let index = this.sectionForm.controls.foodItems.value.indexOf(item);
+    item.isActive = false;
+    this.sectionForm.controls.foodItems.value[index] = item;
+  }
+
+  enableItem(item) {
+    let index = this.sectionForm.controls.foodItems.value.indexOf(item);
+    item.isActive = true;
+    this.sectionForm.controls.foodItems.value[index] = item;
   }
 }
