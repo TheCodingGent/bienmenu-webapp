@@ -16,6 +16,7 @@ export class MenuSectionComponent implements OnInit {
   @Input() index;
   @Input() allSectionsList;
   @Input() sectionForm: FormGroup;
+  @Input() isUpdate;
   @Output() sectionRemoved = new EventEmitter<{
     currentform: FormGroup;
     index: number;

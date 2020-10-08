@@ -56,7 +56,8 @@
                     let i = index
                   ">
                   <app-menu-section cdkDrag [index]="i" [allSectionsList]="allSectionsList"
-                    (sectionRemoved)="onSectionRemoved($event)" [sectionForm]="getSectionControlsIndex(i)">
+                    (sectionRemoved)="onSectionRemoved($event)" [isUpdate]="isEditMode"
+                    [sectionForm]="getSectionControlsIndex(i)">
                   </app-menu-section>
                 </div>
               </div>

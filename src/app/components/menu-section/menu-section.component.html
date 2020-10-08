@@ -26,10 +26,11 @@
       </div>
     </div>
     <div class="item-box" *ngFor="let item of sectionForm.controls.foodItems.value" cdkDrag>
-      <mdb-icon *ngIf="item.isActive" fas icon="toggle-on" class="teal-text pr-2" (click)="disableItem(item)"
-        style="cursor: pointer"> </mdb-icon>
-      <mdb-icon *ngIf="!item.isActive" fas icon="toggle-off" class="grey-text pr-2" (click)="enableItem(item)"
-        style="cursor: pointer"> </mdb-icon>
+
+      <mdb-icon *ngIf="item.isActive && isUpdate" fas icon="toggle-on" class="teal-text pr-2"
+        (click)="disableItem(item)" style="cursor: pointer"> </mdb-icon>
+      <mdb-icon *ngIf="!item.isActive && isUpdate" fas icon="toggle-off" class="grey-text pr-2"
+        (click)="enableItem(item)" style="cursor: pointer"> </mdb-icon>
 
       {{ item.name }}
     </div>
