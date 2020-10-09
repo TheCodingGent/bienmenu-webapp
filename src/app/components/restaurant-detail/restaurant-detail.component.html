@@ -188,9 +188,8 @@
             >
               <div class="row menu-row">
                 <div class="col-md-10">
-                  <span class="restaurant-detail-field">{{
-                    "restaurant-details.MENU-NAME" | translate
-                  }}</span
+                  <span class="restaurant-detail-field"
+                    >{{ "restaurant-details.MENU-NAME" | translate }}: </span
                   >{{ menu.name }}
                   <mat-slide-toggle
                     class="menu-toggle"
@@ -213,9 +212,8 @@
               </div>
               <div class="row menu-row">
                 <div class="col-md-10">
-                  <span class="restaurant-detail-field">{{
-                    "restaurant-details.LAST-UPDATED" | translate
-                  }}</span
+                  <span class="restaurant-detail-field"
+                    >{{ "restaurant-details.LAST-UPDATED" | translate }}: </span
                   >{{ formatDate(menu.lastupdated) }}
                 </div>
                 <div class="col-md-auto">
@@ -248,17 +246,6 @@
           </div>
           <div class="d-flex flex-column">
             <div class="add">
-              <!-- <button
-                mat-raised-button
-                type="button"
-                class="add-btn btn"
-                (click)="openModal('addMenuModal', -1)"
-                [disabled]="
-                  !menuUpdateAllowed || maxMenuCountReached || !hostedInternal
-                "
-              >
-                Add Menu
-              </button> -->
               <div
                 class="menu-update-alert alert alert-info"
                 *ngIf="!menuUpdateAllowed"

@@ -23,6 +23,7 @@ import { MenuService } from 'src/app/services/menu.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ThemePalette } from '@angular/material/core';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-restaurant-detail',
   templateUrl: './restaurant-detail.component.html',

@@ -50,7 +50,7 @@
     "ALERT": "There was a problem while processing your request to purchase this plan, please try again or contact us at: info@bienmenuapp.com if problem persists.",
     "REQUEST-MSG": "Request for plan purchase is being processed, you will be redirected to the payment page momentarily!",
     "CHOOSE-PLAN": "Choose a plan that works for you!",
-    "PLAN1": "Basic Menu Management",
+    "PLAN1": "Basic",
     "PRICE1": "Free Plan",
     "SELECT-BTN": "Select",
     "DESCRIPTION11": "Ideal for restaurants, bars and cafés",
@@ -59,7 +59,7 @@
     "DESCRIPTION14": "Update up to one menu per month",
     "DESCRIPTION15": "Optional customer checkin form integrated with your menus",
     "DESCRIPTION16": "A single QR code for all your business needs",
-    "PLAN2": "Plus Menu Management",
+    "PLAN2": "Plus Monthly",
     "EVERY-MONTH": "Every month",
     "FREE-TRIAL": "14 days free trial",
     "START-FREE-TRIAL-BTN": "Start Free Trial",
@@ -280,5 +280,9 @@
     "NOT-FOUND": "404 Not Found",
     "MSG": " Sorry, an error has occurred, the requested page cannot be found!",
     "HOME": "Take Me Home"
+  },
+
+  "feature-not-allowed": {
+    "MSG": "This feature is currently only available for exclusive customers. Please contact us if you would like to become one of our partners and get early access to exclusive features!"
   }
 }

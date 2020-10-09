@@ -9,12 +9,14 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./main-navbar.component.scss'],
 })
 export class MainNavbarComponent implements OnInit {
-  private roles: string[];
+  roles: string[];
+  username: string;
+  lang: any;
+  language = '';
+  plan: string;
+
   isLoggedIn = false;
   showAdminBoard = false;
-  username: string;
-  lang;
-  language = '';
 
   constructor(
     private tokenStorageService: TokenStorageService,
@@ -25,6 +27,7 @@ export class MainNavbarComponent implements OnInit {
     if (this.lang !== null) this.language = this.lang[0].language;
     console.log(this.language);
   }
+
   useLanguageButton() {
     if (this.language === 'en') {
       this.translate.use('fr');
@@ -38,9 +41,11 @@ export class MainNavbarComponent implements OnInit {
     this.lang = JSON.parse(localStorage.getItem('languages'));
     this.language = this.lang[0].language;
   }
+
   useLanguage(language: string) {
     this.translate.use(language);
   }
+
   ngOnInit(): void {
     this.translate.use(this.language);
     this.isLoggedIn = !!this.tokenStorageService.getToken();

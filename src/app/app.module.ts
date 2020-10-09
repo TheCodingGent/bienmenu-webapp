@@ -47,6 +47,7 @@ import { ContactTracingHomeComponent } from './components/contact-tracing-home/c
 import { BusinessPortalHomeComponent } from './components/business-portal-home/business-portal-home.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FeatureNotAllowedComponent } from './components/feature-not-allowed/feature-not-allowed.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     DisplayMenuComponent,
     ContactTracingHomeComponent,
     BusinessPortalHomeComponent,
+    FeatureNotAllowedComponent,
   ],
   imports: [
     BrowserModule,

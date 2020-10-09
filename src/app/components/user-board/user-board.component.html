@@ -7,46 +7,39 @@
         <li *ngFor="let restaurant of restaurants" class="list-group-item">
           <div class="container">
             <div class="row align-items-center">
-              <div class="col-md-2">
+              <div class="col-md-4">
                 <span>{{ restaurant.name }}</span>
               </div>
-              <div class="col-md-10">
+              <div class="col-md-8">
                 <div class="row justify-content-end">
                   <div class="col-sm-auto">
                     <button
                       mat-raised-button
-                      class="btn btn-block"
-                      (click)="
-                        goToRoute(
-                          '/create-menu/' + restaurant._id + '/' + 'new-menu'
-                        )
-                      "
-                    >
-                      {{ "user.CREATE-MENU" | translate }}
-                    </button>
-                  </div>
-                  <div class="col-sm-auto">
-                    <button
-                      mat-raised-button
+                      matTooltip="Preview what your customers will see"
+                      matTooltipClass="btn-tooltip"
                       class="btn btn-block"
                       (click)="goToRoute('/' + restaurant._id)"
                     >
-                      {{ "user.PREVIEW" | translate }}
+                      {{ "admin.PREVIEW" | translate }}
                     </button>
                   </div>
                   <div class="col-sm-auto">
                     <button
                       mat-raised-button
+                      matTooltip="View QR code and download it"
+                      matTooltipClass="btn-tooltip"
                       class="btn btn-block"
                       (click)="goToRoute('/qrcode/' + restaurant._id)"
                     >
-                      {{ "user.QR-CODE" | translate }}
+                      QR Code
                     </button>
                   </div>
                   <div class="col-sm-2">
                     <button
                       mat-mini-fab
-                      color="primary"
+                      mat-raised-button
+                      matTooltip="Manage your business"
+                      matTooltipClass="btn-tooltip"
                       aria-label="Edit and manage business"
                       (click)="goToRoute('/detail/' + restaurant._id)"
                     >

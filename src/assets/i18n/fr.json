@@ -50,7 +50,7 @@
     "ALERT": "Un problème est survenu lors du traitement de votre demande d'achat de ce plan, veuillez réessayer ou nous contacter à: info@bienmenuapp.com si le problème persiste.",
     "REQUEST-MSG": "La demande d'achat de forfait est en cours de traitement, vous serez redirigé vers la page de paiement momentanément!",
     "CHOOSE-PLAN": "Choisissez un plan qui vous convient!",
-    "PLAN1": "Gestion de base des menus",
+    "PLAN1": "Base",
     "PRICE1": "Plan gratuit",
     "SELECT-BTN": "Sélectionner",
     "DESCRIPTION11": "Idéal pour les restaurants, bars et cafés",
@@ -59,7 +59,7 @@
     "DESCRIPTION14": "Mettre à jour jusqu'à un menu par mois",
     "DESCRIPTION15": "Formulaire d'enregistrement client en option intégré à vos menus",
     "DESCRIPTION16": "Un code QR unique pour tous les besoins de votre entreprise",
-    "PLAN2": "Gestion des menus Plus",
+    "PLAN2": "Plus",
     "EVERY-MONTH": "Chaque mois",
     "FREE-TRIAL": "Essai gratuit de 14 jours",
     "START-FREE-TRIAL-BTN": "Commencer l'essai gratuit",
@@ -69,7 +69,7 @@
     "DESCRIPTION24": "Gérez vos plats et boissons quotidiens avec des mises à jour illimitées du menu",
     "DESCRIPTION25": "Formulaire d'enregistrement client en option intégré à vos menus",
     "DESCRIPTION26": "Un code QR unique pour tous les besoins de votre entreprise",
-    "PLAN3": "Plus annuel",
+    "PLAN3": "Plus Annuel",
     "EVERY-YEAR": "Chaque année",
     "DESCRIPTION31": "Idéal pour les restaurants, bars et cafés",
     "DESCRIPTION32": "Idéal pour gérer fréquemment vos menus",
@@ -201,9 +201,9 @@
     "UPLOAD-PDF": "Télécharger un menu PDF",
     "LINK": "Lien vers un menu existant",
     "MENU-NAME": "Nom du menu",
-    "DELETE-MENU": "Supprimer le menu",
+    "DELETE-MENU": "Supprimer",
     "LAST-UPDATED": "Dernière mise à jour",
-    "UPDATE-MENU": "Mettre à jour le Menu",
+    "UPDATE-MENU": "Mettre à jour",
     "UPDATE-MSG": " Menu mis à jour!",
     "ALERT-MSG-MONTH": "Le nombre maximal de mises à jour de menu a été atteint pour ce mois. Vous pouvez mettre à niveau votre plan pour des mises à jour illimitées!",
     "ALERT-MSG-RESTO": "Le nombre maximum de menus autorisés par restaurant a été atteint. Vous pouvez mettre à niveau votre plan pour en ajouter plus!",
@@ -279,5 +279,8 @@
     "NOT-FOUND": "404 Pas Trouvé",
     "MSG": " Désolé, une erreur s'est produite, la page demandée est introuvable!",
     "HOME": "Accueil"
+  },
+  "feature-not-allowed": {
+    "MSG": "Cette fonctionnalité n'est actuellement disponible que pour les clients exclusifs. N'hésitez pas à nous contacter si vous souhaitez devenir l'un de nos partenaires et bénéficier d'un accès anticipé à des fonctionnalités exclusives!"
   }
 }
