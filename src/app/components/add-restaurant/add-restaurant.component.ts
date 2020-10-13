@@ -212,7 +212,7 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  createRestaurantFromForm() {
+  buildRestaurant() {
     this.restaurant = this.restaurantForm.value;
 
     this.restaurant.country = this.country;
@@ -222,7 +222,7 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     this.restaurant.address = this.address;
     this.restaurant.phone = this.phone;
     this.restaurant.color = this.selectedColor;
-    this.restaurant.hostedInternal = this.selectedMenuOption === 'internal';
+    //this.restaurant.hostedInternal = this.selectedMenuOption === 'internal';
     if (this.currentPlan === 'contact-tracing') {
       this.restaurant.tracingEnabled = true;
     }
@@ -272,7 +272,7 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     }
 
     // build restaurant object to be sent to the server
-    this.createRestaurantFromForm();
+    this.buildRestaurant();
 
     this.restaurantService
       .addRestaurantForUser(this.restaurant)

@@ -5,7 +5,7 @@
       <input
         type="text"
         #search
-        placeholder="Search for your business"
+        placeholder="{{ 'add-restaurant.PLACEHOLDER-ADDRESS' | translate }}"
         class="form-control"
         (keydown.enter)="$event.preventDefault()"
         autocorrect="off"
@@ -14,7 +14,9 @@
         spellcheck="off"
         mdbInput
       />
-      <label for="address">Business Address</label>
+      <label for="address">
+        {{ "add-restaurant.BUSINESS-ADDRESS" | translate }}</label
+      >
     </div>
     <div class="country-select">
       <select class="browser-default custom-select" (change)="onChange($event)">

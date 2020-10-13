@@ -37,7 +37,6 @@ export class FileUploadService {
     const filename = name
       ? name + '.' + image.name.split('.').pop()
       : image.name;
-    console.log(filename);
     const formData = new FormData();
     formData.append('image', image, filename);
     return this.http.post(url, formData);

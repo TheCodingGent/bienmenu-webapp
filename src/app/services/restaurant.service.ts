@@ -55,15 +55,15 @@ export class RestaurantService {
     return this.http.post<Restaurant>(url, restaurant, this.httpOptions);
   }
 
-  addMenu(menu: Menu, id: string): Observable<Menu> {
-    const url = `${this.restaurantsUrl}/menus/add/${id}`;
-    return this.http.post<Menu>(url, JSON.stringify(menu), this.httpOptions);
-  }
+  // addMenu(menu: Menu, id: string): Observable<Menu> {
+  //   const url = `${this.restaurantsUrl}/menus/add/${id}`;
+  //   return this.http.post<Menu>(url, JSON.stringify(menu), this.httpOptions);
+  // }
 
-  updateMenu(menu: Menu, id: string): Observable<Menu> {
-    const url = `${this.restaurantsUrl}/menus/update/${id}`;
-    return this.http.post<Menu>(url, JSON.stringify(menu), this.httpOptions);
-  }
+  // updateMenu(menu: Menu, id: string): Observable<Menu> {
+  //   const url = `${this.restaurantsUrl}/menus/update/${id}`;
+  //   return this.http.post<Menu>(url, JSON.stringify(menu), this.httpOptions);
+  // }
 
   updateContactTracing(tracingEnabled: boolean, id: string): Observable<any> {
     const url = `${this.restaurantsUrl}/set-contact-tracing/${id}`;
@@ -83,22 +83,22 @@ export class RestaurantService {
     );
   }
 
-  updateMenuHostingSetting(
-    hostedInternal: boolean,
-    id: string
-  ): Observable<any> {
-    const url = `${this.restaurantsUrl}/updated-menu-hosting/${id}`;
-    return this.http.post<Menu>(
-      url,
-      { hostedInternal: hostedInternal },
-      this.httpOptions
-    );
-  }
+  // updateMenuHostingSetting(
+  //   hostedInternal: boolean,
+  //   id: string
+  // ): Observable<any> {
+  //   const url = `${this.restaurantsUrl}/updated-menu-hosting/${id}`;
+  //   return this.http.post<Menu>(
+  //     url,
+  //     { hostedInternal: hostedInternal },
+  //     this.httpOptions
+  //   );
+  // }
 
-  deleteMenu(menu: Menu, id: string): Observable<unknown> {
-    const url = `${this.restaurantsUrl}/menus/delete/${id}`;
-    return this.http.post(url, JSON.stringify(menu), this.httpOptions);
-  }
+  // deleteMenu(menu: Menu, id: string): Observable<unknown> {
+  //   const url = `${this.restaurantsUrl}/menus/delete/${id}`;
+  //   return this.http.post(url, JSON.stringify(menu), this.httpOptions);
+  // }
 
   deleteRestaurant(id: string): Observable<unknown> {
     const url = `${this.restaurantsUrl}/delete/${id}`;

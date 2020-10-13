@@ -22,6 +22,9 @@ import { UserService } from 'src/app/services/user.service';
 import { MustNotBeDuplicateInRestaurant } from 'src/app/helpers/file.validator';
 import { Restaurant } from 'src/app/models/restaurant';
 import { FormatFilename } from 'src/app/helpers/utilities';
+import { Menu, MenuType } from 'src/app/models/menu';
+import { MenuService } from 'src/app/services/menu.service';
+import { ObjectId } from 'bson';
 
 @Component({
   selector: 'app-add-menu',
@@ -31,16 +34,23 @@ import { FormatFilename } from 'src/app/helpers/utilities';
 export class AddMenuComponent implements OnInit {
   @Input() restaurant: Restaurant;
   @Output() closed = new EventEmitter<boolean>();
-  @ViewChild('addmenumodal') addmenumodal;
-  @ViewChild('menufile') menuFile: ElementRef;
+  @ViewChild('addMenuModal') addMenuModal;
 
-  id = 'addmenumodal'; // modal id used by modal service
+  id = 'addMenuModal'; // modal id used by modal service
+
+  menu: Menu;
+  menuToUpdate: Menu;
+  isUpdating: boolean = false;
+  isExternalMenu: boolean = false;
+
+  menus: Menu[];
 
   isOperationFailed = false;
   isValidFile = false;
   isSubmitted = false;
   menuForm: FormGroup;
   name: FormControl;
+  externalMenuLink: FormControl;
   fileToUpload: File;
 
   constructor(
@@ -48,27 +58,20 @@ export class AddMenuComponent implements OnInit {
     private restaurantService: RestaurantService,
     private fileUploadService: FileUploadService,
     private userService: UserService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private menuService: MenuService
   ) {}
 
   ngOnInit() {
     this.modalService.add(this);
+    this.menus = this.restaurant.menuBank.menus;
 
     this.name = this.formBuilder.control('', Validators.required);
 
-    this.menuForm = this.formBuilder.group(
-      {
-        name: this.name,
-        filename: [''],
-        lastupdated: [new Date().toISOString()],
-      },
-      {
-        validator: MustNotBeDuplicateInRestaurant(
-          'name',
-          this.restaurant.menus
-        ),
-      }
-    );
+    this.menuForm = this.formBuilder.group({
+      name: this.name,
+      filename: [''],
+    });
   }
 
   ngOnDestroy(): void {
@@ -77,13 +80,37 @@ export class AddMenuComponent implements OnInit {
 
   // open modal
   open(): void {
-    this.addmenumodal.show();
+    this.addMenuModal.show();
+    if (this.isUpdating) {
+      // set the name control value
+      this.menuForm.patchValue({
+        name: this.menuToUpdate.name,
+      });
+    }
+
+    if (this.isExternalMenu) {
+      this.externalMenuLink = this.formBuilder.control('', Validators.required);
+      this.menuForm.addControl('externalMenuLink', this.externalMenuLink);
+
+      if (this.isUpdating) {
+        this.menuForm.patchValue({
+          externalMenuLink: this.menuToUpdate.externalMenuLink,
+        });
+      }
+    } else {
+      this.menuForm.removeControl('externalMenuLink');
+    }
   }
 
   // close modal
   close(): void {
     this.menuForm.reset();
-    this.addmenumodal.hide();
+    this.addMenuModal.hide();
+
+    // clear foodItem in addFoodItem modal
+    this.menuToUpdate = undefined;
+    this.isUpdating = false;
+
     this.closed.emit(true);
   }
 
@@ -95,6 +122,20 @@ export class AddMenuComponent implements OnInit {
     }
   }
 
+  createMenuObject(): void {
+    this.menu = this.menuForm.value; // sets the name and the filename
+    if (this.isUpdating) {
+      this.menu._id = this.menuToUpdate._id;
+    } else {
+      this.menu._id = new ObjectId().toHexString();
+    }
+    this.menu.isActive = true;
+    this.menu.type = this.isExternalMenu
+      ? MenuType.ExternalLinkMenu
+      : MenuType.FileBasedMenu;
+    this.menu.lastupdated = new Date().toLocaleString();
+  }
+
   saveMenu() {
     this.isSubmitted = true;
 
@@ -103,39 +144,87 @@ export class AddMenuComponent implements OnInit {
       filename: FormatFilename(this.name.value),
     });
 
-    this.restaurantService
-      .addMenu(this.menuForm.value, this.restaurant._id)
+    this.createMenuObject();
+
+    this.menuService
+      .addMenuForRestaurant(this.restaurant._id, this.menu)
       .subscribe(
-        (data) => {
-          // if menu was added successfully to the db then upload the file
-          this.fileUploadService
-            .postFile(
-              this.fileToUpload,
-              this.restaurant._id,
-              this.menuForm.get('filename').value
-            )
-            .subscribe(
-              (data) => {
-                // do something, if upload success
-                this.userService.updateMenuUpdateCount().subscribe(
-                  (_) => {
-                    this.close();
-                    window.location.reload();
-                  },
-                  (err) => {
-                    console.log(JSON.parse(err.error).message);
-                    this.isOperationFailed = true;
-                  }
-                );
-              },
-              (error) => {
-                this.isOperationFailed = true;
+        (_) => {
+          this.userService.updateMenuUpdateCount().subscribe(
+            (_) => {
+              // if file based menu and menu added successfully upload menu file
+              if (!this.isExternalMenu) {
+                this.fileUploadService
+                  .postFile(
+                    this.fileToUpload,
+                    this.restaurant._id,
+                    this.menuForm.get('filename').value
+                  )
+                  .subscribe(
+                    (_) => {
+                      this.close();
+                      window.location.reload();
+                      this.isSubmitted = false;
+                    },
+                    (error) => {
+                      console.log(error);
+                      this.isSubmitted = false;
+                      this.isOperationFailed = true;
+                    }
+                  );
+              } else {
+                this.close();
+                window.location.reload();
+                this.isSubmitted = false;
               }
-            );
+            },
+            (err) => {
+              console.log(JSON.parse(err.error).message);
+              this.isSubmitted = false;
+              this.isOperationFailed = true;
+            }
+          );
         },
         (error) => {
+          console.log(error);
+          this.isSubmitted = false;
           this.isOperationFailed = true;
         }
       );
+
+    // this.restaurantService
+    //   .addMenu(this.menuForm.value, this.restaurant._id)
+    //   .subscribe(
+    //     (data) => {
+    //       // if menu was added successfully to the db then upload the file
+    //       this.fileUploadService
+    //         .postFile(
+    //           this.fileToUpload,
+    //           this.restaurant._id,
+    //           this.menuForm.get('filename').value
+    //         )
+    //         .subscribe(
+    //           (data) => {
+    //             // do something, if upload success
+    //             this.userService.updateMenuUpdateCount().subscribe(
+    //               (_) => {
+    //                 this.close();
+    //                 window.location.reload();
+    //               },
+    //               (err) => {
+    //                 console.log(JSON.parse(err.error).message);
+    //                 this.isOperationFailed = true;
+    //               }
+    //             );
+    //           },
+    //           (error) => {
+    //             this.isOperationFailed = true;
+    //           }
+    //         );
+    //     },
+    //     (error) => {
+    //       this.isOperationFailed = true;
+    //     }
+    //   );
   }
 }

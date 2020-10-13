@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UpdateMenuComponent } from './update-menu.component';
+import { FeatureNotAllowedComponent } from './feature-not-allowed.component';
 
-describe('UpdateMenuComponent', () => {
-  let component: UpdateMenuComponent;
-  let fixture: ComponentFixture<UpdateMenuComponent>;
+describe('FeatureNotAllowedComponent', () => {
+  let component: FeatureNotAllowedComponent;
+  let fixture: ComponentFixture<FeatureNotAllowedComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpdateMenuComponent ]
+      declarations: [ FeatureNotAllowedComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UpdateMenuComponent);
+    fixture = TestBed.createComponent(FeatureNotAllowedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

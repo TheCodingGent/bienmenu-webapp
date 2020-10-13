@@ -1,5 +1,6 @@
 .profile-container {
   position: relative;
+  padding-top: 110px;
   overflow: auto;
   height: 100vh;
   width: 100%;
@@ -20,6 +21,7 @@
 
 .card-text {
   text-align: center;
+  padding-left: 30px;
 }
 
 .upgrade-btn {

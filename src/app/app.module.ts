@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { QRCodeModule } from 'angularx-qrcode';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
@@ -19,7 +19,6 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { RestaurantDetailComponent } from './components/restaurant-detail/restaurant-detail.component';
 import { AddRestaurantComponent } from './components/add-restaurant/add-restaurant.component';
 import { AddMenuComponent } from './components/add-menu/add-menu.component';
-import { UpdateMenuComponent } from './components/update-menu/update-menu.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -38,8 +37,17 @@ import { ContactTracingComponent } from './components/contact-tracing/contact-tr
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
 import { PricingPlansComponent } from './components/pricing-plans/pricing-plans.component';
+import { CreateMenuComponent } from './components/create-menu/create-menu.component';
+import { FoodItemManagerComponent } from './components/food-item-manager/food-item-manager.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MenuSectionComponent } from './components/menu-section/menu-section.component';
+import { AddFoodItemComponent } from './components/add-food-item/add-food-item.component';
+import { DisplayMenuComponent } from './components/display-menu/display-menu.component';
 import { ContactTracingHomeComponent } from './components/contact-tracing-home/contact-tracing-home.component';
 import { BusinessPortalHomeComponent } from './components/business-portal-home/business-portal-home.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FeatureNotAllowedComponent } from './components/feature-not-allowed/feature-not-allowed.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +57,6 @@ import { BusinessPortalHomeComponent } from './components/business-portal-home/b
     RestaurantDetailComponent,
     AddRestaurantComponent,
     AddMenuComponent,
-    UpdateMenuComponent,
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
@@ -66,8 +73,14 @@ import { BusinessPortalHomeComponent } from './components/business-portal-home/b
     SuccessComponent,
     CancelComponent,
     PricingPlansComponent,
+    CreateMenuComponent,
+    FoodItemManagerComponent,
+    MenuSectionComponent,
+    AddFoodItemComponent,
+    DisplayMenuComponent,
     ContactTracingHomeComponent,
     BusinessPortalHomeComponent,
+    FeatureNotAllowedComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,9 +95,18 @@ import { BusinessPortalHomeComponent } from './components/business-portal-home/b
     PdfViewerModule,
     RxReactiveFormsModule,
     ColorPickerModule,
+    DragDropModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC5OKLO-8r7Jy-SJszBQww_g7ci6n_jMGc',
       libraries: ['places'],
+    }),
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
     }),
   ],
   providers: [
@@ -103,3 +125,6 @@ import { BusinessPortalHomeComponent } from './components/business-portal-home/b
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

@@ -1,0 +1,66 @@
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { MenuService } from 'src/app/services/menu.service';
+import { Menu } from 'src/app/models/menu';
+import { MenuSection } from 'src/app/models/menu-section';
+import { FoodItemService } from 'src/app/services/food-item.service';
+import { FoodItem } from 'src/app/models/food-item';
+import { LightOrDark } from 'src/app/helpers/color.helper';
+
+@Component({
+  selector: 'app-display-menu',
+  templateUrl: './display-menu.component.html',
+  styleUrls: ['./display-menu.component.scss'],
+})
+export class DisplayMenuComponent implements OnInit {
+  menu: Menu = new Menu();
+  sections: MenuSection[] = [];
+  foodItem: FoodItem = new FoodItem();
+  FoodItems: FoodItem[] = [];
+  tag: string = '';
+  color: string = '';
+  mainColor = '#009688';
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private menuService: MenuService,
+    private elRef: ElementRef
+  ) {}
+  setColorThemeProperty() {
+    this.elRef.nativeElement.style.setProperty('--main-color', this.mainColor);
+    this.elRef.nativeElement.style.setProperty(
+      '--accent-color',
+      this.mainColor + '4d'
+    );
+
+    if (LightOrDark(this.mainColor) == 'light') {
+      this.elRef.nativeElement.style.setProperty('--font-color', '#000000');
+    } else {
+      this.elRef.nativeElement.style.setProperty('--font-color', '#ffffff');
+    }
+  }
+  ngOnInit(): void {
+    this.color = this.activatedRoute.snapshot.paramMap.get('color');
+    this.menuService
+      .getMenu(this.activatedRoute.snapshot.paramMap.get('id'))
+      .subscribe((menu) => {
+        this.mainColor = this.color;
+        this.setColorThemeProperty();
+        this.menu = menu;
+        this.sections = this.menu.sections;
+        // this.foodItemService.getFoodItemsForUser().subscribe((items) => {
+        //   items.foodItems;
+        //   console.log(items.foodItems);
+
+        //   for (let section of this.sections) {
+        //     for (let menuSectionItem of section.menuSectionItems) {
+        //       this.FoodItems = items.foodItems.filter(
+        //         (foodItem) => foodItem._id === menuSectionItem.foodItemId
+        //       );
+        //       section.foodItems = this.FoodItems;
+        //     }
+        //   }
+        // });
+      });
+  }
+}

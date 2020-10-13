@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Restaurant } from 'src/app/models/restaurant';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { Location } from '@angular/common';
+
 import { UserService } from 'src/app/services/user.service';
-import { CollapseComponent } from 'angular-bootstrap-md';
+
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-board',
@@ -22,7 +23,7 @@ export class UserBoardComponent implements OnInit {
     private restaurantService: RestaurantService,
     private tokenStorageService: TokenStorageService,
     private userService: UserService,
-    private location: Location,
+
     private router: Router
   ) {}
 

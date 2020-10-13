@@ -1,38 +1,44 @@
 <div class="admin-board container-fluid">
   <div class="admin-board-content container">
-    <div class="d-flex flex-column" *ngIf="accessAllowed">
-      <h2>All Businesses</h2>
+    <div class="d-flex flex-column">
+      <h2>{{ "admin.All-busnisses" | translate }}</h2>
       <ul class="restaurants list-group">
         <li *ngFor="let restaurant of restaurants" class="list-group-item">
           <div class="container">
             <div class="row align-items-center">
-              <div class="col-md-2">
+              <div class="col-md-4">
                 <span>{{ restaurant.name }}</span>
               </div>
-              <div class="col-md-10">
+              <div class="col-md-8">
                 <div class="row justify-content-end">
                   <div class="col-sm-auto">
                     <button
                       mat-raised-button
+                      matTooltip="Preview what your customers will see"
+                      matTooltipClass="btn-tooltip"
                       class="btn btn-block"
                       (click)="goToRoute('/' + restaurant._id)"
                     >
-                      Preview
+                      {{ "admin.PREVIEW" | translate }}
                     </button>
                   </div>
                   <div class="col-sm-auto">
                     <button
                       mat-raised-button
+                      matTooltip="View QR code and download it"
+                      matTooltipClass="btn-tooltip"
                       class="btn btn-block"
                       (click)="goToRoute('/qrcode/' + restaurant._id)"
                     >
                       QR Code
                     </button>
                   </div>
-                  <div class="col-sm-auto">
+                  <div class="col-sm-2">
                     <button
                       mat-mini-fab
-                      color="primary"
+                      mat-raised-button
+                      matTooltip="Manage your business"
+                      matTooltipClass="btn-tooltip"
                       aria-label="Edit and manage business"
                       (click)="goToRoute('/detail/' + restaurant._id)"
                     >
@@ -47,12 +53,11 @@
       </ul>
       <div class="add-new">
         <a routerLink="/add">
-          <button mat-raised-button class="btn">Add Restaurant</button>
+          <button mat-raised-button class="btn">
+            {{ "admin.Add-Restaurant" | translate }}
+          </button>
         </a>
       </div>
-    </div>
-    <div class="alert alert-danger" *ngIf="!accessAllowed">
-      {{ content }}
     </div>
   </div>
 </div>

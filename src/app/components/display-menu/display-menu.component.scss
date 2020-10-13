@@ -1,0 +1,113 @@
+.display-menu {
+  margin: 80px auto;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 90%;
+  border-radius: 20px;
+  background-color: rgba(247, 242, 242, 0.527);
+}
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 5px rgb(247, 245, 245);
+  border-radius: 50px;
+  background-color: var(--main-color) !important;
+}
+.hr {
+  background-color: var(--main-color) !important;
+}
+@media (max-width: 700px) {
+  .mobileDisplay {
+    display: none;
+  }
+}
+.food-name {
+  font-weight: 400;
+  padding-top: 8px;
+  @media (max-width: 700px) {
+    font-size: small;
+  }
+}
+.menu-title {
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  font-family: "Lobster Two";
+  padding: 10px;
+}
+.big-food-image {
+  width: 250px;
+
+  @media (max-width: 700px) {
+    width: 150px;
+    height: 150px;
+  }
+}
+.food-name-div {
+  width: 250px;
+
+  @media (max-width: 700px) {
+    width: 100px;
+  }
+}
+.section-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 30px;
+  padding-bottom: 30px;
+  .section-title {
+    font-family: "Lobster Two";
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+}
+.small-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+
+  @media (max-width: 700px) {
+    margin: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
+.mat-icon {
+  vertical-align: middle;
+  color: var(--main-color) !important;
+}
+
+.food-item-manager {
+  margin: 80px 0 70px 0;
+  position: absolute;
+  overflow: auto;
+  display: flex;
+}
+
+.food-description {
+  font-size: smaller;
+}
+
+.food-item-manager-content {
+  width: 100%;
+}
+
+.food-items-accordion .mat-expansion-panel-header-title,
+.food-items-accordion .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.food-items-accordion .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.food-items-accordion .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}

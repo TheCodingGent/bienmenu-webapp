@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RestaurantService } from 'src/app/services/restaurant.service';
-import { Menu } from 'src/app/models/menu';
+import { Menu, MenuType } from 'src/app/models/menu';
 import { Restaurant } from 'src/app/models/restaurant';
 import { LightOrDark } from 'src/app/helpers/color.helper';
 import { NavbarService } from 'src/app/services/navbar.service';
@@ -54,6 +54,7 @@ export class MenuListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private restaurantService: RestaurantService,
     private elRef: ElementRef,
     private navbarService: NavbarService,
@@ -85,11 +86,11 @@ export class MenuListComponent implements OnInit {
 
     if (this.currentRestaurantId) {
       this.getMenus();
-      if (!this.isHostedInternal) {
-        window.location.href = this.formatMenuUrl(
-          this.currentRestaurant.externalMenuLink
-        );
-      }
+      // if (!this.isHostedInternal) {
+      //   window.location.href = this.formatMenuUrl(
+      //     this.currentRestaurant.externalMenuLink
+      //   );
+      // }
     }
   }
 
@@ -98,23 +99,52 @@ export class MenuListComponent implements OnInit {
       .getRestaurant(this.currentRestaurantId)
       .subscribe((restaurant) => {
         this.currentRestaurant = restaurant;
-        this.menus = restaurant.menus;
-        this.isHostedInternal = restaurant.hostedInternal;
+        this.menus = restaurant.menuBank.menus.filter((menu) => menu.isActive); // only add menus that are active
+        // this.isHostedInternal = restaurant.hostedInternal;
         this.mainColor = this.currentRestaurant.color;
         this.setColorThemeProperty();
+        if (this.menus.length === 1) {
+          this.openMenu(this.menus[0]);
+        }
       });
   }
 
-  openMenu(filename: string) {
-    this.isOpeningMenu = true;
+  // openMenu(filename: string) {
+  //   this.isOpeningMenu = true;
 
-    var windowReference = window.open();
+  //   var windowReference = window.open();
 
-    windowReference.location.href = this.formatMenuUrl(
-      menuBucketUrl + this.currentRestaurant._id + '/' + filename + '.pdf'
-    );
+  //   windowReference.location.href = this.formatMenuUrl(
+  //     menuBucketUrl + this.currentRestaurant._id + '/' + filename + '.pdf'
+  //   );
 
-    this.isOpeningMenu = false;
+  //   this.isOpeningMenu = false;
+  // }
+  openMenu(menu: Menu) {
+    switch (+menu.type) {
+      case MenuType.BienMenuMenu:
+        this.router.navigate([
+          '/display-menu',
+          menu._id,
+          this.currentRestaurant.color,
+        ]);
+        break;
+      case MenuType.FileBasedMenu:
+        this.isOpeningMenu = true;
+        var windowReference = window.open();
+        windowReference.location.href = this.formatMenuUrl(
+          menuBucketUrl +
+            this.currentRestaurant._id +
+            '/' +
+            menu.filename +
+            '.pdf'
+        );
+        this.isOpeningMenu = false;
+        break;
+      case MenuType.ExternalLinkMenu:
+        window.location.href = this.formatMenuUrl(menu.externalMenuLink);
+        break;
+    }
   }
 
   formatMenuUrl(url: string): string {

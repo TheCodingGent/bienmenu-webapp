@@ -1,33 +1,35 @@
 <div class="profile-container container-fluid">
   <div class="profile-container-content container" *ngIf="currentUser">
     <div class="card">
-      <img
-        class="card-img-top"
-        src="./assets/img/bienmenu-logo.png"
-        alt="Bienmenu"
-        style="width: 100px; margin: 20px"
-      />
       <div class="card-body">
         <h5 class="card-title">
-          Welcome <strong>{{ currentUser.firstName }}</strong
+          <img
+            class="card-img-top"
+            src="./assets/img/bienmenu-logo.png"
+            alt="Bienmenu"
+            style="width: 100px; margin: 20px"
+          />
+          {{ "profile.TITLE" | translate }}
+          <strong>{{ currentUser.firstName.toUpperCase() }}</strong
           >!
         </h5>
-        <p class="card-text">Here you can see your basic profile info.</p>
+        <p class="card-text">{{ "profile.SUBTITLE" | translate }}</p>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
-          <strong>Name:</strong> {{ currentUser.firstName }}&nbsp;{{
-            currentUser.lastName
-          }}
+          <strong>{{ "profile.NAME" | translate }}</strong>
+          {{ currentUser.firstName }}&nbsp;{{ currentUser.lastName }}
         </li>
         <li class="list-group-item">
-          <strong>Email:</strong> {{ currentUser.email }}
+          <strong>{{ "profile.EMAIL" | translate }}</strong>
+          {{ currentUser.email }}
         </li>
         <li class="list-group-item">
-          <strong>Current Plan:</strong> {{ currentUser.plan }}
+          <strong>{{ "profile.PLAN" | translate }}</strong>
+          {{ currentUser.plan }}
         </li>
         <li class="list-group-item">
-          <strong>Active Businesses:</strong>
+          <strong>{{ "profile.ACTIVE-BUSINESSES" | translate }}</strong>
           <ul>
             <li *ngFor="let restaurant of currentUser.restaurants">
               {{ restaurant.name }}
@@ -42,19 +44,21 @@
           [disabled]="currentUser.plan !== 'basic'"
           (click)="goToPricing()"
         >
-          Upgrade Your Plan
+          {{ "profile.UPGRADE" | translate }}
         </button>
 
         <a
           class="card-link waves-light"
           href="https://www.bien-menu.com/contact"
         >
-          <button mat-raised-button class="contact-btn btn">Contact Us</button>
+          <button mat-raised-button class="contact-btn btn">
+            {{ "profile.CONTACT" | translate }}
+          </button>
         </a>
       </div>
     </div>
     <div class="alert alert-danger" *ngIf="!isLoggedIn">
-      Please login to view your profile.
+      {{ "profile.ALERT" | translate }}
     </div>
   </div>
 </div>

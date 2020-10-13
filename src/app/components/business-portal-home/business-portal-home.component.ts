@@ -112,7 +112,7 @@ export class BusinessPortalHomeComponent implements OnInit {
       .subscribe((restaurant) => {
         this.currentRestaurant = restaurant;
         this.isContactTracingEnabled = restaurant.tracingEnabled;
-        this.hasMenus = restaurant.menus.length > 0;
+        this.hasMenus = restaurant.menuBank.menus.length > 0;
         this.mainColor = this.currentRestaurant.color;
         this.setColorThemeProperty();
       });

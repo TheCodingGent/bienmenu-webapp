@@ -1,21 +1,24 @@
 <div class="restaurant-detail container-fluid">
   <div class="alert alert-danger" *ngIf="!userAllowedOnPage">
-    Current user not authorized to view this restaurant...
+    {{ "restaurant-details.USER-ALERT" | translate }}
   </div>
   <div class="restaurant-detail-content container">
     <div *ngIf="restaurant">
-      <h2>{{ restaurant.name }} Details</h2>
+      <h2>
+        {{ restaurant.name }} {{ "restaurant-details.DETAILS" | translate }}
+      </h2>
       <div class="basic-info list-group">
         <div
           class="list-group-item first-item restaurant-detail-section-header"
         >
-          <h4>Basic Info</h4>
+          <h4>{{ "restaurant-details.INFO" | translate }}</h4>
         </div>
         <div class="list-group-item">
           <span class="restaurant-detail-field">ID: </span>{{ restaurant._id }}
         </div>
         <div class="list-group-item">
-          <span class="restaurant-detail-field">Name: </span
+          <span class="restaurant-detail-field"
+            >{{ "restaurant-details.NAME" | translate }}:</span
           >{{ restaurant.name }}
         </div>
         <div class="list-group-item">
@@ -25,7 +28,9 @@
         <div class="list-group-item" *ngIf="userHasContactTracing">
           <div class="row restaurant-setting">
             <div class="col-md-2">
-              <span class="restaurant-detail-field">Contact Tracing: </span>
+              <span class="restaurant-detail-field"
+                >{{ "restaurant-details.CONTACT-TRACING" | translate }}
+              </span>
             </div>
             <div class="col-md-auto">
               <div
@@ -33,14 +38,14 @@
                 *ngIf="restaurant.tracingEnabled"
                 style="color: green"
               >
-                Enabled
+                {{ "restaurant-details.ENABLED" | translate }}
               </div>
               <div
                 class="enabled-disabled"
                 *ngIf="!restaurant.tracingEnabled"
                 style="color: red"
               >
-                Disabled
+                {{ "restaurant-details.DISABLED" | translate }}
               </div>
             </div>
             <div class="col-md-auto">
@@ -50,8 +55,12 @@
                   [(ngModel)]="selectedCTSetting"
                   (ngModelChange)="onChangeCT($event)"
                 >
-                  <option value="true">Enable Contact Tracing</option>
-                  <option value="false">Disable Contact Tracing</option>
+                  <option value="true">
+                    {{ "restaurant-details.E-CONTACT-TRACING" | translate }}
+                  </option>
+                  <option value="false">
+                    {{ "restaurant-details.D-CONTACT-TRACING" | translate }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -67,33 +76,8 @@
                     isCTSettingSubmitted
                   "
                 >
-                  Save
+                  {{ "restaurant-details.SAVE" | translate }}
                 </button>
-              </div>
-            </div>
-          </div>
-          <div class="list-group-item" *ngIf="!hostedInternal">
-            <div class="row restaurant-setting">
-              <div class="col-md-2">
-                <span class="restaurant-detail-field">Menus available at:</span>
-              </div>
-              <div class="col-md-auto">
-                <div class="enabled-disabled">
-                  {{ restaurant.externalMenuLink }}
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="setting-btn" *ngIf="!hostedInternal">
-                  <button
-                    mat-raised-button
-                    type="button"
-                    class="btn"
-                    (click)="saveMenuHostingSetting()"
-                    [disabled]="isHostingSettingSubmitted"
-                  >
-                    Manage Menus on BienMenu
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -101,7 +85,9 @@
         <div class="list-group-item">
           <div class="row restaurant-setting">
             <div class="col-md-2">
-              <span class="restaurant-detail-field">Current Cover Photo: </span>
+              <span class="restaurant-detail-field">{{
+                "restaurant-details.COVER-PHOTO" | translate
+              }}</span>
             </div>
             <div class="col-md-auto">
               <img style="width: 150px" [src]="restaurant.coverPhotoUrl" />
@@ -111,7 +97,9 @@
         <div class="list-group-item">
           <div class="row restaurant-setting">
             <div class="col-md-2">
-              <span class="restaurant-detail-field"> Update Cover Photo: </span>
+              <span class="restaurant-detail-field"
+                >{{ "restaurant-details.UPDATE-COVER-PHOTO" | translate }}
+              </span>
             </div>
             <div class="col-md-auto">
               <input
@@ -129,7 +117,7 @@
                   (click)="uploadCoverPhoto()"
                   [disabled]="!isValidImage || isSubmitted"
                 >
-                  Upload
+                  {{ "restaurant-details.UPLOAD" | translate }}
                 </button>
               </div>
             </div>
@@ -141,7 +129,9 @@
                 <div class="col-md-2">
                   <mat-spinner diameter="20"></mat-spinner>
                 </div>
-                <div class="col-md-auto">Uploading image...</div>
+                <div class="col-md-auto">
+                  {{ "restaurant-details.UPLOAD-MSG" | translate }}
+                </div>
               </div>
             </div>
           </div>
@@ -152,17 +142,62 @@
             <div
               class="list-group-item first-item restaurant-detail-section-header"
             >
-              <h4>Restaurant Menus</h4>
+              <div class="row">
+                <div class="col-md-11">
+                  <h4>{{ "restaurant-details.REST-MENUS" | translate }}</h4>
+                </div>
+                <div class="col-md-auto">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="Example icon-button with a menu"
+                  >
+                    <mat-icon style="margin-bottom: 4px; margin-left: 1px"
+                      >note_add</mat-icon
+                    >
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button
+                      mat-menu-item
+                      (click)="
+                        goToRoute(
+                          '/create-menu/' + restaurant._id + '/' + 'new-menu'
+                        )
+                      "
+                    >
+                      <mat-icon>menu_book</mat-icon>
+                      <span>{{
+                        "restaurant-details.CREATE-MENU" | translate
+                      }}</span>
+                    </button>
+                    <button mat-menu-item (click)="openAddMenu(0)">
+                      <mat-icon>picture_as_pdf</mat-icon>
+                      <span>Upload a PDF menu</span>
+                    </button>
+                    <button mat-menu-item (click)="openAddMenu(2)">
+                      <mat-icon>link</mat-icon>
+                      <span>{{ "restaurant-details.LINK" | translate }}</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
             </div>
-
             <div
-              *ngFor="let menu of restaurant.menus; let i = index"
+              *ngFor="let menu of menus; let i = index"
               class="list-group-item"
             >
               <div class="row menu-row">
                 <div class="col-md-10">
-                  <span class="restaurant-detail-field">Menu Name: </span
+                  <span class="restaurant-detail-field"
+                    >{{ "restaurant-details.MENU-NAME" | translate }}: </span
                   >{{ menu.name }}
+                  <mat-slide-toggle
+                    class="menu-toggle"
+                    [color]="color"
+                    [checked]="menu.isActive"
+                    (change)="onMenuToggle($event, i)"
+                  >
+                  </mat-slide-toggle>
                 </div>
                 <div class="col-md-auto">
                   <button
@@ -171,13 +206,14 @@
                     class="delete-btn btn btn-block"
                     (click)="deleteMenu(menu, restaurant._id)"
                   >
-                    Delete Menu
+                    {{ "restaurant-details.DELETE-MENU" | translate }}
                   </button>
                 </div>
               </div>
               <div class="row menu-row">
                 <div class="col-md-10">
-                  <span class="restaurant-detail-field">Last Updated: </span
+                  <span class="restaurant-detail-field"
+                    >{{ "restaurant-details.LAST-UPDATED" | translate }}: </span
                   >{{ formatDate(menu.lastupdated) }}
                 </div>
                 <div class="col-md-auto">
@@ -185,58 +221,52 @@
                     mat-raised-button
                     type="button"
                     class="btn btn-block"
-                    (click)="openModal('updatemenumodal' + menu._id, i)"
+                    (click)="updateMenu(menu._id, i)"
                     [disabled]="!menuUpdateAllowed"
                   >
-                    Update Menu
+                    {{ "restaurant-details.UPDATE-MENU" | translate }}
                   </button>
                 </div>
-                <div class="col-md-auto" *ngIf="menuUpdating == i && success">
+                <div
+                  class="col-md-auto"
+                  *ngIf="menuToUpdateIndex == i && success"
+                >
                   <div class="menu-update-alert alert alert-success">
-                    Menu updated successfully!
+                    {{ "restaurant-details.UPDATE-MSG" | translate }}
                   </div>
                 </div>
-                <app-update-menu
-                  [restaurantId]="restaurant._id"
-                  [menu]="menu"
-                  (success)="updateSuccess($event)"
-                ></app-update-menu>
+              </div>
+              <div class="row menu-row">
+                <div class="col-md-10">
+                  <span class="restaurant-detail-field">Type: </span
+                  >{{ enumToMenuType(menu.type) }}
+                </div>
               </div>
             </div>
           </div>
           <div class="d-flex flex-column">
             <div class="add">
-              <button
-                mat-raised-button
-                type="button"
-                class="add-btn btn"
-                (click)="openModal('addmenumodal', -1)"
-                [disabled]="
-                  !menuUpdateAllowed || maxMenuCountReached || !hostedInternal
-                "
-              >
-                Add Menu
-              </button>
               <div
                 class="menu-update-alert alert alert-info"
                 *ngIf="!menuUpdateAllowed"
               >
-                The maximum menu updates has been reached for this month. You
-                can upgrade your plan for unlimited updates!
+                {{ "restaurant-details.ALERT-MSG-MONTH" | translate }}
               </div>
               <div
                 class="menu-update-alert alert alert-info"
                 *ngIf="maxMenuCountReached"
               >
-                The maximum number of allowed menus per restaurant has been
-                reached. You can upgrade your plan to add more!
+                {{ "restaurant-details.ALERT-MSG-RESTO" | translate }}
               </div>
               <div *ngIf="maxMenuCountReached || !menuUpdateAllowed">
                 <a routerLink="/pricing-plans">
-                  <button mat-raised-button class="btn">Upgrade Now</button>
+                  <button mat-raised-button class="btn">
+                    {{ "restaurant-details.UPGRADE" | translate }}
+                  </button>
                 </a>
               </div>
               <app-add-menu
+                #addMenuComponent
                 [restaurant]="restaurant"
                 (closed)="onClosedModal($event)"
               ></app-add-menu>
@@ -248,7 +278,7 @@
                 class="delete-btn btn"
                 (click)="deleteRestaurant(restaurant._id)"
               >
-                Delete Restaurant
+                {{ "restaurant-details.DELETE-RESTO" | translate }}
               </button>
             </div>
           </div>

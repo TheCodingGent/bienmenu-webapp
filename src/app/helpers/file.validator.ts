@@ -1,5 +1,5 @@
 import { Menu } from '../models/menu';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function ValidateFile(
   file: File,
@@ -12,27 +12,18 @@ export function ValidateFile(
   );
 }
 
-export function MustNotBeDuplicateInRestaurant(
-  controlName: string,
-  menus: Menu[]
-) {
-  return (formGroup: FormGroup) => {
-    const control = formGroup.controls[controlName];
+export function MustNotBeDuplicateInRestaurant(menus: Menu[]): ValidatorFn {
+  return (group: FormGroup): ValidationErrors => {
+    const control = group.controls['name'];
     let duplicate = false;
 
-    if (control.errors && !control.errors.mustMatch) {
-      // return if another validator has already found an error on the matchingControl
-      return;
-    }
-
-    if (!menus) {
-      //menus empty
+    if (!menus || !control.value) {
       return;
     }
 
     // check if name already exists
     for (let menu of menus) {
-      if (menu.name === control.value) {
+      if (menu.name.toLowerCase() === control.value.toLowerCase()) {
         duplicate = true;
       }
     }
@@ -43,5 +34,7 @@ export function MustNotBeDuplicateInRestaurant(
     } else {
       control.setErrors(null);
     }
+
+    return;
   };
 }

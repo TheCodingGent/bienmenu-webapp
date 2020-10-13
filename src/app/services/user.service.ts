@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConfigService } from './app-config.service';
 import { Restaurant } from '../models/restaurant';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,12 @@ export class UserService {
 
   getAdminContent(): Observable<any> {
     return this.http.get(this.userApiUrl + 'admin', {
+      responseType: 'text',
+    });
+  }
+
+  getPartnerContent(): Observable<any> {
+    return this.http.get(this.userApiUrl + 'partner', {
       responseType: 'text',
     });
   }

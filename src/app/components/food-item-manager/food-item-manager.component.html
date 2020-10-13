@@ -1,0 +1,116 @@
+<div class="food-item-manager container-fluid">
+  <div class="food-item-manager-content">
+    <div class="action-buttons">
+      <button mat-raised-button (click)="accordion.openAll()">
+        {{ "food-item-manager.EXPAND" | translate }}
+      </button>
+      <div class="divider"></div>
+      <button mat-raised-button (click)="accordion.closeAll()">
+        {{ "food-item-manager.COLLAPSE" | translate }}
+      </button>
+    </div>
+
+    <mat-accordion class="food-items-accordion" multi>
+      <div style="padding-bottom: 10px" *ngFor="let foodItem of foodItems">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title
+              ><div
+                style="
+                  padding-right: 10px;
+                  margin-top: auto;
+                  margin-bottom: auto;
+                "
+              >
+                <img class="small-img" src="{{ foodItem.imageUrl }}" />
+              </div>
+              <div class="food-name-div">
+                <h6
+                  class="food-name"
+                  style="font-weight: 400; padding-top: 8px"
+                >
+                  {{ foodItem.name }}
+                  <mat-icon *ngIf="foodItem.promotionPrice > 0"
+                    >verified</mat-icon
+                  >
+                </h6>
+              </div>
+            </mat-panel-title>
+            <mat-panel-description>
+              ${{ foodItem.price }}
+              <mat-icon class="myelement" color="primary">fastfood</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div>
+            <div class="row">
+              <div class="col-md-8 food-description">
+                {{ foodItem.description }}
+                <div class="vertical-divider"></div>
+                <div>
+                  <mat-icon color="primary">room_service</mat-icon>
+                  <span> Calories: </span>{{ foodItem.calories }} kcal
+                </div>
+                <div class="vertical-divider"></div>
+                <div style="padding-bottom: 20px">
+                  <mat-chip-list aria-label="Fish selection">
+                    <div *ngFor="let tag of foodItem.tags">
+                      <mat-chip color="primary" selected
+                        ><img
+                          style="padding-right: 5px"
+                          *ngIf="tag.toLocaleLowerCase() === 'spicy'"
+                          src="/assets/img/tag-images/spicy.png"
+                        />
+                        <img
+                          style="padding-right: 5px"
+                          *ngIf="tag.toLocaleLowerCase() === 'vegetarian'"
+                          src="/assets/img/tag-images/vegetarian.png"
+                        />{{ tag }}</mat-chip
+                      >
+                    </div>
+                  </mat-chip-list>
+                </div>
+              </div>
+              <div class="col-md-auto">
+                <img width="300px" [src]="foodItem.imageUrl" />
+              </div>
+            </div>
+            <div class="vertical-divider"></div>
+            <div class="action-buttons">
+              <button
+                mat-raised-button
+                type="button"
+                class="edit-btn btn"
+                (click)="openModal('addFoodItemModal', foodItem)"
+              >
+                {{ "food-item-manager.EDIT-BTN" | translate }}
+              </button>
+              <div class="divider"></div>
+              <button
+                mat-raised-button
+                type="button"
+                class="delete-btn btn float-right"
+                (click)="deleteFoodItem(foodItem)"
+              >
+                {{ "food-item-manager.DELETE-BTN" | translate }}
+              </button>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </mat-accordion>
+    <div class="add">
+      <button
+        mat-raised-button
+        type="button"
+        class="add-btn btn"
+        (click)="openModal('addFoodItemModal')"
+      >
+        {{ "food-item-manager.ADD-BTN" | translate }}
+      </button>
+      <app-add-food-item
+        #addFoodItem
+        (closed)="onClosedModal($event)"
+      ></app-add-food-item>
+    </div>
+  </div>
+</div>

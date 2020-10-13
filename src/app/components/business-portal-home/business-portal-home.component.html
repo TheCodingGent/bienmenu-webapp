@@ -18,7 +18,9 @@
           >
             <mat-icon class="btn-portal-icon">perm_contact_calendar</mat-icon>
           </button>
-          <div class="btn-portal-label">Check In</div>
+          <div class="btn-portal-label">
+            {{ "business-portal.CHECK-IN" | translate }}
+          </div>
         </div>
         <div *ngIf="hasMenus" [@tada]>
           <button
@@ -29,7 +31,9 @@
           >
             <mat-icon class="btn-portal-icon">menu_book</mat-icon>
           </button>
-          <div class="btn-portal-label">Menus</div>
+          <div class="btn-portal-label">
+            {{ "business-portal.MENU" | translate }}
+          </div>
         </div>
       </div>
     </div>
@@ -37,8 +41,7 @@
       class="thank-you-message alert alert-success"
       *ngIf="showThankYouMessage"
     >
-      You're information has been securely and successfully saved. Thank you and
-      stay safe! 🙏🏼
+      {{ "business-portal.THANK-YOU-ALERT" | translate }} 🙏🏼
     </div>
   </div>
 
@@ -54,7 +57,7 @@
 >
   <div class="container">
     <div class="d-flex flex-column">
-      <h4>Powered by</h4>
+      <h4>{{ "business-portal.POWERED-BY" | translate }}</h4>
 
       <img
         class="bienmenu-long-logo"

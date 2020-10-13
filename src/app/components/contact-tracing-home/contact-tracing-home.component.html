@@ -1,18 +1,17 @@
 <div class="contact-tracing-home container-fluid">
   <div class="contact-tracing-home-content container">
-    <h1>Welcome to BienMenu's Customer Checkin Solution</h1>
-    <h4>It's safe, secure and free to use</h4>
+    <h1>{{ "contact-tracing-home.WELCOME" | translate }}</h1>
+    <h4>{{ "contact-tracing-home.SUBTITLE" | translate }}</h4>
     <ol>
-      <li>Sign up for an account</li>
-      <li>Add your business information</li>
-      <li>Print your QR code</li>
+      <li>{{ "contact-tracing-home.SIGNUP" | translate }}</li>
+      <li>{{ "contact-tracing-home.ADD-INFO" | translate }}</li>
+      <li>{{ "contact-tracing-home.PRINT-MSG" | translate }}</li>
       <li>
-        Contact us in case of a positive COVID-19 case at your business and we
-        will contact your customers on your behalf
+        {{ "contact-tracing-home.COVID-19-MSG" | translate }}
       </li>
     </ol>
     <button mat-raised-button class="btn" (click)="goToSignup()">
-      Sign Up
+      {{ "contact-tracing-home.SIGNUP-BTN" | translate }}
     </button>
   </div>
 </div>
