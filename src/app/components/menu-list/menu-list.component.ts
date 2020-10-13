@@ -86,11 +86,6 @@ export class MenuListComponent implements OnInit {
 
     if (this.currentRestaurantId) {
       this.getMenus();
-      // if (!this.isHostedInternal) {
-      //   window.location.href = this.formatMenuUrl(
-      //     this.currentRestaurant.externalMenuLink
-      //   );
-      // }
     }
   }
 
@@ -103,23 +98,9 @@ export class MenuListComponent implements OnInit {
         // this.isHostedInternal = restaurant.hostedInternal;
         this.mainColor = this.currentRestaurant.color;
         this.setColorThemeProperty();
-        if (this.menus.length === 1) {
-          this.openMenu(this.menus[0]);
-        }
       });
   }
 
-  // openMenu(filename: string) {
-  //   this.isOpeningMenu = true;
-
-  //   var windowReference = window.open();
-
-  //   windowReference.location.href = this.formatMenuUrl(
-  //     menuBucketUrl + this.currentRestaurant._id + '/' + filename + '.pdf'
-  //   );
-
-  //   this.isOpeningMenu = false;
-  // }
   openMenu(menu: Menu) {
     switch (+menu.type) {
       case MenuType.BienMenuMenu:
