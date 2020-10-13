@@ -20,7 +20,7 @@
             *ngFor="let menuSectionItem of section.menuSectionItems"
             style="padding-bottom: 10px"
           >
-            <mat-expansion-panel>
+            <mat-expansion-panel *ngIf="menuSectionItem.isActive">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <div style="padding-right: 10px; margin: auto">
