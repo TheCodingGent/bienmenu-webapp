@@ -15,8 +15,7 @@ import {
 } from '@angular/animations';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { rubberBand } from 'ng-animate';
-
-const menuBucketUrl = 'https://bienmenu.s3.amazonaws.com/menus/';
+import { AppConfigService } from 'src/app/services/app-config.service';
 
 @Component({
   selector: 'app-menu-list',
@@ -43,6 +42,7 @@ const menuBucketUrl = 'https://bienmenu.s3.amazonaws.com/menus/';
   ],
 })
 export class MenuListComponent implements OnInit {
+  menuBucketUrl: string;
   currentRestaurantId: string;
   currentRestaurant: Restaurant;
   menus: Menu[];
@@ -58,7 +58,8 @@ export class MenuListComponent implements OnInit {
     private restaurantService: RestaurantService,
     private elRef: ElementRef,
     private navbarService: NavbarService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private appConfigService: AppConfigService
   ) {}
 
   setColorThemeProperty() {
@@ -76,6 +77,8 @@ export class MenuListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.menuBucketUrl = this.appConfigService.mainS3BucketUrl + 'menus/';
+
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (!this.isLoggedIn) {
       // if user is not logged in hide the navigation bar
@@ -114,7 +117,7 @@ export class MenuListComponent implements OnInit {
         this.isOpeningMenu = true;
         var windowReference = window.open();
         windowReference.location.href = this.formatMenuUrl(
-          menuBucketUrl +
+          this.menuBucketUrl +
             this.currentRestaurant._id +
             '/' +
             menu.filename +

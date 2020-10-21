@@ -133,7 +133,7 @@ export class AddMenuComponent implements OnInit {
     this.menu.type = this.isExternalMenu
       ? MenuType.ExternalLinkMenu
       : MenuType.FileBasedMenu;
-    this.menu.lastupdated = new Date().toLocaleString();
+    this.menu.lastupdated = new Date().toISOString();
   }
 
   saveMenu() {

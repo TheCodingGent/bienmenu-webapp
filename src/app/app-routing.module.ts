@@ -78,8 +78,7 @@ const routes: Routes = [
   },
   {
     path: 'display-menu/:id/:color',
-    component: DisplayMenuComponent,
-    canActivate: [PartnerGuard],
+    component: DisplayMenuComponent
   },
   { path: 'menu-list', component: MenuListComponent },
   { path: 'menus/:id', component: BusinessPortalHomeComponent },

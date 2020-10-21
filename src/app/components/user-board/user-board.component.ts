@@ -47,7 +47,9 @@ export class UserBoardComponent implements OnInit {
   getRestaurant(restaurantId: string): void {
     this.restaurantService
       .getRestaurant(restaurantId)
-      .subscribe((restaurant) => this.restaurants.push(restaurant));
+      .subscribe((restaurant) => {
+        this.restaurants.push(restaurant);
+      });
   }
 
   getAddAllowed(): void {

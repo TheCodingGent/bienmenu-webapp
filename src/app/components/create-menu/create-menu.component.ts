@@ -114,7 +114,7 @@ export class CreateMenuComponent implements OnInit {
     this.menu.name = this.ctrlMenuName.value;
     this.menu.isActive = true;
     this.menu.type = MenuType.BienMenuMenu;
-    this.menu.lastupdated = new Date().toLocaleString();
+    this.menu.lastupdated = new Date().toISOString();
     this.menu.sections = this.convertFoodItemToMenuSectionItem();
     this.menu.schedule = this.ctrlScheduleDays.value;
 
@@ -125,13 +125,11 @@ export class CreateMenuComponent implements OnInit {
           this.router.navigate(['/user']).then(() => {
             window.location.reload();
           });
-          console.log(data);
         },
         (error) => {
           console.log(error);
         }
       );
-    console.log(this.menu);
   }
 
   addSection() {

@@ -171,6 +171,12 @@ export class AddFoodItemComponent implements OnInit {
       )}.${this.fileToUpload.name.split('.').pop()}`;
     }
     this.currentFoodItem.tags = this.tags;
+    this.currentFoodItem.price = parseFloat(
+      this.currentFoodItem.price.toFixed(2)
+    );
+    this.currentFoodItem.promotionPrice = parseFloat(
+      this.currentFoodItem.promotionPrice.toFixed(2)
+    );
   }
 
   saveFoodItem(): void {
