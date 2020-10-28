@@ -35,13 +35,14 @@ export class FoodItemManagerComponent implements OnInit {
 
   onClosedModal(foodItem: FoodItem) {
     if (foodItem) {
-      const index = this.foodItems.findIndex(
-        (item) => item._id === foodItem._id
-      );
-      // replace if exists
-      if (index > -1) this.foodItems[index] = foodItem;
-      // add if does not exist
-      else this.foodItems.push(foodItem);
+      // const index = this.foodItems.findIndex(
+      //   (item) => item._id === foodItem._id
+      // );
+      // // replace if exists
+      // if (index > -1) this.foodItems[index] = foodItem;
+      // // add if does not exist
+      // else this.foodItems.push(foodItem);
+      this.ngOnInit();
     }
   }
 

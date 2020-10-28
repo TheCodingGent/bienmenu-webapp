@@ -171,12 +171,8 @@ export class AddFoodItemComponent implements OnInit {
       )}.${this.fileToUpload.name.split('.').pop()}`;
     }
     this.currentFoodItem.tags = this.tags;
-    this.currentFoodItem.price = parseFloat(
-      this.currentFoodItem.price.toFixed(2)
-    );
-    this.currentFoodItem.promotionPrice = parseFloat(
-      this.currentFoodItem.promotionPrice.toFixed(2)
-    );
+    this.currentFoodItem.price = this.currentFoodItem.price
+    this.currentFoodItem.promotionPrice = this.currentFoodItem.promotionPrice;
   }
 
   saveFoodItem(): void {
@@ -199,7 +195,6 @@ export class AddFoodItemComponent implements OnInit {
               FormatFilename(this.currentFoodItem.name)
             )
             .subscribe((data) => {
-              console.log(data);
               this.close();
               this.isSubmitted = false;
             });
