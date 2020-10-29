@@ -42,7 +42,7 @@ export class FoodItemManagerComponent implements OnInit {
       // if (index > -1) this.foodItems[index] = foodItem;
       // // add if does not exist
       // else this.foodItems.push(foodItem);
-      this.ngOnInit();
+      window.location.reload();
     }
   }
 

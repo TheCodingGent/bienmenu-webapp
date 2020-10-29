@@ -99,6 +99,36 @@
           <div class="md-form">
             <input
               type="text"
+              id="promotionPrice"
+              formControlName="promotionPrice"
+              class="form-control"
+              mdbInput
+              mdbValidate
+            />
+            <label for="promotionPrice"
+              >{{ "add-food-item.PROMOTION-PRICE" | translate }} ($)</label
+            >
+            <mdb-error
+              *ngIf="
+                f.promotionPrice.invalid &&
+                (f.promotionPrice.dirty || f.promotionPrice.touched)
+              "
+            >
+              <span *ngIf="f.promotionPrice.errors.pattern">{{
+                "add-food-item.VALID-PRICE" | translate
+              }}</span>
+            </mdb-error>
+            <mdb-success
+              *ngIf="
+                f.promotionPrice.valid &&
+                (f.promotionPrice.dirty || f.promotionPrice.touched)
+              "
+              >{{ "add-food-item.VALID" | translate }}
+            </mdb-success>
+          </div>
+          <div class="md-form">
+            <input
+              type="text"
               id="calories"
               formControlName="calories"
               class="form-control"

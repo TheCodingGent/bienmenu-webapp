@@ -222,16 +222,15 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     this.restaurant.address = this.address;
     this.restaurant.phone = this.phone;
     this.restaurant.color = this.selectedColor;
-    //this.restaurant.hostedInternal = this.selectedMenuOption === 'internal';
-    if (this.currentPlan === 'contact-tracing') {
-      this.restaurant.tracingEnabled = true;
-    }
+    this.restaurant.tracingEnabled = true;
+    
     if (this.coverPhotoToUpload) {
+      this.restaurant.coverPhotoFilename = FormatFilename(
+        this.restaurant.name
+      );
       this.restaurant.coverPhotoUrl = `${
         this.appConfigService.mainS3BucketUrl
-      }businesses/${this.restaurant._id}/${FormatFilename(
-        this.restaurant.name
-      )}.${this.coverPhotoToUpload.name.split('.').pop()}`;
+      }businesses/${this.restaurant._id}/${this.restaurant.coverPhotoFilename}.${this.coverPhotoToUpload.name.split('.').pop()}`;
     }
   }
 
@@ -258,18 +257,18 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
     this.restaurantForm.disable();
 
     //populate the menu file names
-    for (let menu of this.menus.controls) {
-      let name = menu.get('name').value;
-      let file = this.menuFiles.get(name);
+    // for (let menu of this.menus.controls) {
+    //   let name = menu.get('name').value;
+    //   let file = this.menuFiles.get(name);
 
-      menu.patchValue({
-        filename: FormatFilename(name),
-      });
+    //   menu.patchValue({
+    //     filename: FormatFilename(name),
+    //   });
 
-      let filename = menu.get('filename').value;
+    //   let filename = menu.get('filename').value;
 
-      await this.uploadFileToServer(file, filename);
-    }
+    //   await this.uploadFileToServer(file, filename);
+    // }
 
     // build restaurant object to be sent to the server
     this.buildRestaurant();
@@ -285,7 +284,7 @@ export class AddRestaurantComponent implements OnInit, AfterViewChecked {
                   'businesses',
                   this.restaurant._id,
                   this.coverPhotoToUpload,
-                  FormatFilename(this.restaurant.name)
+                  this.restaurant.coverPhotoFilename
                 )
                 .subscribe((_) => {
                   this.isSubmitted = false;

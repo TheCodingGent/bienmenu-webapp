@@ -33,7 +33,6 @@ export class FileUploadService {
     name?: string
   ): Observable<any> {
     const url = `${this.fileServerUrl}image/upload/${path}/${id}`;
-    console.log(name);
     const filename = name
       ? name + '.' + image.name.split('.').pop()
       : image.name;

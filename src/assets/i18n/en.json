@@ -240,6 +240,7 @@
     "NAME-ALREADY-EXSITS": "Food item name is already in use, food item names must be unique",
     "VALID": "Valid",
     "PRICE": "Price",
+    "PROMOTION-PRICE": "Promotion Price",
     "REQ-MSG-PRICE": "Food item price is required",
     "VALID-PRICE": "Please enter a valid price",
     "SAVE": "Save",

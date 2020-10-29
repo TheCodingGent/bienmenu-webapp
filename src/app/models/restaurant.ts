@@ -14,4 +14,5 @@ export interface Restaurant {
   color: string;
   tracingEnabled: boolean;
   coverPhotoUrl: string;
+  coverPhotoFilename: string;
 }

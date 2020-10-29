@@ -14,7 +14,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { FoodItem } from 'src/app/models/food-item';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { FoodItemService } from 'src/app/services/food-item.service';
-import { FormatFilename } from 'src/app/helpers/utilities';
+import { FormatFilename, GetFileVersion } from 'src/app/helpers/utilities';
 import { AppConfigService } from 'src/app/services/app-config.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class AddFoodItemComponent implements OnInit {
 
   id = 'addFoodItemModal'; // modal id used by modal service
 
-  currentFoodItem: FoodItem;
+  currentFoodItem: FoodItem = new FoodItem();
   foodItemForm: FormGroup;
   fileToUpload: File;
 
@@ -68,6 +68,9 @@ export class AddFoodItemComponent implements OnInit {
       description: this.formBuilder.control(''),
       price: this.formBuilder.control('', [
         Validators.required,
+        Validators.pattern('^(\\d+(\\.\\d{0,2})?|\\.?\\d{1,2})$'),
+      ]),
+      promotionPrice: this.formBuilder.control('', [
         Validators.pattern('^(\\d+(\\.\\d{0,2})?|\\.?\\d{1,2})$'),
       ]),
       calories: this.formBuilder.control('', [Validators.pattern('^\\d+$')]),
@@ -146,33 +149,42 @@ export class AddFoodItemComponent implements OnInit {
   }
 
   buildFoodItem(): void {
-    let id: string;
-
     // if not editing generate a new ID for the food item
-    if (!this.isEditing) {
-      id = new ObjectID().toHexString();
-    } else {
-      id = this.currentFoodItem._id;
-    }
+    if (!this.isEditing)
+      this.currentFoodItem._id = new ObjectID().toHexString();
 
-    this.currentFoodItem = this.foodItemForm.value;
-    this.currentFoodItem._id = id;
+    this.currentFoodItem.name = this.foodItemForm.get('name').value;
+    this.currentFoodItem.description = this.foodItemForm.get(
+      'description'
+    ).value;
+    this.currentFoodItem.price = this.foodItemForm.get('price').value;
+    this.currentFoodItem.calories = this.foodItemForm.get('calories').value;
+
+    this.currentFoodItem.tags = this.tags;
+    this.currentFoodItem.price = this.currentFoodItem.price;
+    this.currentFoodItem.promotionPrice = this.currentFoodItem.promotionPrice;
 
     if (this.fileToUpload) {
-      if (this.isEditing && this.currentFoodItem.imageUrl) {
-        // the current image has changed and need to delete the current image
+      if (this.isEditing) {
+        // consider deleting older images when image changes
+        // update the version of the image
+        this.currentFoodItem.imageFilename = FormatFilename(
+          this.currentFoodItem.name,
+          GetFileVersion(this.currentFoodItem.imageFilename)
+        );
+      } else {
+        this.currentFoodItem.imageFilename = FormatFilename(
+          this.currentFoodItem.name
+        );
       }
 
       // update the image url
       this.currentFoodItem.imageUrl = `${
         this.appCofigService.mainS3BucketUrl
-      }foodItems/${id}/${FormatFilename(
-        this.currentFoodItem.name
-      )}.${this.fileToUpload.name.split('.').pop()}`;
+      }foodItems/${this.currentFoodItem._id}/${
+        this.currentFoodItem.imageFilename
+      }.${this.fileToUpload.name.split('.').pop()}`;
     }
-    this.currentFoodItem.tags = this.tags;
-    this.currentFoodItem.price = this.currentFoodItem.price
-    this.currentFoodItem.promotionPrice = this.currentFoodItem.promotionPrice;
   }
 
   saveFoodItem(): void {
@@ -181,7 +193,7 @@ export class AddFoodItemComponent implements OnInit {
     this.buildFoodItem();
 
     // to-do save the food item to the db
-    console.log(this.currentFoodItem);
+    //console.log(this.currentFoodItem);
     this.foodItemService.addFoodItemForUser(this.currentFoodItem).subscribe(
       (data) => {
         // to-do if food item was added successfully to the db then upload the image file
@@ -192,7 +204,7 @@ export class AddFoodItemComponent implements OnInit {
               'foodItems',
               this.currentFoodItem._id,
               this.fileToUpload,
-              FormatFilename(this.currentFoodItem.name)
+              this.currentFoodItem.imageFilename
             )
             .subscribe((data) => {
               this.close();

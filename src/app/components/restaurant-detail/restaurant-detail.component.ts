@@ -17,7 +17,7 @@ import {
 import { LightOrDark } from 'src/app/helpers/color.helper';
 import { ValidateFile } from 'src/app/helpers/file.validator';
 import { FileUploadService } from 'src/app/services/file-upload.service';
-import { FormatFilename } from 'src/app/helpers/utilities';
+import { FormatFilename, GetFileVersion } from 'src/app/helpers/utilities';
 import { AppConfigService } from 'src/app/services/app-config.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -195,17 +195,6 @@ export class RestaurantDetailComponent implements OnInit {
   }
 
   deleteMenu(menu: Menu, restaurantId: string) {
-    // if (
-    //   confirm('Are you sure you want to delete this menu and all its data?')
-    // ) {
-    //   this.menuService.deleteMenuById(restaurantId, menu).subscribe((_) => {
-    //     window.location.reload();
-    //   }),
-    //     (err) => {
-    //       console.log('An error occurred: ' + err);
-    //     };
-    // }
-
     Swal.fire({
       title: 'Are you sure you want to delete this menu and all its data?',
       icon: 'warning',
@@ -226,22 +215,6 @@ export class RestaurantDetailComponent implements OnInit {
   }
 
   deleteRestaurant(restaurantId: string) {
-    // if (
-    //   confirm(
-    //     'Are you sure you want to delete this restaurant? This action cannot be undone.'
-    //   )
-    // ) {
-    //   this.restaurantService.deleteRestaurant(restaurantId).subscribe((_) => {
-    //     this.tokenStorageService.deleteRestaurant(restaurantId);
-    //     this.router.navigate(['/user']).then(() => {
-    //       window.location.reload();
-    //     });
-    //   }),
-    //     (err) => {
-    //       console.log('An error occurred: ' + err);
-    //     };
-    // }
-
     Swal.fire({
       title:
         'Are you sure you want to delete this restaurant? This action cannot be undone.',
@@ -266,22 +239,6 @@ export class RestaurantDetailComponent implements OnInit {
   }
 
   saveContactTracing() {
-    // if (
-    //   confirm('Are you sure you want to modify the contact tracing setting?')
-    // ) {
-    //   this.isCTSettingSubmitted = true;
-    //   this.restaurantService
-    //     .updateContactTracing(this.selectedCTSetting, this.restaurant._id)
-    //     .subscribe((data) => {
-    //       this.isCTSettingSubmitted = false;
-    //       window.location.reload();
-    //     }),
-    //     (err) => {
-    //       console.log('An error occurred: ' + err);
-    //       this.isCTSettingSubmitted = false;
-    //     };
-    // }
-
     Swal.fire({
       title: 'Are you sure you want to modify the contact tracing setting?',
       icon: 'warning',
@@ -320,14 +277,20 @@ export class RestaurantDetailComponent implements OnInit {
 
   uploadCoverPhoto() {
     this.isSubmitted = true;
+
+    // up-version the filename
+    const coverPhotoFilename = FormatFilename(
+      this.restaurant.name,
+      GetFileVersion(this.restaurant.coverPhotoFilename)
+    );
+
+    // get new url
     const coverPhotoUrl = `${this.appConfigService.mainS3BucketUrl}businesses/${
       this.restaurant._id
-    }/${FormatFilename(
-      this.restaurant.name
-    )}.${this.coverPhotoToUpload.name.split('.').pop()}`;
+    }/${coverPhotoFilename}.${this.coverPhotoToUpload.name.split('.').pop()}`;
 
     this.restaurantService
-      .updateCoverPhotoUrl(coverPhotoUrl, this.restaurant._id)
+      .updateCoverPhoto(coverPhotoFilename, coverPhotoUrl, this.restaurant._id)
       .subscribe(
         (data) => {
           this.fileUploadService
@@ -335,7 +298,7 @@ export class RestaurantDetailComponent implements OnInit {
               'businesses',
               this.restaurant._id,
               this.coverPhotoToUpload,
-              FormatFilename(this.restaurant.name)
+              coverPhotoFilename
             )
             .subscribe((data) => {
               this.isSubmitted = false;

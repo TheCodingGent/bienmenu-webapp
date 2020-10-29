@@ -21,7 +21,7 @@ import { ValidateFile } from 'src/app/helpers/file.validator';
 import { UserService } from 'src/app/services/user.service';
 import { MustNotBeDuplicateInRestaurant } from 'src/app/helpers/file.validator';
 import { Restaurant } from 'src/app/models/restaurant';
-import { FormatFilename } from 'src/app/helpers/utilities';
+import { FormatFilename, GetFileVersion } from 'src/app/helpers/utilities';
 import { Menu, MenuType } from 'src/app/models/menu';
 import { MenuService } from 'src/app/services/menu.service';
 import { ObjectId } from 'bson';
@@ -140,9 +140,16 @@ export class AddMenuComponent implements OnInit {
     this.isSubmitted = true;
 
     // set the filename based on the name
-    this.menuForm.patchValue({
-      filename: FormatFilename(this.name.value),
-    });
+    if(this.isUpdating){
+      this.menuForm.patchValue({
+        filename: FormatFilename(this.name.value, GetFileVersion(this.menuToUpdate.filename)),
+      });
+    }else{
+      this.menuForm.patchValue({
+        filename: FormatFilename(this.name.value),
+      });
+    }
+    
 
     this.createMenuObject();
 

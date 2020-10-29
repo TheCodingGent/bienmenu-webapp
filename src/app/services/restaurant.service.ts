@@ -74,11 +74,12 @@ export class RestaurantService {
     );
   }
 
-  updateCoverPhotoUrl(coverPhotoUrl: string, id: string): Observable<any> {
+  updateCoverPhoto(coverPhotoFilename: string, coverPhotoUrl: string, id: string): Observable<any> {
     const url = `${this.restaurantsUrl}/update-cover-photo/${id}`;
     return this.http.post(
       url,
-      { coverPhotoUrl: coverPhotoUrl },
+      { coverPhotoFilename: coverPhotoFilename,
+        coverPhotoUrl: coverPhotoUrl },
       this.httpOptions
     );
   }

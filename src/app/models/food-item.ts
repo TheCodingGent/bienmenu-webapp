@@ -2,6 +2,7 @@ export class FoodItem {
   _id: string;
   name: string;
   description: string;
+  imageFilename: string;
   imageUrl: string;
   tags: string[];
   price: number;
