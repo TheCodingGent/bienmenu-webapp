@@ -6,4 +6,5 @@ export class MenuSectionItem {
   foodItem: FoodItem;
   menuSectionId: string;
   isActive: boolean;
+  quantityLow: boolean;
 }
