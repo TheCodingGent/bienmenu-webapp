@@ -6,6 +6,8 @@ import { MenuSection } from 'src/app/models/menu-section';
 import { FoodItemService } from 'src/app/services/food-item.service';
 import { FoodItem } from 'src/app/models/food-item';
 import { LightOrDark } from 'src/app/helpers/color.helper';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-display-menu',
@@ -24,6 +26,8 @@ export class DisplayMenuComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private menuService: MenuService,
+    private tokenStorageService: TokenStorageService,
+    private navbarService: NavbarService,
     private elRef: ElementRef
   ) {}
   setColorThemeProperty() {
@@ -40,6 +44,11 @@ export class DisplayMenuComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    if (!this.tokenStorageService.getToken()) {
+      // if user is not logged in hide the navigation bar
+      this.navbarService.hide();
+    }
+
     this.color = this.activatedRoute.snapshot.paramMap.get('color');
     this.menuService
       .getMenu(this.activatedRoute.snapshot.paramMap.get('id'))
