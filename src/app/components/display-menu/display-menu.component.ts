@@ -23,6 +23,7 @@ export class DisplayMenuComponent implements OnInit {
   tag: string = '';
   color: string = '';
   mainColor = '#009688';
+  isLoggedIn = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,7 +48,8 @@ export class DisplayMenuComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    if (!this.tokenStorageService.getToken()) {
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    if (!this.isLoggedIn) {
       // if user is not logged in hide the navigation bar
       this.navbarService.hide();
     }

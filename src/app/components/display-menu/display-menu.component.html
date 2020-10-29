@@ -1,4 +1,7 @@
-<div class="display-menu container-fluid">
+<div
+  class="display-menu container-fluid"
+  [ngClass]="{ 'top-padding': isLoggedIn }"
+>
   <div class="display-menu-content container">
     <div class="d-flex flex-column">
       <div class="title-container">
