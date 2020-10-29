@@ -239,6 +239,7 @@
     "NAME-ALREADY-EXSITS": "Le nom de l'aliment est déjà utilisé, les noms de l'aliment doivent être uniques",
     "VALID": "Valide",
     "PRICE": "Prix",
+    "PROMOTION-PRICE": "Prix de Rabais",
     "REQ-MSG-PRICE": "Le prix de l'aliment est obligatoire",
     "VALID-PRICE": "Veuillez saisir un prix valide",
     "SAVE": "Sauvegarder",
