@@ -1,5 +1,5 @@
 <div class="display-menu container-fluid">
-  <div class="container">
+  <div class="display-menu-content container">
     <div class="d-flex flex-column">
       <div class="title-container">
         <h1 class="menu-title">
@@ -9,7 +9,53 @@
 
       <div *ngFor="let section of sections">
         <div *ngIf="section.menuSectionItems.length > 0">
-          <div class="section-container">
+          <div class="card">
+            <div class="card-header">
+              <div class="section-title">
+                {{ section.name }}
+              </div>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item food-item"
+                *ngFor="let menuSectionItem of section.menuSectionItems"
+                (click)="goToFoodItemDetails(menuSectionItem.foodItem._id)"
+              >
+                <div
+                  class="d-flex justify-content-between"
+                  *ngIf="menuSectionItem.isActive"
+                >
+                  <div>
+                    <div class="d-flex flex-column">
+                      <div class="food-name">
+                        {{ menuSectionItem.foodItem.name }}
+                      </div>
+                      <div>${{ menuSectionItem.foodItem.price }}</div>
+                      <div *ngIf="menuSectionItem.foodItem.calories">
+                        {{ menuSectionItem.foodItem.calories }} Cal
+                      </div>
+                    </div>
+                  </div>
+                  <mat-icon *ngIf="menuSectionItem.foodItem.promotionPrice > 0"
+                    >verified</mat-icon
+                  >
+                  <div>
+                    <img
+                      class="small-img"
+                      [src]="menuSectionItem.foodItem.imageUrl"
+                    />
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="section-container">
             <h3 class="section-title">
               {{ section.name }}
               <hr class="hr" />
@@ -156,9 +202,4 @@
                 </mat-expansion-panel>
               </div>
             </div>
-          </mat-accordion>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+          </mat-accordion> -->

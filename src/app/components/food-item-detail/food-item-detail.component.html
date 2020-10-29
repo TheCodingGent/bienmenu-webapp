@@ -1,0 +1,56 @@
+<div class="food-item-detail container-fluid" *ngIf="foodItem">
+  <div class="cover-photo-div">
+    <img class="big-food-image" [src]="foodItem.imageUrl" />
+  </div>
+  <div class="food-item-detail-content">
+    <button
+      mat-mini-fab
+      mat-raised-button
+      matTooltip="go back"
+      matTooltipClass="btn-tooltip"
+      (click)="goBack()"
+      style="margin-top: 100px; margin-left: 20px"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="d-flex flex-column food-item-data">
+      <div style="text-align: center; font-size: 22px">
+        {{ foodItem.name | uppercase }}
+      </div>
+
+      <div class="row">
+        <div class="food-item-description col-md-6">
+          {{ foodItem.description }}
+          <div class="vertical-divider"></div>
+          <div class="d-flex">
+            <mat-icon>room_service</mat-icon>
+            <div class="divider"></div>
+            <span> Calories: </span>{{ foodItem.calories }} Cal
+          </div>
+          <div class="vertical-divider"></div>
+          <div style="padding-bottom: 20px">
+            <mat-chip-list aria-label="Fish selection">
+              <div *ngFor="let tag of foodItem.tags">
+                <mat-chip selected
+                  ><img
+                    style="padding-right: 5px"
+                    *ngIf="tag.toLocaleLowerCase() === 'spicy'"
+                    src="/assets/img/tag-images/spicy.png"
+                  />
+                  <img
+                    style="padding-right: 5px"
+                    *ngIf="tag.toLocaleLowerCase() === 'vegetarian'"
+                    src="/assets/img/tag-images/vegetarian.png"
+                  />{{ tag }}</mat-chip
+                >
+              </div>
+            </mat-chip-list>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <img class="food-item-image" [src]="foodItem.imageUrl" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

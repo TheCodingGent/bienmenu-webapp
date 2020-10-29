@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { MenuService } from 'src/app/services/menu.service';
 import { Menu } from 'src/app/models/menu';
 import { MenuSection } from 'src/app/models/menu-section';
-import { FoodItemService } from 'src/app/services/food-item.service';
 import { FoodItem } from 'src/app/models/food-item';
 import { LightOrDark } from 'src/app/helpers/color.helper';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -17,6 +17,7 @@ import { NavbarService } from 'src/app/services/navbar.service';
 export class DisplayMenuComponent implements OnInit {
   menu: Menu = new Menu();
   sections: MenuSection[] = [];
+  selectedFoodItem: FoodItem;
   foodItem: FoodItem = new FoodItem();
   FoodItems: FoodItem[] = [];
   tag: string = '';
@@ -25,6 +26,8 @@ export class DisplayMenuComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private location: Location,
     private menuService: MenuService,
     private tokenStorageService: TokenStorageService,
     private navbarService: NavbarService,
@@ -71,5 +74,13 @@ export class DisplayMenuComponent implements OnInit {
         //   }
         // });
       });
+  }
+
+  goToFoodItemDetails(foodItemId: string) {
+    this.router.navigateByUrl('/food-items/food-item/' + foodItemId);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

@@ -48,6 +48,7 @@ import { BusinessPortalHomeComponent } from './components/business-portal-home/b
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FeatureNotAllowedComponent } from './components/feature-not-allowed/feature-not-allowed.component';
+import { FoodItemDetailComponent } from './components/food-item-detail/food-item-detail.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { FeatureNotAllowedComponent } from './components/feature-not-allowed/fea
     ContactTracingHomeComponent,
     BusinessPortalHomeComponent,
     FeatureNotAllowedComponent,
+    FoodItemDetailComponent,
   ],
   imports: [
     BrowserModule,

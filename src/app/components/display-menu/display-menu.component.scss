@@ -1,83 +1,104 @@
 .display-menu {
-  margin: 80px auto;
+  margin-top: 70px;
   overflow: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  width: 90%;
-  border-radius: 20px;
-  background-color: rgba(247, 242, 242, 0.527);
+  padding: 0;
 }
+
+.display-menu-content {
+  padding: 0;
+}
+
 .title-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 5px rgb(247, 245, 245);
-  border-radius: 50px;
   background-color: var(--main-color) !important;
 }
-.hr {
-  background-color: var(--main-color) !important;
+
+// @media (max-width: 768px) {
+//   .mobileDisplay {
+//     display: none;
+//   }
+// }
+
+.food-item {
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
-@media (max-width: 700px) {
-  .mobileDisplay {
-    display: none;
-  }
-}
+
 .food-name {
-  font-weight: 400;
+  font-weight: bold;
+  font-size: 20px;
   padding-top: 8px;
-  @media (max-width: 700px) {
-    font-size: small;
+  @media (max-width: 768px) {
+    font-size: 18px;
   }
 }
+
 .menu-title {
-  font-weight: 600;
+  font-weight: bold;
   text-align: center;
   color: white;
   font-family: "Lobster Two";
   padding: 10px;
 }
-.big-food-image {
-  width: 250px;
 
-  @media (max-width: 700px) {
-    width: 150px;
-    height: 150px;
-  }
-}
-.food-name-div {
-  width: 250px;
+// .big-food-image {
+//   width: 250px;
 
-  @media (max-width: 700px) {
-    width: 100px;
-  }
-}
-.section-container {
+//   @media (max-width: 700px) {
+//     width: 150px;
+//     height: 150px;
+//   }
+// }
+
+// .food-name-div {
+//   width: 250px;
+
+//   @media (max-width: 700px) {
+//     width: 100px;
+//   }
+// }
+
+.section-title {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  padding-top: 30px;
-  padding-bottom: 30px;
-  .section-title {
-    font-family: "Lobster Two";
-    font-weight: 400;
-    text-transform: capitalize;
-  }
+  font-family: "Lobster Two";
+  font-weight: bold;
+  font-size: 22px;
+  text-transform: capitalize;
 }
+
+// .section-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   padding-top: 30px;
+//   padding-bottom: 30px;
+
+// }
+
 .small-img {
-  width: 30px;
-  height: 30px;
-  border-radius: 30px;
+  width: 200px;
+  height: 150px;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 15px;
 
-  @media (max-width: 700px) {
+  @media (max-width: 768px) {
     margin: auto;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    width: 100px;
+    height: 80px;
   }
 }
+
 .mat-icon {
   vertical-align: middle;
   color: var(--main-color) !important;

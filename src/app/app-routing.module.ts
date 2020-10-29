@@ -31,6 +31,7 @@ import { DisplayMenuComponent } from './components/display-menu/display-menu.com
 import { ContactTracingHomeComponent } from './components/contact-tracing-home/contact-tracing-home.component';
 import { BusinessPortalHomeComponent } from './components/business-portal-home/business-portal-home.component';
 import { FeatureNotAllowedComponent } from './components/feature-not-allowed/feature-not-allowed.component';
+import { FoodItemDetailComponent } from './components/food-item-detail/food-item-detail.component';
 
 const externalUrlProvider = new InjectionToken('externalUrlRedirectResolver');
 
@@ -78,10 +79,14 @@ const routes: Routes = [
   },
   {
     path: 'display-menu/:id/:color',
-    component: DisplayMenuComponent
+    component: DisplayMenuComponent,
   },
   { path: 'menu-list', component: MenuListComponent },
   { path: 'menus/:id', component: BusinessPortalHomeComponent },
+  {
+    path: 'food-items/food-item/:id',
+    component: FoodItemDetailComponent,
+  },
   {
     matcher: (url) => {
       if (
